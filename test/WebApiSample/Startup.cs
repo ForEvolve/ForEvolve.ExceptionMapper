@@ -35,6 +35,7 @@ namespace WebApiSample
             }
 
             app.UseRouting();
+            app.UseHttpExceptionMapping();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
