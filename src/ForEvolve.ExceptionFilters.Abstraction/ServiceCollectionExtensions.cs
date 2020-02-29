@@ -10,17 +10,10 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExceptionFiltersExtensions
     {
-        private static IExceptionMappingBuilder _builder;
-
         public static IServiceCollection AddExceptionMapping(this IServiceCollection services, Action<IExceptionMappingBuilder> exceptionMappingBuilder = null)
         {
             services.AddLogging();
-            if (_builder == null)
-            {
-                _builder = new ExceptionMappingBuilder(services);
-            }
-            services.TryAddSingleton(_builder);
-            exceptionMappingBuilder?.Invoke(_builder);
+            exceptionMappingBuilder?.Invoke(new ServiceCollectionWrapper(services));
             return services;
         }
     }
@@ -30,9 +23,9 @@ namespace Microsoft.Extensions.DependencyInjection
         IServiceCollection Services { get; }
     }
 
-    public class ExceptionMappingBuilder : IExceptionMappingBuilder
+    public class ServiceCollectionWrapper : IExceptionMappingBuilder
     {
-        public ExceptionMappingBuilder(IServiceCollection services)
+        public ServiceCollectionWrapper(IServiceCollection services)
         {
             Services = services ?? throw new ArgumentNullException(nameof(services));
         }
