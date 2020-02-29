@@ -21,4 +21,9 @@ namespace ForEvolve.ExceptionFilters.BaseHttpExceptions.Handlers
     {
         public override int StatusCode => StatusCodes.Status500InternalServerError;
     }
+
+    public class NotImplementedExceptionHandler : ExceptionHandler<NotImplementedException>
+    {
+        public override int StatusCode => StatusCodes.Status501NotImplemented;
+    }
 }
