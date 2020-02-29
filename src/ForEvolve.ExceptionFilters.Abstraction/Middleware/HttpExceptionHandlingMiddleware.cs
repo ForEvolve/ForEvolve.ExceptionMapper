@@ -28,8 +28,8 @@ namespace ForEvolve.ExceptionFilters
                 {
                     var handler = await _exceptionMapManager.GetMapForExceptionAsync(exceptionType);
                     await handler.ExecuteAsync(context);
-                    return;
                 }
+                return;
             }
             await _next(context);
         }

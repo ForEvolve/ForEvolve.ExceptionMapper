@@ -27,7 +27,8 @@ namespace WebApiSample
                     .Map<NotFoundException>().ToStatusCode(404)
                     .Map<ConflictException>().ToStatusCode(409)
                     .Map<NotImplementedException>().ToStatusCode(501)
-                    .Map<ServerErrorException>().ToStatusCode(500)
+                    //.Map<ServerErrorException>().ToStatusCode(500)
+                    //.Map<Exception>().ToStatusCode(500)
                 )
 
                 // Or with MVC
@@ -62,14 +63,16 @@ namespace WebApiSample
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/Conflict\",");
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/InternalServerError\",");
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/NotImplemented\",");
-                    await context.Response.WriteAsync($"\"{baseUri}/Routing/MyNotFoundException\"");
+                    await context.Response.WriteAsync($"\"{baseUri}/Routing/MyNotFoundException\",");
+                    await context.Response.WriteAsync($"\"{baseUri}/Routing/Exception\"");
                     await context.Response.WriteAsync("],");
                     await context.Response.WriteAsync("\"mvc\":[");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/NotFound\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/Conflict\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/InternalServerError\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/NotImplemented\",");
-                    await context.Response.WriteAsync($"\"{baseUri}/mvc/MyNotFoundException\"");
+                    await context.Response.WriteAsync($"\"{baseUri}/mvc/MyNotFoundException\",");
+                    await context.Response.WriteAsync($"\"{baseUri}/mvc/Exception\"");
                     await context.Response.WriteAsync("]");
                     await context.Response.WriteAsync("}");
                 });
@@ -78,6 +81,7 @@ namespace WebApiSample
                 endpoints.MapGet("/Routing/InternalServerError", context => throw new InternalServerErrorException(new Exception()));
                 endpoints.MapGet("/Routing/NotImplemented", context => throw new NotImplementedException());
                 endpoints.MapGet("/Routing/MyNotFoundException", context => throw new MyNotFoundException());
+                endpoints.MapGet("/Routing/Exception", context => throw new Exception());
             });
         }
     }
@@ -86,35 +90,25 @@ namespace WebApiSample
     [Route("mvc")]
     public class ExceptionController
     {
+#pragma warning disable IDE0022 // Use block body for methods
         [HttpGet("NotFound")]
-        public IActionResult NotFound()
-        {
-            throw new NotFoundException();
-        }
+        public IActionResult NotFound() => throw new NotFoundException();
 
         [HttpGet("Conflict")]
-        public IActionResult Conflict()
-        {
-            throw new ConflictException();
-        }
+        public IActionResult Conflict() => throw new ConflictException();
 
         [HttpGet("InternalServerError")]
-        public IActionResult InternalServerError()
-        {
-            throw new InternalServerErrorException(new Exception());
-        }
+        public IActionResult InternalServerError() => throw new InternalServerErrorException(new Exception());
 
         [HttpGet("NotImplemented")]
-        public IActionResult NotImplemented()
-        {
-            throw new NotImplementedException();
-        }
+        public IActionResult NotImplemented() => throw new NotImplementedException();
 
         [HttpGet("MyNotFoundException")]
-        public IActionResult MyNotFoundException()
-        {
-            throw new MyNotFoundException();
-        }
+        public IActionResult MyNotFoundException() => throw new MyNotFoundException();
+
+        [HttpGet("Exception")]
+        public IActionResult Exception() => throw new Exception();
+#pragma warning restore IDE0022 // Use block body for methods
     }
 
     public class MyNotFoundException : NotFoundException
