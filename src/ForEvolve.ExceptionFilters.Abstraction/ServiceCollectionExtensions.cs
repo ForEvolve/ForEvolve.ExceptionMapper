@@ -58,45 +58,29 @@ namespace Microsoft.AspNetCore.Builder
 }
 namespace ForEvolve.ExceptionFilters
 {
-    public class HttpExceptionHandlingMiddleware
-    {
-        private readonly RequestDelegate _next;
-        //private readonly IExceptionMapManager _exceptionMapManager;
-
-        public HttpExceptionHandlingMiddleware(/*IExceptionMapManager exceptionMapManager, */RequestDelegate next)
-        {
-            //_exceptionMapManager = exceptionMapManager ?? throw new ArgumentNullException(nameof(exceptionMapManager));
-            _next = next;
-        }
-
-        public async Task InvokeAsync(HttpContext context)
-        {
-            var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerFeature>();
-            if (exceptionHandlerPathFeature?.Error != null)
-            {
-                var exceptionType = exceptionHandlerPathFeature.Error.GetType();
-                //if (await _exceptionMapManager.HasMapForExceptionAsync(exceptionType))
-                //{
-                //    var handler = await _exceptionMapManager.GetMapForExceptionAsync(exceptionType);
-                //    await handler.ExecuteAsync(context);
-                //}
-                return;
-            }
-            await _next(context);
-        }
-    }
-
-    public interface IExceptionHandler
-    {
-        int Order { get; }
-        Task<bool> KnowHowToHandleAsync(Exception exception);
-        Task HandleAsync(HttpContext httpContext, Exception exception);
-    }
-
     public interface IExceptionHandlingManager
     {
-        Task<bool> HasHandlerForExceptionAsync(Exception exception);
-        Task<IExceptionHandler> GetHandlerForExceptionAsync(Exception exception);
+        Task<ExceptionHandlingResult> HandleAsync(HttpContext context);
+    }
+
+    public class ExceptionHandlingManager : IExceptionHandlingManager
+    {
+        public Task<ExceptionHandlingResult> HandleAsync(HttpContext context)
+        {
+            //var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerFeature>();
+            //if (exceptionHandlerPathFeature?.Error != null)
+            //{
+            //    var exceptionType = exceptionHandlerPathFeature.Error.GetType();
+            //    //if (await _exceptionMapManager.HasMapForExceptionAsync(exceptionType))
+            //    //{
+            //    //    var handler = await _exceptionMapManager.GetMapForExceptionAsync(exceptionType);
+            //    //    await handler.ExecuteAsync(context);
+            //    //}
+            //    return;
+            //}
+
+            throw new NotImplementedException();
+        }
     }
 
 
