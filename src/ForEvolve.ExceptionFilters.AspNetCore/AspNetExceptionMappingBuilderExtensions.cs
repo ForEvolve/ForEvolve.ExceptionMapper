@@ -1,4 +1,5 @@
 ﻿using ForEvolve.ExceptionFilters;
+using Scrutor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,20 +16,20 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         public static IExceptionMappingBuilder AddDefaultHandlers(this IExceptionMappingBuilder builder)
         {
-            builder.Services.Scan(s => s
-                .FromAssemblyOf<IExceptionHandler>()
-                .AddClasses(f => f.AssignableTo<IExceptionHandler>())
-                .As<IExceptionHandler>()
-                .WithSingletonLifetime()
-            );
-            return builder;
+            return builder.ScanHandlersFrom(s => s.FromAssemblyOf<IExceptionHandler>(), ServiceLifetime.Singleton);
         }
 
         /// <typeparam name="T">The type in which assembly that should be scanned.</typeparam>
         public static IExceptionMappingBuilder ScanHandlersFromAssemblyOf<T>(this IExceptionMappingBuilder builder, ServiceLifetime lifetime = ServiceLifetime.Singleton)
         {
-            builder.Services.Scan(s => s
-                .FromAssemblyOf<T>()
+            return builder.ScanHandlersFrom(s => s.FromAssemblyOf<T>(), lifetime);
+        }
+
+        public static IExceptionMappingBuilder ScanHandlersFrom(this IExceptionMappingBuilder builder, Func<ITypeSourceSelector, IImplementationTypeSelector> typeSelector, ServiceLifetime lifetime = ServiceLifetime.Singleton)
+        {
+            if (typeSelector == null) { throw new ArgumentNullException(nameof(typeSelector)); }
+
+            builder.Services.Scan(s => typeSelector(s)
                 .AddClasses(f => f.AssignableTo<IExceptionHandler>())
                 .As<IExceptionHandler>()
                 .WithLifetime(lifetime)
