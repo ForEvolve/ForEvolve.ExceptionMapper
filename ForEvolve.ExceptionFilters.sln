@@ -15,7 +15,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForEvolve.ExceptionFilters.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForEvolve.ExceptionFilters.AspNetCore.Tests", "test\ForEvolve.ExceptionFilters.AspNetCore.Tests\ForEvolve.ExceptionFilters.AspNetCore.Tests.csproj", "{944FE611-A72A-4C3F-8F0E-971B2884366F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSample", "test\WebApiSample\WebApiSample.csproj", "{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiSample", "test\WebApiSample\WebApiSample.csproj", "{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6EB72298-998C-41BA-8FE1-E3FDD71E5870}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
