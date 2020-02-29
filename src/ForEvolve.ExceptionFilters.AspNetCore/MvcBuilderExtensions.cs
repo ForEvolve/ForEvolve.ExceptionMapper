@@ -10,7 +10,7 @@ namespace ForEvolve.ExceptionFilters
         public static IMvcBuilder WithExceptionMapping(this IMvcBuilder mvcBuilder, Action<IExceptionMappingBuilder> exceptionMappingBuilder = null)
         {
             mvcBuilder.Services.AddExceptionMapping(exceptionMappingBuilder);
-            mvcBuilder.Services.TryAddSingleton<IExceptionConverter<ProblemDetails>, ExceptionToProblemDetailsConverter>();
+            mvcBuilder.Services.TryAddSingleton<IExceptionConverter, ExceptionToProblemDetailsConverter>();
             mvcBuilder.Services.TryAddSingleton<IExceptionContextResultBuilder, DefaultMvcExceptionContextResultBuilder>();
             mvcBuilder.Services.Configure<MvcOptions>(options =>
             {

@@ -6,9 +6,9 @@ namespace ForEvolve.ExceptionFilters
 {
     public class DefaultMvcExceptionContextResultBuilder : IExceptionContextResultBuilder
     {
-        private readonly IExceptionConverter<ProblemDetails> _exceptionConverter;
+        private readonly IExceptionConverter _exceptionConverter;
 
-        public DefaultMvcExceptionContextResultBuilder(IExceptionConverter<ProblemDetails> exceptionConverter)
+        public DefaultMvcExceptionContextResultBuilder(IExceptionConverter exceptionConverter)
         {
             _exceptionConverter = exceptionConverter ?? throw new ArgumentNullException(nameof(exceptionConverter));
         }

@@ -2,9 +2,8 @@
 
 namespace ForEvolve.ExceptionFilters
 {
-    public interface IExceptionConverter<TResult>
-        where TResult : class
+    public interface IExceptionConverter
     {
-        TResult Convert(Exception exception);
+        object Convert(Exception exception);
     }
 }

@@ -4,7 +4,7 @@ using System;
 
 namespace ForEvolve.ExceptionFilters
 {
-    public class ExceptionToProblemDetailsConverter : IExceptionConverter<ProblemDetails>
+    public class ExceptionToProblemDetailsConverter : IExceptionConverter
     {
         private readonly IHostingEnvironment _hostingEnvironment;
 
@@ -13,7 +13,7 @@ namespace ForEvolve.ExceptionFilters
             _hostingEnvironment = hostingEnvironment ?? throw new ArgumentNullException(nameof(hostingEnvironment));
         }
 
-        public ProblemDetails Convert(Exception exception)
+        public object Convert(Exception exception)
         {
             if (exception == null)
             {
