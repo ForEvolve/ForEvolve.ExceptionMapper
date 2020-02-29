@@ -21,6 +21,7 @@ namespace WebApiSample
         public void ConfigureServices(IServiceCollection services)
         {
             services
+                .AddExceptionMapping(builder => builder.AddDefaultHandlers())
                 .AddControllers()
             ;
         }
