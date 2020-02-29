@@ -41,11 +41,6 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.Services.AddSingleton<IExceptionHandler, THandler>();
             return builder;
         }
-        //public static FluentBuilder<TException> Map<TException>(this IExceptionMappingBuilder builder)
-        //    where TException : Exception
-        //{
-        //    return new FluentBuilder<TException>(builder);
-        //}
     }
 }
 namespace Microsoft.AspNetCore.Builder
@@ -102,42 +97,6 @@ namespace ForEvolve.ExceptionFilters
     {
         Task<bool> HasHandlerForExceptionAsync(Exception exception);
         Task<IExceptionHandler> GetHandlerForExceptionAsync(Exception exception);
-    }
-
-    //public abstract class ExceptionHandlerBase : IExceptionHandler
-    //{
-    //    public Task HandleAsync(HttpContext httpContext, Exception exception)
-    //    {
-    //        throw new System.NotImplementedException();
-    //    }
-
-    //    public abstract Task<bool> KnowHowToHandleAsync(Exception exception);
-    //    protected abstract Task HandleCoreAsync(HttpContext httpContext, Exception exception);
-    //}
-
-    public abstract class ExceptionHandler<TException> : IExceptionHandler
-        where TException : Exception
-    {
-        public const int DefaultOrder = 1;
-
-        public abstract int StatusCode { get; }
-        public virtual int Order => DefaultOrder;
-
-        public Task<bool> KnowHowToHandleAsync(Exception exception)
-        {
-            return Task.FromResult(exception is TException);
-        }
-
-        public Task HandleAsync(HttpContext httpContext, Exception exception)
-        {
-            httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
-            return HandleCoreAsync(httpContext, exception as TException);
-        }
-
-        protected virtual Task HandleCoreAsync(HttpContext httpContext, TException exception)
-        {
-            return Task.CompletedTask;
-        }
     }
 
 
