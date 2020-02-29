@@ -16,13 +16,13 @@ namespace ForEvolve.ExceptionFilters
             return Task.FromResult(exception is TException);
         }
 
-        public Task HandleAsync(HttpContext httpContext, Exception exception)
+        public Task ExecuteAsync(HttpContext httpContext, Exception exception)
         {
             httpContext.Response.StatusCode = StatusCode;
-            return HandleCoreAsync(httpContext, exception as TException);
+            return ExecuteCoreAsync(httpContext, exception as TException);
         }
 
-        protected virtual Task HandleCoreAsync(HttpContext httpContext, TException exception)
+        protected virtual Task ExecuteCoreAsync(HttpContext httpContext, TException exception)
         {
             return Task.CompletedTask;
         }

@@ -45,7 +45,7 @@ namespace ForEvolve.ExceptionFilters
 
         }
 
-        public class HandleAsync : ExceptionHandlerTest
+        public class ExecuteAsync : ExceptionHandlerTest
         {
             private HttpContextHelper _httpContextHelper = new HttpContextHelper();
 
@@ -55,7 +55,7 @@ namespace ForEvolve.ExceptionFilters
                 var sut = new ExceptionTestHandler<TestException>();
                 var exception = new TestException();
 
-                await sut.HandleAsync(
+                await sut.ExecuteAsync(
                     _httpContextHelper.HttpContextMock.Object,
                     exception
                 );
@@ -67,12 +67,12 @@ namespace ForEvolve.ExceptionFilters
             }
 
             [Fact]
-            public async Task Should_call_HandleCoreAsync()
+            public async Task Should_call_ExecuteCoreAsync()
             {
                 var sut = new ExceptionTestHandler<TestException>();
                 var exception = new TestException();
 
-                await sut.HandleAsync(
+                await sut.ExecuteAsync(
                     _httpContextHelper.HttpContextMock.Object,
                     exception
                 );
@@ -91,12 +91,12 @@ namespace ForEvolve.ExceptionFilters
         {
             public override int StatusCode => 999;
 
-            protected override Task HandleCoreAsync(HttpContext httpContext, TException exception)
+            protected override Task ExecuteCoreAsync(HttpContext httpContext, TException exception)
             {
                 HandleCoreWasCalled = true;
                 HttpContext = httpContext;
                 Exception = exception;
-                return base.HandleCoreAsync(httpContext, exception);
+                return base.ExecuteCoreAsync(httpContext, exception);
             }
 
             public bool HandleCoreWasCalled { get; private set; }

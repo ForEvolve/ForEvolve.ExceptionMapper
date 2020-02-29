@@ -7,6 +7,6 @@ namespace ForEvolve.ExceptionFilters
     {
         int Order { get; }
         Task<bool> KnowHowToHandleAsync(Exception exception);
-        Task HandleAsync(HttpContext httpContext, Exception exception);
+        Task ExecuteAsync(HttpContext httpContext, Exception exception);
     }
 }
