@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ForEvolve.ExceptionFilters.Abstraction\ForEvolve.ExceptionFilters.Abstraction.csproj" />
+    <ProjectReference Include="..\..\src\ForEvolve.ExceptionFilters.AspNetCore\ForEvolve.ExceptionFilters.AspNetCore.csproj" />
+  </ItemGroup>
+
+</Project>
