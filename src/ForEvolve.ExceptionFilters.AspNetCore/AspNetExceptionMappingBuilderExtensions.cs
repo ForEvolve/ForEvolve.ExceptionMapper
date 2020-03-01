@@ -14,8 +14,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// Registers all <see cref="IExceptionHandler"/> found in the assembly <see cref="ForEvolve.ExceptionFilters.Abstraction"/>
         /// with singleton lifetime.
         /// </summary>
-        public static IExceptionMappingBuilder AddDefaultHandlers(this IExceptionMappingBuilder builder)
+        public static IExceptionMappingBuilder AddDefaultHandlers(this IExceptionMappingBuilder builder, Action<ExceptionFiltersOptions> setup = null)
         {
+            if (setup != null) { builder.Services.Configure(setup); }
             return builder.ScanHandlersFrom(s => s.FromAssemblyOf<IExceptionHandler>(), ServiceLifetime.Singleton);
         }
 

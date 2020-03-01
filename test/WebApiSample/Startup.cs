@@ -21,11 +21,10 @@ namespace WebApiSample
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .Configure<ExceptionFiltersOptions>(options =>
+                .AddExceptionMapping(builder => builder.AddDefaultHandlers(options =>
                 {
                     options.FallbackStrategy = FallbackStrategy.Handle;
-                })
-                .AddExceptionMapping(builder => builder.AddDefaultHandlers())
+                }))
                 .AddControllers()
             ;
         }
