@@ -11,6 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddLogging();
             exceptionMappingBuilder?.Invoke(new ServiceCollectionWrapper(services));
+            services.TryAddSingleton<IExceptionHandlingManager, ExceptionHandlingManager>();
             return services;
         }
     }
