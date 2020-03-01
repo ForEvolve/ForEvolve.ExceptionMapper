@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ForEvolve.ExceptionMapper\ForEvolve.ExceptionMapper.csproj" />
-    <ProjectReference Include="..\..\src\ForEvolve.ExceptionMapper.AspNetCore\ForEvolve.ExceptionMapper.AspNetCore.csproj" />
   </ItemGroup>
 
 </Project>
