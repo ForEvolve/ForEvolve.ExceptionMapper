@@ -4,6 +4,6 @@ namespace ForEvolve.ExceptionFilters
 {
     public interface IExceptionHandlingManager
     {
-        Task<ExceptionHandlingResult> HandleAsync(HttpContext context);
+        Task<IExceptionHandlingResult> HandleAsync(HttpContext context);
     }
 }

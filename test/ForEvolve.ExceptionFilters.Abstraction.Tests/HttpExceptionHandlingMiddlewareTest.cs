@@ -30,7 +30,7 @@ namespace ForEvolve.ExceptionFilters
         [Fact]
         public async Task Should_not_call_next_when_exception_is_handled()
         {
-            var result = new ExceptionHandlingResult(true);
+            var result = new ExceptionHandledResult(new Exception());
             _exceptionHandlingManagerMock
                 .Setup(x => x.HandleAsync(It.IsAny<HttpContext>()))
                 .ReturnsAsync(result)
@@ -42,7 +42,7 @@ namespace ForEvolve.ExceptionFilters
         [Fact]
         public async Task Should_call_next_when_exception_is_not_handled()
         {
-            var result = new ExceptionHandlingResult(false);
+            var result = new ExceptionNotHandledResult(new Exception());
             _exceptionHandlingManagerMock
                 .Setup(x => x.HandleAsync(It.IsAny<HttpContext>()))
                 .ReturnsAsync(result)

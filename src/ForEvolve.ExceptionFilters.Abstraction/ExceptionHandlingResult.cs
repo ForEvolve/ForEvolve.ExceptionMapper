@@ -1,36 +1,57 @@
-﻿namespace ForEvolve.ExceptionFilters
+﻿using System;
+
+namespace ForEvolve.ExceptionFilters
 {
-    public class ExceptionHandlingResult
+    public interface IExceptionHandlingResult
     {
-        public ExceptionHandlingResult(bool exceptionHandled)
+        bool ExceptionHandled { get; }
+        Exception Error { get; }
+        bool ExceptionHandlerFeatureSupported { get; }
+    }
+
+    public class ExceptionHandledResult : IExceptionHandlingResult
+    {
+        public ExceptionHandledResult(Exception error)
         {
-            ExceptionHandled = exceptionHandled;
+            Error = error ?? throw new ArgumentNullException(nameof(error));
+            ExceptionHandled = true;
+            ExceptionHandlerFeatureSupported = true;
         }
 
         public bool ExceptionHandled { get; }
+        public Exception Error { get; }
+        public bool ExceptionHandlerFeatureSupported { get; }
     }
 
+    public class ExceptionNotHandledResult : IExceptionHandlingResult
+    {
+        public ExceptionNotHandledResult(Exception error)
+        {
+            Error = error ?? throw new ArgumentNullException(nameof(error));
+            ExceptionHandlerFeatureSupported = true;
+        }
 
-    //public abstract class ExceptionSerializerHandlerBase : IExceptionHandler
-    //{
-    //    public const int DefaultSerializerOrder = 100;
-    //    public virtual int Order => DefaultSerializerOrder;
+        public bool ExceptionHandled { get; }
+        public Exception Error { get; }
+        public bool ExceptionHandlerFeatureSupported { get; }
+    }
 
-    //    public abstract Task HandleAsync(HttpContext httpContext, Exception exception);
+    public class NoExceptionResult : IExceptionHandlingResult
+    {
+        public NoExceptionResult()
+        {
+            ExceptionHandlerFeatureSupported = true;
+        }
 
-    //    public virtual Task<bool> KnowHowToHandleAsync(Exception exception)
-    //        => Task.FromResult(true);
-    //}
+        public bool ExceptionHandled { get; }
+        public Exception Error { get; }
+        public bool ExceptionHandlerFeatureSupported { get; }
+    }
 
-    //public class JsonExceptionSerializerHandler : ExceptionSerializerHandlerBase
-    //{
-    //    public override Task HandleAsync(HttpContext httpContext, Exception exception)
-    //    {
-    //        throw new System.NotImplementedException();
-    //    }
-    //}
-    //public class ExceptionHandlingOptions
-    //{
-    //    public bool SerializeExceptions { get; set; }
-    //}
+    public sealed class ExceptionHandlerFeatureNotSupportedResult : IExceptionHandlingResult
+    {
+        public bool ExceptionHandled { get; }
+        public Exception Error { get; }
+        public bool ExceptionHandlerFeatureSupported => false;
+    }
 }

@@ -24,23 +24,34 @@ namespace ForEvolve.ExceptionFilters
         public IReadOnlyCollection<IExceptionHandler> Handlers
             => new ReadOnlyCollection<IExceptionHandler>(_handlers);
 
-        public async Task<ExceptionHandlingResult> HandleAsync(HttpContext context)
+        public async Task<IExceptionHandlingResult> HandleAsync(HttpContext context)
         {
-            var exceptionHandled = false;
             var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerFeature>();
-            if (exceptionHandlerPathFeature?.Error != null)
+            if (exceptionHandlerPathFeature == null)
             {
-                var exception = exceptionHandlerPathFeature.Error;
-                foreach (var handler in _handlers)
+                return new ExceptionHandlerFeatureNotSupportedResult();
+            }
+
+            var exception = exceptionHandlerPathFeature.Error;
+            if(exception == null)
+            {
+                return new NoExceptionResult();
+            }
+
+            var exceptionHandled = false;
+            foreach (var handler in _handlers)
+            {
+                if (await handler.KnowHowToHandleAsync(exception))
                 {
-                    if (await handler.KnowHowToHandleAsync(exception))
-                    {
-                        exceptionHandled = true;
-                        await handler.ExecuteAsync(context, exception);
-                    }
+                    exceptionHandled = true;
+                    await handler.ExecuteAsync(context, exception);
                 }
             }
-            return new ExceptionHandlingResult(exceptionHandled);
+
+            return exceptionHandled
+                ? new ExceptionHandledResult(exception) as IExceptionHandlingResult
+                : new ExceptionNotHandledResult(exception) as IExceptionHandlingResult
+            ;
         }
     }
 }
