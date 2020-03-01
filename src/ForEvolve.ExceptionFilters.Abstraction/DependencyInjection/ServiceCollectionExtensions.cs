@@ -7,7 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExceptionFiltersExtensions
     {
-        public static IServiceCollection AddExceptionMapping(this IServiceCollection services, Action<IExceptionMappingBuilder> exceptionMappingBuilder = null)
+        public static IServiceCollection AddExceptionMapper(this IServiceCollection services, Action<IExceptionMappingBuilder> exceptionMappingBuilder = null)
         {
             services.AddLogging();
             exceptionMappingBuilder?.Invoke(new ServiceCollectionWrapper(services));

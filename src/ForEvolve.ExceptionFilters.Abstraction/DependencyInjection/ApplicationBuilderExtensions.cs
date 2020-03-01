@@ -3,7 +3,7 @@ namespace Microsoft.AspNetCore.Builder
 {
     public static class ApplicationBuilderExtensions
     {
-        public static IApplicationBuilder UseHttpExceptionMapping(this IApplicationBuilder app)
+        public static IApplicationBuilder UseExceptionMapper(this IApplicationBuilder app)
         {
             return app.UseExceptionHandler(errorApp =>
             {

@@ -16,7 +16,7 @@ namespace ForEvolve.ExceptionFilters
         {
             // Arrange
             var services = new ServiceCollection();
-            services.AddExceptionMapping();
+            services.AddExceptionMapper();
             var serviceProvider = services.BuildServiceProvider();
 
             // Act

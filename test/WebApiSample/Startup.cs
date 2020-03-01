@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using ForEvolve.ExceptionFilters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,7 @@ namespace WebApiSample
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddExceptionMapping(builder => builder.AddDefaultHandlers(options =>
+                .AddExceptionMapper(builder => builder.AddDefaultHandlers(options =>
                 {
                     options.FallbackStrategy = FallbackStrategy.Handle;
                 }))
@@ -38,7 +39,7 @@ namespace WebApiSample
             }
 
             app.UseRouting();
-            app.UseHttpExceptionMapping();
+            app.UseExceptionMapper();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
