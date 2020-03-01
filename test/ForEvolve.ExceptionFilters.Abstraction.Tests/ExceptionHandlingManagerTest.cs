@@ -84,7 +84,7 @@ namespace ForEvolve.ExceptionFilters
                     public class And_the_Exception_was_handled : And_has_an_Error
                     {
                         [Fact]
-                        public async Task Should_return_ExceptionHandledResult()
+                        public async Task Should_return_ExceptionHandlingContext_Result()
                         {
                             // Arrange
                             var handlerMock = new Mock<IExceptionHandler>();
@@ -92,7 +92,8 @@ namespace ForEvolve.ExceptionFilters
                                 .Setup(x => x.KnowHowToHandleAsync(_exception))
                                 .ReturnsAsync(true);
                             handlerMock
-                                .Setup(x => x.ExecuteAsync(HttpContext, _exception))
+                                .Setup(x => x.ExecuteAsync(It.IsAny<ExceptionHandlingContext>()))
+                                .Callback((ExceptionHandlingContext context) => context.Result = new TestResult())
                                 .Returns(Task.CompletedTask);
                             _handlers.Add(handlerMock.Object);
                             var sut = new ExceptionHandlingManager(_handlers);
@@ -101,7 +102,16 @@ namespace ForEvolve.ExceptionFilters
                             var result = await sut.HandleAsync(HttpContext);
 
                             // Assert
-                            Assert.IsType<ExceptionHandledResult>(result);
+                            Assert.IsType<TestResult>(result);
+                        }
+
+                        private class TestResult : IExceptionHandlingResult
+                        {
+                            public bool ExceptionHandled => throw new NotImplementedException();
+
+                            public Exception Error => throw new NotImplementedException();
+
+                            public bool ExceptionHandlerFeatureSupported => throw new NotImplementedException();
                         }
                     }
 
@@ -194,7 +204,7 @@ namespace ForEvolve.ExceptionFilters
             {
                 public int Order { get; set; }
 
-                public Task ExecuteAsync(HttpContext httpContext, Exception exception)
+                public Task ExecuteAsync(ExceptionHandlingContext context)
                 {
                     throw new NotImplementedException();
                 }

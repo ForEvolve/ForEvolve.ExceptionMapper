@@ -55,10 +55,11 @@ namespace ForEvolve.ExceptionFilters
                 var sut = new ExceptionTestHandler<TestException>();
                 var exception = new TestException();
 
-                await sut.ExecuteAsync(
+                await sut.ExecuteAsync(new ExceptionHandlingContext(
                     _httpContextHelper.HttpContextMock.Object,
-                    exception
-                );
+                    exception,
+                    default
+                ));
 
                 Assert.Equal(
                     sut.StatusCode,
@@ -72,10 +73,11 @@ namespace ForEvolve.ExceptionFilters
                 var sut = new ExceptionTestHandler<TestException>();
                 var exception = new TestException();
 
-                await sut.ExecuteAsync(
+                await sut.ExecuteAsync(new ExceptionHandlingContext(
                     _httpContextHelper.HttpContextMock.Object,
-                    exception
-                );
+                    exception,
+                    default
+                ));
 
                 Assert.True(sut.HandleCoreWasCalled);
                 Assert.Same(exception, sut.Exception);
@@ -91,12 +93,12 @@ namespace ForEvolve.ExceptionFilters
         {
             public override int StatusCode => 999;
 
-            protected override Task ExecuteCoreAsync(HttpContext httpContext, TException exception)
+            protected override Task ExecuteCoreAsync(ExceptionHandlingContext<TException> context)
             {
                 HandleCoreWasCalled = true;
-                HttpContext = httpContext;
-                Exception = exception;
-                return base.ExecuteCoreAsync(httpContext, exception);
+                HttpContext = context.HttpContext;
+                Exception = context.Error;
+                return base.ExecuteCoreAsync(context);
             }
 
             public bool HandleCoreWasCalled { get; private set; }

@@ -11,18 +11,19 @@ namespace ForEvolve.ExceptionFilters
         public abstract int StatusCode { get; }
         public virtual int Order => DefaultOrder;
 
-        public Task<bool> KnowHowToHandleAsync(Exception exception)
+        public virtual Task<bool> KnowHowToHandleAsync(Exception exception)
         {
             return Task.FromResult(exception is TException);
         }
 
-        public Task ExecuteAsync(HttpContext httpContext, Exception exception)
+        public virtual Task ExecuteAsync(ExceptionHandlingContext context)
         {
-            httpContext.Response.StatusCode = StatusCode;
-            return ExecuteCoreAsync(httpContext, exception as TException);
+            context.HttpContext.Response.StatusCode = StatusCode;
+            context.Result = new ExceptionHandledResult(context.Error);
+            return ExecuteCoreAsync(new ExceptionHandlingContext<TException>(context));
         }
 
-        protected virtual Task ExecuteCoreAsync(HttpContext httpContext, TException exception)
+        protected virtual Task ExecuteCoreAsync(ExceptionHandlingContext<TException> context)
         {
             return Task.CompletedTask;
         }

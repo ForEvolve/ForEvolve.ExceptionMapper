@@ -24,9 +24,9 @@ namespace ForEvolve.ExceptionFilters
         public IReadOnlyCollection<IExceptionHandler> Handlers
             => new ReadOnlyCollection<IExceptionHandler>(_handlers);
 
-        public async Task<IExceptionHandlingResult> HandleAsync(HttpContext context)
+        public async Task<IExceptionHandlingResult> HandleAsync(HttpContext httpContext)
         {
-            var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerFeature>();
+            var exceptionHandlerPathFeature = httpContext.Features.Get<IExceptionHandlerFeature>();
             if (exceptionHandlerPathFeature == null)
             {
                 return new ExceptionHandlerFeatureNotSupportedResult();
@@ -38,20 +38,54 @@ namespace ForEvolve.ExceptionFilters
                 return new NoExceptionResult();
             }
 
-            var exceptionHandled = false;
+            var context = new ExceptionHandlingContext(httpContext, exception, new ExceptionNotHandledResult(exception));
             foreach (var handler in _handlers)
             {
                 if (await handler.KnowHowToHandleAsync(exception))
                 {
-                    exceptionHandled = true;
-                    await handler.ExecuteAsync(context, exception);
+                    await handler.ExecuteAsync(context);
                 }
             }
 
-            return exceptionHandled
-                ? new ExceptionHandledResult(exception) as IExceptionHandlingResult
-                : new ExceptionNotHandledResult(exception) as IExceptionHandlingResult
-            ;
+            return context.Result;
+        }
+    }
+
+    public class ExceptionHandlingContext<TException>
+        where TException : Exception
+    {
+        public ExceptionHandlingContext(ExceptionHandlingContext previous)
+            : this(previous.HttpContext, previous.Error as TException, previous.Result)
+        {
+        }
+
+        public ExceptionHandlingContext(ExceptionHandlingContext<TException> previous)
+            : this(previous.HttpContext, previous.Error, previous.Result)
+        {
+        }
+
+        public ExceptionHandlingContext(HttpContext httpContext, TException error, IExceptionHandlingResult initialResult)
+        {
+            HttpContext = httpContext ?? throw new ArgumentNullException(nameof(httpContext));
+            Error = error ?? throw new ArgumentNullException(nameof(error));
+            Result = initialResult;
+        }
+
+        public HttpContext HttpContext { get; }
+        public TException Error { get; }
+        public IExceptionHandlingResult Result { get; set; }
+    }
+
+    public class ExceptionHandlingContext : ExceptionHandlingContext<Exception>
+    {
+        public ExceptionHandlingContext(ExceptionHandlingContext previous)
+            : base(previous)
+        {
+        }
+
+        public ExceptionHandlingContext(HttpContext httpContext, Exception error, IExceptionHandlingResult initialResult)
+            : base(httpContext, error, initialResult)
+        {
         }
     }
 }
