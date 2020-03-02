@@ -23,6 +23,7 @@ namespace WebApiSample
         {
             services
                 .AddExceptionMapper(builder => builder
+                    .AddExceptionHandler<ImATeapotExceptionHandler>()
                     .MapCommonExceptions(options =>
                     {
                         options.FallbackStrategy = FallbackStrategy.Handle;
@@ -61,7 +62,8 @@ namespace WebApiSample
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/MyNotFoundException\",");
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/Exception\",");
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/MyUnauthorizedException\",");
-                    await context.Response.WriteAsync($"\"{baseUri}/Routing/GoneException\"");
+                    await context.Response.WriteAsync($"\"{baseUri}/Routing/GoneException\",");
+                    await context.Response.WriteAsync($"\"{baseUri}/Routing/ImATeapotException\"");
                     await context.Response.WriteAsync("],");
                     await context.Response.WriteAsync("\"mvc\":[");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/NotFound\",");
@@ -71,7 +73,8 @@ namespace WebApiSample
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/MyNotFoundException\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/Exception\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/MyUnauthorizedException\",");
-                    await context.Response.WriteAsync($"\"{baseUri}/mvc/GoneException\"");
+                    await context.Response.WriteAsync($"\"{baseUri}/mvc/GoneException\",");
+                    await context.Response.WriteAsync($"\"{baseUri}/mvc/ImATeapotException\"");
                     await context.Response.WriteAsync("]");
                     await context.Response.WriteAsync("}");
                 });
@@ -83,6 +86,7 @@ namespace WebApiSample
                 endpoints.MapGet("/Routing/Exception", context => throw new Exception());
                 endpoints.MapGet("/Routing/MyUnauthorizedException", context => throw new MyUnauthorizedException());
                 endpoints.MapGet("/Routing/GoneException", context => throw new GoneException());
+                endpoints.MapGet("/Routing/ImATeapotException", context => throw new ImATeapotException());
             });
         }
     }
@@ -115,6 +119,9 @@ namespace WebApiSample
 
         [HttpGet("GoneException")]
         public IActionResult GoneException() => throw new GoneException();
+
+        [HttpGet("ImATeapotException")]
+        public IActionResult ImATeapotException() => throw new ImATeapotException();
 #pragma warning restore IDE0022 // Use block body for methods
     }
 
@@ -128,5 +135,37 @@ namespace WebApiSample
 
     public class GoneException : Exception
     {
+    }
+
+    public class ImATeapotException : Exception
+    {
+
+    }
+
+    public class ImATeapotExceptionHandler : IExceptionHandler
+    {
+        public int Order => HandlerOrder.DefaultOrder;
+
+        public async Task ExecuteAsync(ExceptionHandlingContext context)
+        {
+            var response = context.HttpContext.Response;
+            response.StatusCode = StatusCodes.Status418ImATeapot;
+            response.ContentType = "text/html";
+            context.Result = new ExceptionHandledResult(context.Error);
+            await response.WriteAsync("<html><body><pre style=\"font-family: SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;\">");
+            await response.WriteAsync(@"             ;,'
+     _o_    ;:;'
+ ,-.'---`.__ ;
+((j`=====',-'
+ `-\     /
+    `-=-'     hjw
+Source: <a href=""https://www.asciiart.eu/food-and-drinks/coffee-and-tea"" target=""_blank"">https://www.asciiart.eu/food-and-drinks/coffee-and-tea</a>");
+            await response.WriteAsync("</pre></body></html>");
+        }
+
+        public Task<bool> KnowHowToHandleAsync(Exception exception)
+        {
+            return Task.FromResult(exception is ImATeapotException);
+        }
     }
 }
