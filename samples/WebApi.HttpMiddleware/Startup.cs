@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebApi.Shared;
 
 namespace WebApi.HttpMiddleware
 {
@@ -25,7 +26,7 @@ namespace WebApi.HttpMiddleware
                 .AddExceptionMapper(builder => builder
                     .AddExceptionHandler<ImATeapotExceptionHandler>()
                     .AddExceptionHandler<MyForbiddenExceptionHandler>()
-                    .MapCommonHttpExceptionHandlers(options =>
+                    .MapCommonHttpExceptions(options =>
                     {
                         options.Strategy = FallbackStrategy.Handle;
                     })
@@ -99,97 +100,6 @@ namespace WebApi.HttpMiddleware
                 endpoints.MapGet("/Routing/ImATeapotException", context => throw new ImATeapotException());
                 endpoints.MapGet("/Routing/MyForbiddenException", context => throw new MyForbiddenException());
             });
-        }
-    }
-
-    [ApiController]
-    [Route("mvc")]
-    public class ExceptionController
-    {
-#pragma warning disable IDE0022 // Use block body for methods
-        [HttpGet("NotFound")]
-        public IActionResult NotFound() => throw new NotFoundException();
-
-        [HttpGet("Conflict")]
-        public IActionResult Conflict() => throw new ConflictException();
-
-        [HttpGet("InternalServerError")]
-        public IActionResult InternalServerError() => throw new InternalServerErrorException(new Exception());
-
-        [HttpGet("NotImplemented")]
-        public IActionResult NotImplemented() => throw new NotImplementedException();
-
-        [HttpGet("MyNotFoundException")]
-        public IActionResult MyNotFoundException() => throw new MyNotFoundException();
-
-        [HttpGet("Exception")]
-        public IActionResult Exception() => throw new Exception();
-
-        [HttpGet("MyUnauthorizedException")]
-        public IActionResult MyUnauthorizedException() => throw new MyUnauthorizedException();
-
-        [HttpGet("GoneException")]
-        public IActionResult GoneException() => throw new GoneException();
-
-        [HttpGet("ImATeapotException")]
-        public IActionResult ImATeapotException() => throw new ImATeapotException();
-
-        [HttpGet("MyForbiddenException")]
-        public IActionResult MyForbiddenException() => throw new MyForbiddenException();
-#pragma warning restore IDE0022 // Use block body for methods
-    }
-
-    public class MyNotFoundException : NotFoundException
-    {
-    }
-
-    public class MyUnauthorizedException : Exception
-    {
-    }
-
-    public class GoneException : Exception
-    {
-    }
-
-    public class ImATeapotException : Exception
-    {
-
-    }
-
-    public class MyForbiddenException : Exception
-    {
-
-    }
-
-    public class MyForbiddenExceptionHandler : ExceptionHandler<MyForbiddenException>
-    {
-        public override int StatusCode => StatusCodes.Status403Forbidden;
-    }
-
-    public class ImATeapotExceptionHandler : IExceptionHandler
-    {
-        public int Order => HandlerOrder.DefaultOrder;
-
-        public async Task ExecuteAsync(ExceptionHandlingContext context)
-        {
-            var response = context.HttpContext.Response;
-            response.StatusCode = StatusCodes.Status418ImATeapot;
-            response.ContentType = "text/html";
-            context.Result = new ExceptionHandledResult(context.Error);
-            await response.WriteAsync("<html><body><pre style=\"font-family: SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;\">");
-            await response.WriteAsync(@"             ;,'
-     _o_    ;:;'
- ,-.'---`.__ ;
-((j`=====',-'
- `-\     /
-    `-=-'     hjw
-Source: <a href=""https://www.asciiart.eu/food-and-drinks/coffee-and-tea"" target=""_blank"">https://www.asciiart.eu/food-and-drinks/coffee-and-tea</a>");
-            await response.WriteAsync("</pre></body></html>");
-        }
-
-        public Task<bool> KnowHowToHandleAsync(Exception exception)
-        {
-            return Task.FromResult(exception is ImATeapotException);
         }
     }
 }

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ForEvolve.ExceptionMapper\ForEvolve.ExceptionMapper.csproj" />
+    <ProjectReference Include="..\WebApi.Shared\WebApi.Shared.csproj" />
   </ItemGroup>
 
 </Project>

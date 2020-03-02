@@ -247,18 +247,9 @@ Under the hood, the `Map<TException>()` extension creates a `FluentExceptionHand
 
 Here is a list of what I want to do:
 
+-   [ ] Take the fallback out of `MapCommonHttpExceptions()` into its own extension, like `MapHttpFallback()`
 -   [ ] Create a MVC/Razor Pages filter that could replace the middleware or work in conjunction of it, adding more control over the process for MVC applications.
-    -   [x] Create a `ForEvolve.ExceptionMapper.Mvc` project that contains MVC/Razor Pages filter/code.
 -   [ ] Add one or more serialization handlers that at least support JSON serialization and that leverage `ProblemDetailsFactory` to create `ProblemDetails` objects.
--   [x] Samples
-    -   [x] Rename `WebApiSample` to `WebApi.HttpMiddleware`.
-    -   [x] Create a new project name `WebApi.Mvc` that uses the `ForEvolve.ExceptionMapper.Mvc` filter instead of `ForEvolve.ExceptionMapper.HttpMiddleware`.
--   [ ] Rearrange assemblies:
-    -   [x] Move Http/Middleware out of `ForEvolve.ExceptionMapper`, into `ForEvolve.ExceptionMapper.HttpMiddleware` assembly.
-    -   [x] Move the `Scrutor` dependency out of `ForEvolve.ExceptionMapper` to `ForEvolve.ExceptionMapper.FluentMapper` or create a new assembly for that (`ForEvolve.ExceptionMapper.Scrutor`).
-    -   [x] Rename `ForEvolve.ExceptionMapper` to `ForEvolve.ExceptionMapper.Core`.
-    -   [x] Create a new `ForEvolve.ExceptionMapper` that includes all packages.
-    -   [ ] `ForEvolve.ExceptionMapper.CommonExceptions` could be renamed `ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers` and the exceptions could be moved in another assembly, like in `ForEvolve.ExceptionMapper.Core` or a new `ForEvolve.ExceptionMapper.CommonExceptions` project. This would allow reusing the exceptions for both Http/Middleware and Mvc/Razor Page scenarios, without the need to load every handlers if not needed.
 -   [ ] Write tests that covers `ForEvolve.ExceptionMapper.FluentMapper` and other missing pieces
 
 # Found a bug or have a feature request?

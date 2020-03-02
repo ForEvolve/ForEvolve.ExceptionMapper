@@ -42,13 +42,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForEvolve.ExceptionMapper.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForEvolve.ExceptionMapper.Scrutor.Tests", "test\ForEvolve.ExceptionMapper.Scrutor.Tests\ForEvolve.ExceptionMapper.Scrutor.Tests.csproj", "{9789A9A9-9C27-4E6F-B333-B0B2488637C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.HttpMiddleware", "samples\WebApi.HttpMiddleware\WebApi.HttpMiddleware.csproj", "{EDF69289-5307-47D2-BD53-C5E523B69F6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.HttpMiddleware", "samples\WebApi.HttpMiddleware\WebApi.HttpMiddleware.csproj", "{EDF69289-5307-47D2-BD53-C5E523B69F6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Mvc", "samples\WebApi.Mvc\WebApi.Mvc.csproj", "{B4D05F27-FD28-4983-8247-27759B7DE77C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Mvc", "samples\WebApi.Mvc\WebApi.Mvc.csproj", "{B4D05F27-FD28-4983-8247-27759B7DE77C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers", "src\ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers\ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers.csproj", "{E29EF017-7E0B-4F20-A1D3-08FA22EA05AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers", "src\ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers\ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers.csproj", "{E29EF017-7E0B-4F20-A1D3-08FA22EA05AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers.Tests", "test\ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers.Tests\ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers.Tests.csproj", "{CED04BA2-6293-48D9-92D4-33D58CBB5B56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers.Tests", "test\ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers.Tests\ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers.Tests.csproj", "{CED04BA2-6293-48D9-92D4-33D58CBB5B56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Shared", "samples\WebApi.Shared\WebApi.Shared.csproj", "{A5051881-D65D-4FB7-9E9C-D10FF48E54E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -276,6 +278,18 @@ Global
 		{CED04BA2-6293-48D9-92D4-33D58CBB5B56}.Release|x64.Build.0 = Release|Any CPU
 		{CED04BA2-6293-48D9-92D4-33D58CBB5B56}.Release|x86.ActiveCfg = Release|Any CPU
 		{CED04BA2-6293-48D9-92D4-33D58CBB5B56}.Release|x86.Build.0 = Release|Any CPU
+		{A5051881-D65D-4FB7-9E9C-D10FF48E54E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5051881-D65D-4FB7-9E9C-D10FF48E54E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5051881-D65D-4FB7-9E9C-D10FF48E54E1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A5051881-D65D-4FB7-9E9C-D10FF48E54E1}.Debug|x64.Build.0 = Debug|Any CPU
+		{A5051881-D65D-4FB7-9E9C-D10FF48E54E1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A5051881-D65D-4FB7-9E9C-D10FF48E54E1}.Debug|x86.Build.0 = Debug|Any CPU
+		{A5051881-D65D-4FB7-9E9C-D10FF48E54E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5051881-D65D-4FB7-9E9C-D10FF48E54E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5051881-D65D-4FB7-9E9C-D10FF48E54E1}.Release|x64.ActiveCfg = Release|Any CPU
+		{A5051881-D65D-4FB7-9E9C-D10FF48E54E1}.Release|x64.Build.0 = Release|Any CPU
+		{A5051881-D65D-4FB7-9E9C-D10FF48E54E1}.Release|x86.ActiveCfg = Release|Any CPU
+		{A5051881-D65D-4FB7-9E9C-D10FF48E54E1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -299,6 +313,7 @@ Global
 		{B4D05F27-FD28-4983-8247-27759B7DE77C} = {B236C0BC-2FEF-4F68-8EE3-A6281924D00F}
 		{E29EF017-7E0B-4F20-A1D3-08FA22EA05AD} = {C2DD6A0D-F994-42A4-BAFF-1FB972850229}
 		{CED04BA2-6293-48D9-92D4-33D58CBB5B56} = {F5AE538B-E864-425E-959A-7ED49533482E}
+		{A5051881-D65D-4FB7-9E9C-D10FF48E54E1} = {B236C0BC-2FEF-4F68-8EE3-A6281924D00F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D008587-73AC-49F3-A485-00D80DA2B10D}
