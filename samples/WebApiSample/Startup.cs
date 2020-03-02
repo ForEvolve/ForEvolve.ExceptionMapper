@@ -31,6 +31,13 @@ namespace WebApiSample
                     })
                     .Map<MyUnauthorizedException>(map => map.ToStatusCode(401))
                     .Map<GoneException>(map => map.ToStatusCode(410))
+                    .Map<NotSupportedException>(map => map.To(context =>
+                    {
+                        context.HttpContext.Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
+                        context.Result = new ExceptionHandledResult(context.Error);
+                        context.HttpContext.Response.WriteAsync("{\"title\":\"This operation is not supported at the moment!\"}");
+                        return Task.CompletedTask;
+                    }, ForEvolve.ExceptionMapper.FluentMapper.FluentHandlerStrategy.Append))
                 )
                 .AddControllers()
             ;
