@@ -22,10 +22,14 @@ namespace WebApiSample
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddExceptionMapper(builder => builder.MapCommonExceptions(options =>
-                {
-                    options.FallbackStrategy = FallbackStrategy.Handle;
-                }))
+                .AddExceptionMapper(builder => builder
+                    .MapCommonExceptions(options =>
+                    {
+                        options.FallbackStrategy = FallbackStrategy.Handle;
+                    })
+                    .Map<MyUnauthorizedException>(map => map.ToStatusCode(401))
+                    .Map<GoneException>(map => map.ToStatusCode(410))
+                )
                 .AddControllers()
             ;
         }
@@ -55,7 +59,9 @@ namespace WebApiSample
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/InternalServerError\",");
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/NotImplemented\",");
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/MyNotFoundException\",");
-                    await context.Response.WriteAsync($"\"{baseUri}/Routing/Exception\"");
+                    await context.Response.WriteAsync($"\"{baseUri}/Routing/Exception\",");
+                    await context.Response.WriteAsync($"\"{baseUri}/Routing/MyUnauthorizedException\",");
+                    await context.Response.WriteAsync($"\"{baseUri}/Routing/GoneException\"");
                     await context.Response.WriteAsync("],");
                     await context.Response.WriteAsync("\"mvc\":[");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/NotFound\",");
@@ -63,7 +69,9 @@ namespace WebApiSample
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/InternalServerError\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/NotImplemented\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/MyNotFoundException\",");
-                    await context.Response.WriteAsync($"\"{baseUri}/mvc/Exception\"");
+                    await context.Response.WriteAsync($"\"{baseUri}/mvc/Exception\",");
+                    await context.Response.WriteAsync($"\"{baseUri}/mvc/MyUnauthorizedException\",");
+                    await context.Response.WriteAsync($"\"{baseUri}/mvc/GoneException\"");
                     await context.Response.WriteAsync("]");
                     await context.Response.WriteAsync("}");
                 });
@@ -73,6 +81,8 @@ namespace WebApiSample
                 endpoints.MapGet("/Routing/NotImplemented", context => throw new NotImplementedException());
                 endpoints.MapGet("/Routing/MyNotFoundException", context => throw new MyNotFoundException());
                 endpoints.MapGet("/Routing/Exception", context => throw new Exception());
+                endpoints.MapGet("/Routing/MyUnauthorizedException", context => throw new MyUnauthorizedException());
+                endpoints.MapGet("/Routing/GoneException", context => throw new GoneException());
             });
         }
     }
@@ -99,11 +109,24 @@ namespace WebApiSample
 
         [HttpGet("Exception")]
         public IActionResult Exception() => throw new Exception();
+
+        [HttpGet("MyUnauthorizedException")]
+        public IActionResult MyUnauthorizedException() => throw new MyUnauthorizedException();
+
+        [HttpGet("GoneException")]
+        public IActionResult GoneException() => throw new GoneException();
 #pragma warning restore IDE0022 // Use block body for methods
     }
 
     public class MyNotFoundException : NotFoundException
     {
+    }
 
+    public class MyUnauthorizedException : Exception
+    {
+    }
+
+    public class GoneException : Exception
+    {
     }
 }
