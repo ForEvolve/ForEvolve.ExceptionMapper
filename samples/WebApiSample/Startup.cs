@@ -26,7 +26,7 @@ namespace WebApiSample
                     .AddExceptionHandler<ImATeapotExceptionHandler>()
                     .MapCommonExceptions(options =>
                     {
-                        options.FallbackStrategy = FallbackStrategy.Handle;
+                        options.Strategy = FallbackStrategy.Handle;
                     })
                     .Map<MyUnauthorizedException>(map => map.ToStatusCode(401))
                     .Map<GoneException>(map => map.ToStatusCode(410))

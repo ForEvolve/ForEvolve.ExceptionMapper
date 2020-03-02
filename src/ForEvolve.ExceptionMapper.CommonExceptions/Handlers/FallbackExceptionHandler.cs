@@ -9,15 +9,15 @@ namespace ForEvolve.ExceptionMapper.Handlers
     {
         public int Order => HandlerOrder.FallbackOrder;
 
-        private readonly ExceptionFiltersOptions _options;
-        public FallbackExceptionHandler(IOptionsMonitor<ExceptionFiltersOptions> options)
+        private readonly FallbackExceptionHandlerOptions _options;
+        public FallbackExceptionHandler(IOptionsMonitor<FallbackExceptionHandlerOptions> options)
         {
             _options = options.CurrentValue;
         }
 
         public Task<bool> KnowHowToHandleAsync(Exception exception)
         {
-            if (_options.FallbackStrategy == FallbackStrategy.Handle)
+            if (_options.Strategy == FallbackStrategy.Handle)
             {
                 return Task.FromResult(true);
             }
@@ -26,7 +26,7 @@ namespace ForEvolve.ExceptionMapper.Handlers
 
         public Task ExecuteAsync(ExceptionHandlingContext context)
         {
-            if (_options.FallbackStrategy == FallbackStrategy.Handle)
+            if (_options.Strategy == FallbackStrategy.Handle)
             {
                 if (!context.Result.ExceptionHandled)
                 {

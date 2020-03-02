@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// Registers all <see cref="IExceptionHandler"/> found in the assembly <see cref="ForEvolve.ExceptionMapper"/>
         /// with singleton lifetime.
         /// </summary>
-        public static IExceptionMappingBuilder MapCommonExceptions(this IExceptionMappingBuilder builder, Action<ExceptionFiltersOptions> setup = null)
+        public static IExceptionMappingBuilder MapCommonExceptions(this IExceptionMappingBuilder builder, Action<FallbackExceptionHandlerOptions> setup = null)
         {
             if (setup != null) { builder.Services.Configure(setup); }
             return builder.ScanHandlersFrom(

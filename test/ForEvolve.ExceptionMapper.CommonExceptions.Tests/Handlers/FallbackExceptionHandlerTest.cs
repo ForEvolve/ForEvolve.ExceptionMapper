@@ -12,14 +12,14 @@ namespace ForEvolve.ExceptionMapper.Handlers
 {
     public class FallbackExceptionHandlerTest
     {
-        private readonly ExceptionFiltersOptions _options;
-        private readonly Mock<IOptionsMonitor<ExceptionFiltersOptions>> _optionsMonitorMock;
+        private readonly FallbackExceptionHandlerOptions _options;
+        private readonly Mock<IOptionsMonitor<FallbackExceptionHandlerOptions>> _optionsMonitorMock;
         private readonly FallbackExceptionHandler sut;
 
         public FallbackExceptionHandlerTest()
         {
-            _options = new ExceptionFiltersOptions();
-            _optionsMonitorMock = new Mock<IOptionsMonitor<ExceptionFiltersOptions>>();
+            _options = new FallbackExceptionHandlerOptions();
+            _optionsMonitorMock = new Mock<IOptionsMonitor<FallbackExceptionHandlerOptions>>();
             _optionsMonitorMock.Setup(x => x.CurrentValue).Returns(_options);
             sut = new FallbackExceptionHandler(_optionsMonitorMock.Object);
         }
@@ -38,7 +38,7 @@ namespace ForEvolve.ExceptionMapper.Handlers
             [Fact]
             public async Task Should_return_true_when_FallbackStrategy_equals_Handle()
             {
-                _options.FallbackStrategy = FallbackStrategy.Handle;
+                _options.Strategy = FallbackStrategy.Handle;
                 var result = await sut.KnowHowToHandleAsync(new Exception());
                 Assert.True(result);
             }
@@ -46,7 +46,7 @@ namespace ForEvolve.ExceptionMapper.Handlers
             [Fact]
             public async Task Should_return_false_when_FallbackStrategy_equals_Ignore()
             {
-                _options.FallbackStrategy = FallbackStrategy.Ignore;
+                _options.Strategy = FallbackStrategy.Ignore;
                 var result = await sut.KnowHowToHandleAsync(new Exception());
                 Assert.False(result);
             }
@@ -70,7 +70,7 @@ namespace ForEvolve.ExceptionMapper.Handlers
             [Fact]
             public async Task Should_handle_the_exception_when_FallbackStrategy_equals_Handle()
             {
-                _options.FallbackStrategy = FallbackStrategy.Handle;
+                _options.Strategy = FallbackStrategy.Handle;
                 await sut.ExecuteAsync(_context);
                 Assert.IsType<ExceptionHandledResult>(_context.Result);
             }
@@ -78,7 +78,7 @@ namespace ForEvolve.ExceptionMapper.Handlers
             [Fact]
             public async Task Should_do_nothing_when_FallbackStrategy_equals_Ignore()
             {
-                _options.FallbackStrategy = FallbackStrategy.Ignore;
+                _options.Strategy = FallbackStrategy.Ignore;
                 await sut.ExecuteAsync(_context);
                 Assert.Same(_initialResult, _context.Result);
             }
