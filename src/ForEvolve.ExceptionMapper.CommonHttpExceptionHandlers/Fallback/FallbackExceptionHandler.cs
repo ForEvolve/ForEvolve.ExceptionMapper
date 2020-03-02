@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
 
-namespace ForEvolve.ExceptionMapper.Handlers
+namespace ForEvolve.ExceptionMapper.Handlers.Fallback
 {
     public class FallbackExceptionHandler : IExceptionHandler
     {

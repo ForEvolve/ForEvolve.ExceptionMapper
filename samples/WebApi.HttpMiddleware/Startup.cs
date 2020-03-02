@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using ForEvolve.ExceptionMapper;
+using ForEvolve.ExceptionMapper.Handlers.Fallback;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,7 +27,8 @@ namespace WebApi.HttpMiddleware
                 .AddExceptionMapper(builder => builder
                     .AddExceptionHandler<ImATeapotExceptionHandler>()
                     .AddExceptionHandler<MyForbiddenExceptionHandler>()
-                    .MapCommonHttpExceptions(options =>
+                    .MapCommonHttpExceptions()
+                    .MapHttpFallback(options =>
                     {
                         options.Strategy = FallbackStrategy.Handle;
                     })
@@ -69,7 +71,7 @@ namespace WebApi.HttpMiddleware
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/InternalServerError\",");
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/NotImplemented\",");
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/MyNotFoundException\",");
-                    await context.Response.WriteAsync($"\"{baseUri}/Routing/Exception\",");
+                    await context.Response.WriteAsync($"\"{baseUri}/Routing/Fallback\",");
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/MyUnauthorizedException\",");
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/GoneException\",");
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/ImATeapotException\",");
@@ -81,7 +83,7 @@ namespace WebApi.HttpMiddleware
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/InternalServerError\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/NotImplemented\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/MyNotFoundException\",");
-                    await context.Response.WriteAsync($"\"{baseUri}/mvc/Exception\",");
+                    await context.Response.WriteAsync($"\"{baseUri}/mvc/Fallback\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/MyUnauthorizedException\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/GoneException\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/ImATeapotException\",");
@@ -94,7 +96,7 @@ namespace WebApi.HttpMiddleware
                 endpoints.MapGet("/Routing/InternalServerError", context => throw new InternalServerErrorException(new Exception()));
                 endpoints.MapGet("/Routing/NotImplemented", context => throw new NotImplementedException());
                 endpoints.MapGet("/Routing/MyNotFoundException", context => throw new MyNotFoundException());
-                endpoints.MapGet("/Routing/Exception", context => throw new Exception());
+                endpoints.MapGet("/Routing/Fallback", context => throw new Exception());
                 endpoints.MapGet("/Routing/MyUnauthorizedException", context => throw new MyUnauthorizedException());
                 endpoints.MapGet("/Routing/GoneException", context => throw new GoneException());
                 endpoints.MapGet("/Routing/ImATeapotException", context => throw new ImATeapotException());

@@ -24,8 +24,8 @@ namespace WebApi.Shared
         [HttpGet("MyNotFoundException")]
         public IActionResult MyNotFoundException() => throw new MyNotFoundException();
 
-        [HttpGet("Exception")]
-        public IActionResult Exception() => throw new Exception();
+        [HttpGet("Fallback")]
+        public IActionResult Fallback() => throw new Exception();
 
         [HttpGet("MyUnauthorizedException")]
         public IActionResult MyUnauthorizedException() => throw new MyUnauthorizedException();

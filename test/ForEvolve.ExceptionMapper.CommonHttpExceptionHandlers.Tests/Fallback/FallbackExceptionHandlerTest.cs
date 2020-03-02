@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ForEvolve.ExceptionMapper.Handlers
+namespace ForEvolve.ExceptionMapper.Handlers.Fallback
 {
     public class FallbackExceptionHandlerTest
     {

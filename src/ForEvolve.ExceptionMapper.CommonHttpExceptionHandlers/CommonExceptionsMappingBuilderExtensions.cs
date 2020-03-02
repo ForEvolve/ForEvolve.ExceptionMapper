@@ -1,4 +1,6 @@
 ﻿using ForEvolve.ExceptionMapper;
+using ForEvolve.ExceptionMapper.Handlers;
+using ForEvolve.ExceptionMapper.Handlers.Fallback;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +15,24 @@ namespace Microsoft.Extensions.DependencyInjection
         /// Registers all <see cref="IExceptionHandler"/> found in the assembly <see cref="ForEvolve.ExceptionMapper"/>
         /// with singleton lifetime.
         /// </summary>
-        public static IExceptionMappingBuilder MapCommonHttpExceptionHandlers(this IExceptionMappingBuilder builder, Action<FallbackExceptionHandlerOptions> setup = null)
+        public static IExceptionMappingBuilder MapCommonHttpExceptions(this IExceptionMappingBuilder builder)
         {
-            if (setup != null) { builder.Services.Configure(setup); }
             return builder.ScanHandlersFrom(
-                s => s.FromAssembliesOf(typeof(CommonHttpExceptionHandlersMappingBuilderExtensions)),
+                s => s
+                    .FromAssembliesOf(typeof(CommonHttpExceptionHandlersMappingBuilderExtensions))
+                    .AddClasses(x => x.InExactNamespaceOf<ConflictExceptionHandler>()),
                 ServiceLifetime.Singleton
             );
+        }
+
+        /// <summary>
+        /// Registers all <see cref="IExceptionHandler"/> found in the assembly <see cref="ForEvolve.ExceptionMapper"/>
+        /// with singleton lifetime.
+        /// </summary>
+        public static IExceptionMappingBuilder MapHttpFallback(this IExceptionMappingBuilder builder, Action<FallbackExceptionHandlerOptions> setup = null)
+        {
+            if (setup != null) { builder.Services.Configure(setup); }
+            return builder.AddExceptionHandler<FallbackExceptionHandler>();
         }
     }
 }

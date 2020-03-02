@@ -1,4 +1,4 @@
-﻿namespace ForEvolve.ExceptionMapper
+﻿namespace ForEvolve.ExceptionMapper.Handlers.Fallback
 {
     public enum FallbackStrategy
     {

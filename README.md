@@ -247,7 +247,7 @@ Under the hood, the `Map<TException>()` extension creates a `FluentExceptionHand
 
 Here is a list of what I want to do:
 
--   [ ] Take the fallback out of `MapCommonHttpExceptions()` into its own extension, like `MapHttpFallback()`
+-   [x] Take the fallback out of `MapCommonHttpExceptions()` into its own extension, like `MapHttpFallback()`
 -   [ ] Create a MVC/Razor Pages filter that could replace the middleware or work in conjunction of it, adding more control over the process for MVC applications.
 -   [ ] Add one or more serialization handlers that at least support JSON serialization and that leverage `ProblemDetailsFactory` to create `ProblemDetails` objects.
 -   [ ] Write tests that covers `ForEvolve.ExceptionMapper.FluentMapper` and other missing pieces
