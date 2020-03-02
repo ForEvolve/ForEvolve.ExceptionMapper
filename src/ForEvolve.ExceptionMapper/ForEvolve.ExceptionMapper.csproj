@@ -5,12 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ForEvolve.Core" Version="1.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1" />
-    <PackageReference Include="Scrutor" Version="3.2.0" />
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper.CommonExceptions\ForEvolve.ExceptionMapper.CommonExceptions.csproj" />
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper.Core\ForEvolve.ExceptionMapper.Core.csproj" />
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper.FluentMapper\ForEvolve.ExceptionMapper.FluentMapper.csproj" />
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper.HttpMiddleware\ForEvolve.ExceptionMapper.HttpMiddleware.csproj" />
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper.Mvc\ForEvolve.ExceptionMapper.Mvc.csproj" />
   </ItemGroup>
 
 </Project>

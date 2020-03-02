@@ -243,7 +243,7 @@ Under the hood, the `Map<TException>()` extension creates a `FluentExceptionHand
 
 -   Initial release
 
-# Future
+# Future/To do
 
 Here is a list of what I want to do:
 
@@ -256,7 +256,7 @@ Here is a list of what I want to do:
     -   [ ] Rename `ForEvolve.ExceptionMapper` to `ForEvolve.ExceptionMapper.Core`.
     -   [ ] Create a new `ForEvolve.ExceptionMapper` that includes all packages.
     -   [ ] `ForEvolve.ExceptionMapper.CommonExceptions` could be renamed `ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers` and the exceptions could be moved in another assembly, like in `ForEvolve.ExceptionMapper.Core` or a new `ForEvolve.ExceptionMapper.CommonExceptions` project. This would allow reusing the exceptions for both Http/Middleware and Mvc/Razor Page scenarios, without the need to load every handlers if not needed.
--   [ ] ...
+-   [ ] Write tests that covers `ForEvolve.ExceptionMapper.FluentMapper`
 
 # Found a bug or have a feature request?
 

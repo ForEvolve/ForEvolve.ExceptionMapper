@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ForEvolve.ExceptionMapper\ForEvolve.ExceptionMapper.csproj" />
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper.Core\ForEvolve.ExceptionMapper.Core.csproj" />
   </ItemGroup>
 
 </Project>
