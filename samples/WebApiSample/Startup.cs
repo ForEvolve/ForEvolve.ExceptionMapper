@@ -24,6 +24,7 @@ namespace WebApiSample
             services
                 .AddExceptionMapper(builder => builder
                     .AddExceptionHandler<ImATeapotExceptionHandler>()
+                    .AddExceptionHandler<MyForbiddenExceptionHandler>()
                     .MapCommonExceptions(options =>
                     {
                         options.Strategy = FallbackStrategy.Handle;
@@ -63,7 +64,8 @@ namespace WebApiSample
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/Exception\",");
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/MyUnauthorizedException\",");
                     await context.Response.WriteAsync($"\"{baseUri}/Routing/GoneException\",");
-                    await context.Response.WriteAsync($"\"{baseUri}/Routing/ImATeapotException\"");
+                    await context.Response.WriteAsync($"\"{baseUri}/Routing/ImATeapotException\",");
+                    await context.Response.WriteAsync($"\"{baseUri}/Routing/MyForbiddenException\"");
                     await context.Response.WriteAsync("],");
                     await context.Response.WriteAsync("\"mvc\":[");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/NotFound\",");
@@ -74,7 +76,8 @@ namespace WebApiSample
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/Exception\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/MyUnauthorizedException\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/GoneException\",");
-                    await context.Response.WriteAsync($"\"{baseUri}/mvc/ImATeapotException\"");
+                    await context.Response.WriteAsync($"\"{baseUri}/mvc/ImATeapotException\",");
+                    await context.Response.WriteAsync($"\"{baseUri}/mvc/MyForbiddenException\"");
                     await context.Response.WriteAsync("]");
                     await context.Response.WriteAsync("}");
                 });
@@ -87,6 +90,7 @@ namespace WebApiSample
                 endpoints.MapGet("/Routing/MyUnauthorizedException", context => throw new MyUnauthorizedException());
                 endpoints.MapGet("/Routing/GoneException", context => throw new GoneException());
                 endpoints.MapGet("/Routing/ImATeapotException", context => throw new ImATeapotException());
+                endpoints.MapGet("/Routing/MyForbiddenException", context => throw new MyForbiddenException());
             });
         }
     }
@@ -122,6 +126,9 @@ namespace WebApiSample
 
         [HttpGet("ImATeapotException")]
         public IActionResult ImATeapotException() => throw new ImATeapotException();
+
+        [HttpGet("MyForbiddenException")]
+        public IActionResult MyForbiddenException() => throw new MyForbiddenException();
 #pragma warning restore IDE0022 // Use block body for methods
     }
 
@@ -140,6 +147,16 @@ namespace WebApiSample
     public class ImATeapotException : Exception
     {
 
+    }
+
+    public class MyForbiddenException : Exception
+    {
+
+    }
+
+    public class MyForbiddenExceptionHandler : ExceptionHandler<MyForbiddenException>
+    {
+        public override int StatusCode => StatusCodes.Status403Forbidden;
     }
 
     public class ImATeapotExceptionHandler : IExceptionHandler
