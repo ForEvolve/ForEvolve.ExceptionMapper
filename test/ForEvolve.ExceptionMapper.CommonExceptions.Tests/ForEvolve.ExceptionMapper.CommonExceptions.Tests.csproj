@@ -1,4 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>ForEvolve.ExceptionMapper.CommonExceptions</RootNamespace>
+  </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>ForEvolve.ExceptionMapper</RootNamespace>
   </PropertyGroup>

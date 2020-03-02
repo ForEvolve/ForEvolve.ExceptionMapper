@@ -250,9 +250,9 @@ Here is a list of what I want to do:
 -   [ ] Create a MVC/Razor Pages filter that could replace the middleware or work in conjunction of it, adding more control over the process for MVC applications.
     -   [x] Create a `ForEvolve.ExceptionMapper.Mvc` project that contains MVC/Razor Pages filter/code.
 -   [ ] Add one or more serialization handlers that at least support JSON serialization and that leverage `ProblemDetailsFactory` to create `ProblemDetails` objects.
--   [ ] Samples
-    -   [ ] Rename `WebApiSample` to `WebApi.HttpMiddleware`.
-    -   [ ] Create a new project name `WebApi.Mvc` that uses the `ForEvolve.ExceptionMapper.Mvc` filter instead of `ForEvolve.ExceptionMapper.HttpMiddleware`.
+-   [x] Samples
+    -   [x] Rename `WebApiSample` to `WebApi.HttpMiddleware`.
+    -   [x] Create a new project name `WebApi.Mvc` that uses the `ForEvolve.ExceptionMapper.Mvc` filter instead of `ForEvolve.ExceptionMapper.HttpMiddleware`.
 -   [ ] Rearrange assemblies:
     -   [x] Move Http/Middleware out of `ForEvolve.ExceptionMapper`, into `ForEvolve.ExceptionMapper.HttpMiddleware` assembly.
     -   [x] Move the `Scrutor` dependency out of `ForEvolve.ExceptionMapper` to `ForEvolve.ExceptionMapper.FluentMapper` or create a new assembly for that (`ForEvolve.ExceptionMapper.Scrutor`).
