@@ -1,8 +1,8 @@
 <Project>
 
     <PropertyGroup>
-        <Product>ForEvolve Framework</Product>
-        <RepositoryUrl>https://github.com/ForEvolve/ForEvolve-Framework</RepositoryUrl>
+        <Product>ForEvolve Exception Mapper</Product>
+        <RepositoryUrl>https://github.com/ForEvolve/ForEvolve.ExceptionMapper</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <LangVersion>Latest</LangVersion>
