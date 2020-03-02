@@ -10,16 +10,6 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AspNetExceptionMappingBuilderExtensions
     {
-        /// <summary>
-        /// Registers all <see cref="IExceptionHandler"/> found in the assembly <see cref="ForEvolve.ExceptionMapper"/>
-        /// with singleton lifetime.
-        /// </summary>
-        public static IExceptionMappingBuilder AddDefaultHandlers(this IExceptionMappingBuilder builder, Action<ExceptionFiltersOptions> setup = null)
-        {
-            if (setup != null) { builder.Services.Configure(setup); }
-            return builder.ScanHandlersFrom(s => s.FromAssemblyOf<IExceptionHandler>(), ServiceLifetime.Singleton);
-        }
-
         /// <typeparam name="T">The type in which assembly that should be scanned.</typeparam>
         public static IExceptionMappingBuilder ScanHandlersFromAssemblyOf<T>(this IExceptionMappingBuilder builder, ServiceLifetime lifetime = ServiceLifetime.Singleton)
         {

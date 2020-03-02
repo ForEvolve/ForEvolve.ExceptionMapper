@@ -22,7 +22,7 @@ namespace WebApiSample
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddExceptionMapper(builder => builder.AddDefaultHandlers(options =>
+                .AddExceptionMapper(builder => builder.MapCommonExceptions(options =>
                 {
                     options.FallbackStrategy = FallbackStrategy.Handle;
                 }))
