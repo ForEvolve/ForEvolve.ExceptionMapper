@@ -25,7 +25,7 @@ namespace WebApi.HttpMiddleware
                 .AddExceptionMapper(builder => builder
                     .AddExceptionHandler<ImATeapotExceptionHandler>()
                     .AddExceptionHandler<MyForbiddenExceptionHandler>()
-                    .MapCommonExceptions(options =>
+                    .MapCommonHttpExceptionHandlers(options =>
                     {
                         options.Strategy = FallbackStrategy.Handle;
                     })

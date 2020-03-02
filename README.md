@@ -184,7 +184,7 @@ To use the prebuilt handlers, you have to:
 
 ```csharp
 services.AddExceptionMapper(builder => builder
-    .MapCommonExceptions()
+    .MapCommonHttpExceptionHandlers()
 );
 ```
 
@@ -192,7 +192,7 @@ You can also configure the `FallbackExceptionHandlerOptions` during the registra
 
 ```csharp
 services.AddExceptionMapper(builder => builder
-    .MapCommonExceptions(options =>
+    .MapCommonHttpExceptionHandlers(options =>
     {
         options.Strategy = FallbackStrategy.Handle;
     })
@@ -228,7 +228,7 @@ For example, we could do the following:
 
 ```csharp
 services.AddExceptionMapper(builder => builder
-    .MapCommonExceptions()
+    .MapCommonHttpExceptionHandlers()
     .AddExceptionHandler<ImATeapotExceptionHandler>()
     .Map<MyUnauthorizedException>(map => map.ToStatusCode(401))
     .Map<GoneException>(map => map.ToStatusCode(410))
