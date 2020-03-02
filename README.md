@@ -28,7 +28,21 @@ The prerelease packages are hosted at [feedz.io](feedz.io), thanks to their "Ope
 
 The packages are published on [NuGet.org](NuGet.org).
 
+[![NuGet.org](https://img.shields.io/nuget/vpre/ForEvolve.ExceptionMapper)](https://www.nuget.org/packages/ForEvolve.ExceptionMapper/)
+[![NuGet.org](https://img.shields.io/nuget/vpre/ForEvolve.ExceptionMapper.CommonExceptions)](https://www.nuget.org/packages/ForEvolve.ExceptionMapper.CommonExceptions/)
+[![NuGet.org](https://img.shields.io/nuget/vpre/ForEvolve.ExceptionMapper.FluentMapper)](https://www.nuget.org/packages/ForEvolve.ExceptionMapper.FluentMapper/)
+
 > Nothing released yet...
+
+## How to install
+
+Just load one or more of these NuGet packages:
+
+```bash
+dotnet add package ForEvolve.ExceptionMapper
+dotnet add package ForEvolve.ExceptionMapper.CommonExceptions
+dotnet add package ForEvolve.ExceptionMapper.FluentMapper
+```
 
 # ForEvolve.ExceptionMapper
 
@@ -164,7 +178,7 @@ This package implements different common exceptions and their handlers, like:
 -   `500 InternalServerError` (`ForEvolve.ExceptionMapper.InternalServerErrorException`)
 -   `501 NotImplemented` (`System.NotImplementedException`)
 
-It also comes with a fallback handler that convert unhandled exceptions to `500 InternalServerError`. This is an opt-in feature, configured by the `FallbackExceptionHandlerOptions`. This handler can be useful, but be careful of what you share about your exceptions in production, this could help a malicious user acquire information about your server.
+It also comes with a fallback handler that convert unhandled exceptions to `500 InternalServerError`. This is an opt-in feature, configured by the `FallbackExceptionHandlerOptions`. That handler can be useful, but be careful of what you share about your exceptions in production, this could help a malicious user acquire information about your server.
 
 To use the prebuilt handlers, you have to:
 
@@ -174,7 +188,7 @@ services.AddExceptionMapper(builder => builder
 );
 ```
 
-You can also configure teh `FallbackExceptionHandlerOptions` during the registration or like any other options:
+You can also configure the `FallbackExceptionHandlerOptions` during the registration or like any other options:
 
 ```csharp
 services.AddExceptionMapper(builder => builder
@@ -192,4 +206,66 @@ services.Configure<FallbackExceptionHandlerOptions>(options =>
 
 # ForEvolve.ExceptionMapper.FluentMapper
 
-...
+This package contains utilities that can be used to program exception's mapping in the Startup class, without creating any new type.
+
+For example, to map a `MyUnauthorizedException` to a status code 401, we could do the following:
+
+```csharp
+services.AddExceptionMapper(builder => builder
+    .Map<MyUnauthorizedException>(map => map.ToStatusCode(401))
+);
+```
+
+The `MyUnauthorizedException` looks as simple as this:
+
+```csharp
+public class MyUnauthorizedException : Exception { }
+```
+
+The `Map<TException>()` extension has been designed to be fluent, so it returns an `IExceptionMappingBuilder`, allowing us to chain multiple calls. We can also mix and match with any other configuration helpers as they all do that.
+
+For example, we could do the following:
+
+```csharp
+services.AddExceptionMapper(builder => builder
+    .MapCommonExceptions()
+    .AddExceptionHandler<ImATeapotExceptionHandler>()
+    .Map<MyUnauthorizedException>(map => map.ToStatusCode(401))
+    .Map<GoneException>(map => map.ToStatusCode(410))
+);
+```
+
+Under the hood, the `Map<TException>()` extension creates a `FluentExceptionHandler<TException>` that is configurable. You can append, prepend or replace handler actions.
+
+# Release notes
+
+## 1.0.0
+
+-   Initial release
+
+# Future
+
+Here is a list of what I want to do:
+
+-   [ ] Create a MVC/Razor Pages filter that could replace the middleware or work in conjunction of it, adding more control over the process for MVC applications.
+-   [ ] Add one or more serialization handlers that at least support JSON serialization and that leverage `ProblemDetailsFactory` to create `ProblemDetails` objects.
+-   [ ] Create a `ForEvolve.ExceptionMapper.Mvc` project that contains MVC/Razor Pages filter/code.
+-   [ ] Rearrange assemblies:
+    -   [ ] Move Http/Middleware out of `ForEvolve.ExceptionMapper`, into `ForEvolve.ExceptionMapper.Http` assembly (final name TBD).
+    -   [ ] Move the `Scrutor` dependency from `ForEvolve.ExceptionMapper` to `ForEvolve.ExceptionMapper.FluentMapper` or create a new assembly for that (`ForEvolve.ExceptionMapper.Scanner`, `ForEvolve.ExceptionMapper.AssemblyScanner`, `ForEvolve.ExceptionMapper.Scrutor`, or something else).
+    -   [ ] Rename `ForEvolve.ExceptionMapper` to `ForEvolve.ExceptionMapper.Core`.
+    -   [ ] Create a new `ForEvolve.ExceptionMapper` that includes all packages.
+    -   [ ] `ForEvolve.ExceptionMapper.CommonExceptions` could be renamed `ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers` and the exceptions could be moved in another assembly, like in `ForEvolve.ExceptionMapper.Core` or a new `ForEvolve.ExceptionMapper.CommonExceptions` project. This would allow reusing the exceptions for both Http/Middleware and Mvc/Razor Page scenarios, without the need to load every handlers if not needed.
+-   [ ] ...
+
+# Found a bug or have a feature request?
+
+Please open an issue and be as clear as possible; see _How to contribute?_ for more information.
+
+# How to contribute?
+
+If you would like to contribute to the project, first, thank you for your interest, and please read [Contributing to ForEvolve open source projects](https://github.com/ForEvolve/ForEvolve.DependencyInjection/tree/master/CONTRIBUTING.md) for more information.
+
+## Contributor Covenant Code of Conduct
+
+Also, please read the [Contributor Covenant Code of Conduct](https://github.com/ForEvolve/ForEvolve.DependencyInjection/tree/master/CODE_OF_CONDUCT.md) that applies to all ForEvolve repositories.
