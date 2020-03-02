@@ -11,16 +11,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F5AE538B-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForEvolve.ExceptionMapper.Tests", "test\ForEvolve.ExceptionMapper.Tests\ForEvolve.ExceptionMapper.Tests.csproj", "{241913CB-0426-4709-A3CF-00665C400DE5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiSample", "test\WebApiSample\WebApiSample.csproj", "{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6EB72298-998C-41BA-8FE1-E3FDD71E5870}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForEvolve.ExceptionMapper.CommonExceptions", "src\ForEvolve.ExceptionMapper.CommonExceptions\ForEvolve.ExceptionMapper.CommonExceptions.csproj", "{E3E588AC-0B8B-4007-8680-95DBBC33457A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForEvolve.ExceptionMapper.CommonExceptions", "src\ForEvolve.ExceptionMapper.CommonExceptions\ForEvolve.ExceptionMapper.CommonExceptions.csproj", "{E3E588AC-0B8B-4007-8680-95DBBC33457A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForEvolve.ExceptionMapper.CommonExceptions.Tests", "test\ForEvolve.ExceptionMapper.CommonExceptions.Tests\ForEvolve.ExceptionMapper.CommonExceptions.Tests.csproj", "{00B82E0C-D20C-480B-8F66-9E05CA21D983}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForEvolve.ExceptionMapper.CommonExceptions.Tests", "test\ForEvolve.ExceptionMapper.CommonExceptions.Tests\ForEvolve.ExceptionMapper.CommonExceptions.Tests.csproj", "{00B82E0C-D20C-480B-8F66-9E05CA21D983}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{B236C0BC-2FEF-4F68-8EE3-A6281924D00F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiSample", "samples\WebApiSample\WebApiSample.csproj", "{1242748E-63D9-4CB0-85EB-BF803FCD78A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,18 +58,6 @@ Global
 		{241913CB-0426-4709-A3CF-00665C400DE5}.Release|x64.Build.0 = Release|Any CPU
 		{241913CB-0426-4709-A3CF-00665C400DE5}.Release|x86.ActiveCfg = Release|Any CPU
 		{241913CB-0426-4709-A3CF-00665C400DE5}.Release|x86.Build.0 = Release|Any CPU
-		{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}.Debug|x64.Build.0 = Debug|Any CPU
-		{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}.Debug|x86.Build.0 = Debug|Any CPU
-		{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}.Release|x64.ActiveCfg = Release|Any CPU
-		{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}.Release|x64.Build.0 = Release|Any CPU
-		{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}.Release|x86.ActiveCfg = Release|Any CPU
-		{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E}.Release|x86.Build.0 = Release|Any CPU
 		{E3E588AC-0B8B-4007-8680-95DBBC33457A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E3E588AC-0B8B-4007-8680-95DBBC33457A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3E588AC-0B8B-4007-8680-95DBBC33457A}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -92,6 +82,18 @@ Global
 		{00B82E0C-D20C-480B-8F66-9E05CA21D983}.Release|x64.Build.0 = Release|Any CPU
 		{00B82E0C-D20C-480B-8F66-9E05CA21D983}.Release|x86.ActiveCfg = Release|Any CPU
 		{00B82E0C-D20C-480B-8F66-9E05CA21D983}.Release|x86.Build.0 = Release|Any CPU
+		{1242748E-63D9-4CB0-85EB-BF803FCD78A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1242748E-63D9-4CB0-85EB-BF803FCD78A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1242748E-63D9-4CB0-85EB-BF803FCD78A4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1242748E-63D9-4CB0-85EB-BF803FCD78A4}.Debug|x64.Build.0 = Debug|Any CPU
+		{1242748E-63D9-4CB0-85EB-BF803FCD78A4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1242748E-63D9-4CB0-85EB-BF803FCD78A4}.Debug|x86.Build.0 = Debug|Any CPU
+		{1242748E-63D9-4CB0-85EB-BF803FCD78A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1242748E-63D9-4CB0-85EB-BF803FCD78A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1242748E-63D9-4CB0-85EB-BF803FCD78A4}.Release|x64.ActiveCfg = Release|Any CPU
+		{1242748E-63D9-4CB0-85EB-BF803FCD78A4}.Release|x64.Build.0 = Release|Any CPU
+		{1242748E-63D9-4CB0-85EB-BF803FCD78A4}.Release|x86.ActiveCfg = Release|Any CPU
+		{1242748E-63D9-4CB0-85EB-BF803FCD78A4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,9 +101,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{06C42E2C-A4DB-4CA8-870E-EA84727DF28C} = {C2DD6A0D-F994-42A4-BAFF-1FB972850229}
 		{241913CB-0426-4709-A3CF-00665C400DE5} = {F5AE538B-E864-425E-959A-7ED49533482E}
-		{CAEA2ED8-F2E0-446F-A5AA-A00242786F4E} = {F5AE538B-E864-425E-959A-7ED49533482E}
 		{E3E588AC-0B8B-4007-8680-95DBBC33457A} = {C2DD6A0D-F994-42A4-BAFF-1FB972850229}
 		{00B82E0C-D20C-480B-8F66-9E05CA21D983} = {F5AE538B-E864-425E-959A-7ED49533482E}
+		{1242748E-63D9-4CB0-85EB-BF803FCD78A4} = {B236C0BC-2FEF-4F68-8EE3-A6281924D00F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D008587-73AC-49F3-A485-00D80DA2B10D}

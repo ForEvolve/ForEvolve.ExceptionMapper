@@ -6,10 +6,8 @@ namespace ForEvolve.ExceptionMapper
     public abstract class ExceptionHandler<TException> : IExceptionHandler
         where TException : Exception
     {
-        public const int DefaultOrder = 1;
-
         public abstract int StatusCode { get; }
-        public virtual int Order => DefaultOrder;
+        public virtual int Order => HandlerOrder.DefaultOrder;
 
         public virtual Task<bool> KnowHowToHandleAsync(Exception exception)
         {

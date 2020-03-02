@@ -7,8 +7,7 @@ namespace ForEvolve.ExceptionMapper.Handlers
 {
     public class FallbackExceptionHandler : IExceptionHandler
     {
-        public const int FallbackOrder = 50;
-        public int Order => FallbackOrder;
+        public int Order => HandlerOrder.FallbackOrder;
 
         private readonly ExceptionFiltersOptions _options;
         public FallbackExceptionHandler(IOptionsMonitor<ExceptionFiltersOptions> options)
@@ -37,7 +36,5 @@ namespace ForEvolve.ExceptionMapper.Handlers
             }
             return Task.CompletedTask;
         }
-
     }
-
 }
