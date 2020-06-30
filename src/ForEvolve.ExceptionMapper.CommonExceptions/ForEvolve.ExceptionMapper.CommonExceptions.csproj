@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ForEvolve.ExceptionMapper.Core\ForEvolve.ExceptionMapper.Core.csproj" />
-    <ProjectReference Include="..\ForEvolve.ExceptionMapper.Scrutor\ForEvolve.ExceptionMapper.Scrutor.csproj" />
   </ItemGroup>
   
 </Project>
