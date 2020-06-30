@@ -160,7 +160,7 @@ namespace ForEvolve.ExceptionMapper
                     )
                 },
                 {
-                    "Should sort handlers 'first in last out'",
+                    "Should sort handlers 'first in first out'",
                     new[] {
                         _handlerOrder1Version1,
                         _handlerOrder2,
@@ -170,10 +170,10 @@ namespace ForEvolve.ExceptionMapper
                         _handlerOrder1Version3
                     },
                     orderedHandlers => Assert.Collection(orderedHandlers,
-                        handler => Assert.Same(_handlerOrder1Version3, handler),
-                        handler => Assert.Same(_handlerOrder1Version2, handler),
-                        handler => Assert.Same(_handlerOrder1, handler),
                         handler => Assert.Same(_handlerOrder1Version1, handler),
+                        handler => Assert.Same(_handlerOrder1, handler),
+                        handler => Assert.Same(_handlerOrder1Version2, handler),
+                        handler => Assert.Same(_handlerOrder1Version3, handler),
                         handler => Assert.Same(_handlerOrder2, handler),
                         handler => Assert.Same(_handlerOrder3, handler)
                     )

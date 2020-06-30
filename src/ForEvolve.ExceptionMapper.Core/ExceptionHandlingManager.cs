@@ -16,7 +16,6 @@ namespace ForEvolve.ExceptionMapper
             if (handlers == null) { throw new ArgumentNullException(nameof(handlers)); }
 
             _handlers = handlers
-                .Reverse()
                 .OrderBy(x => x.Order)
                 .ToList();
         }
