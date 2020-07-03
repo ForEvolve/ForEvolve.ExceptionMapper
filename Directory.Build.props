@@ -1,0 +1,11 @@
+<Project>
+
+    <PropertyGroup>
+        <Product>ForEvolve Exception Mapper</Product>
+        <RepositoryUrl>https://github.com/ForEvolve/ForEvolve.ExceptionMapper</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <LangVersion>Latest</LangVersion>
+    </PropertyGroup>
+
+</Project>

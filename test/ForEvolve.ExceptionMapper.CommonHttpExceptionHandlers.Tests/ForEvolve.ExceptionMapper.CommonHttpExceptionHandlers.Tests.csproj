@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers\ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers.csproj" />
+  </ItemGroup>
+
+</Project>

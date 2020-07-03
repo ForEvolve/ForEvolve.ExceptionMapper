@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>ForEvolve.ExceptionMapper.CommonExceptions</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>ForEvolve.ExceptionMapper</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ForEvolve.ExceptionMapper.CommonExceptions\ForEvolve.ExceptionMapper.CommonExceptions.csproj" />
+  </ItemGroup>
+
+</Project>

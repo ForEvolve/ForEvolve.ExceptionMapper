@@ -1,0 +1,29 @@
+﻿{
+  "profiles": {
+    "WebApi.HttpMiddleware (watch)": {
+      "executablePath": "dotnet.exe",
+      "workingDirectory": "$(ProjectDir)",
+      "commandLineArgs": "watch run",
+      "applicationUrl": "https://localhost:9327;http://localhost:9326",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "WebApi.HttpMiddleware": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:9327;http://localhost:9326",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "WebApi.HttpMiddleware (Production)": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:9327;http://localhost:9326",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
+    }
+  }
+}

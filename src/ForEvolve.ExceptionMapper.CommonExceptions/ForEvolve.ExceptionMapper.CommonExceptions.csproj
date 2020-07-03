@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>ForEvolve.ExceptionMapper</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper.Core\ForEvolve.ExceptionMapper.Core.csproj" />
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper.Scrutor\ForEvolve.ExceptionMapper.Scrutor.csproj" />
+  </ItemGroup>
+  
+</Project>

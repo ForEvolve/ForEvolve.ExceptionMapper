@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper.CommonExceptions\ForEvolve.ExceptionMapper.CommonExceptions.csproj" />
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers\ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers.csproj" />
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper.Core\ForEvolve.ExceptionMapper.Core.csproj" />
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper.FluentMapper\ForEvolve.ExceptionMapper.FluentMapper.csproj" />
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper.HttpMiddleware\ForEvolve.ExceptionMapper.HttpMiddleware.csproj" />
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper.Mvc\ForEvolve.ExceptionMapper.Mvc.csproj" />
+  </ItemGroup>
+
+</Project>
