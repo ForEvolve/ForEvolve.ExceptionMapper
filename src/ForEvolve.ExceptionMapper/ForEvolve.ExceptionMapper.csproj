@@ -10,7 +10,7 @@
     <ProjectReference Include="..\ForEvolve.ExceptionMapper.Core\ForEvolve.ExceptionMapper.Core.csproj" />
     <ProjectReference Include="..\ForEvolve.ExceptionMapper.FluentMapper\ForEvolve.ExceptionMapper.FluentMapper.csproj" />
     <ProjectReference Include="..\ForEvolve.ExceptionMapper.HttpMiddleware\ForEvolve.ExceptionMapper.HttpMiddleware.csproj" />
-    <ProjectReference Include="..\ForEvolve.ExceptionMapper.Mvc\ForEvolve.ExceptionMapper.Mvc.csproj" />
+    <!-- <ProjectReference Include="..\ForEvolve.ExceptionMapper.Mvc\ForEvolve.ExceptionMapper.Mvc.csproj" /> -->
   </ItemGroup>
 
 </Project>
