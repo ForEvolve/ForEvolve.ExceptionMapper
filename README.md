@@ -20,31 +20,32 @@ The packages follows _semantic versioning_. I use `Nerdbank.GitVersioning` to au
 Prerelease packages are packaged code not yet merged to `master`.
 The prerelease packages are hosted at [feedz.io](feedz.io), thanks to their "Open Source" subscription.
 
-[![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Fforevolve%2Fexception-mapper%2Fshield%2FForEvolve.ExceptionMapper%2Flatest&label=ForEvolve.ExceptionMapper)](https://f.feedz.io/forevolve/exception-mapper/packages/ForEvolve.ExceptionMapper/latest/download)
-[![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Fforevolve%2Fexception-mapper%2Fshield%2FForEvolve.ExceptionMapper.CommonExceptions%2Flatest&label=ForEvolve.ExceptionMapper.CommonExceptions)](https://f.feedz.io/forevolve/exception-mapper/packages/ForEvolve.ExceptionMapper.CommonExceptions/latest/download)
-[![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Fforevolve%2Fexception-mapper%2Fshield%2FForEvolve.ExceptionMapper.FluentMapper%2Flatest&label=ForEvolve.ExceptionMapper.FluentMapper)](https://f.feedz.io/forevolve/exception-mapper/packages/ForEvolve.ExceptionMapper.FluentMapper/latest/download)
-
 ### Released
 
-The packages are published on [NuGet.org](NuGet.org).
-
-[![NuGet.org](https://img.shields.io/nuget/vpre/ForEvolve.ExceptionMapper)](https://www.nuget.org/packages/ForEvolve.ExceptionMapper/)
-[![NuGet.org](https://img.shields.io/nuget/vpre/ForEvolve.ExceptionMapper.CommonExceptions)](https://www.nuget.org/packages/ForEvolve.ExceptionMapper.CommonExceptions/)
-[![NuGet.org](https://img.shields.io/nuget/vpre/ForEvolve.ExceptionMapper.FluentMapper)](https://www.nuget.org/packages/ForEvolve.ExceptionMapper.FluentMapper/)
-
-> Nothing released yet...
+The release and some preview packages are published on [NuGet.org](https://www.nuget.org/).
 
 ## How to install
 
-Just load one or more of these NuGet packages:
+Load the `ForEvolve.ExceptionMapper` NuGet package or one or more of the following if you prefer loading only part of the _ExceptionMapper_.
 
-```bash
-dotnet add package ForEvolve.ExceptionMapper
-dotnet add package ForEvolve.ExceptionMapper.CommonExceptions
-dotnet add package ForEvolve.ExceptionMapper.FluentMapper
-```
+**List of packages**
+
+| Name                                                                       | NuGet.org                                                                                                                                                                                      | feedz.io                                                                                                                                                                                                                                                                                                                     |
+| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `dotnet add package ForEvolve.ExceptionMapper`                             | [![NuGet.org](https://img.shields.io/nuget/vpre/ForEvolve.ExceptionMapper)](https://www.nuget.org/packages/ForEvolve.ExceptionMapper/)                                                         | [![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Fforevolve%2Fexception-mapper%2Fshield%2FForEvolve.ExceptionMapper%2Flatest)](https://f.feedz.io/forevolve/exception-mapper/packages/ForEvolve.ExceptionMapper/latest/download)                                                         |
+| `dotnet add package ForEvolve.ExceptionMapper.CommonExceptions`            | [![NuGet.org](https://img.shields.io/nuget/vpre/ForEvolve.ExceptionMapper.CommonExceptions)](https://www.nuget.org/packages/ForEvolve.ExceptionMapper.CommonExceptions/)                       | [![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Fforevolve%2Fexception-mapper%2Fshield%2FForEvolve.ExceptionMapper.CommonExceptions%2Flatest)](https://f.feedz.io/forevolve/exception-mapper/packages/ForEvolve.ExceptionMapper.CommonExceptions/latest/download)                       |
+| `dotnet add package ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers` | [![NuGet.org](https://img.shields.io/nuget/vpre/ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers)](https://www.nuget.org/packages/ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers/) | [![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Fforevolve%2Fexception-mapper%2Fshield%2FForEvolve.ExceptionMapper.CommonHttpExceptionHandlers%2Flatest)](https://f.feedz.io/forevolve/exception-mapper/packages/ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers/latest/download) |
+| `dotnet add package ForEvolve.ExceptionMapper.Core`                        | [![NuGet.org](https://img.shields.io/nuget/vpre/ForEvolve.ExceptionMapper.Core)](https://www.nuget.org/packages/ForEvolve.ExceptionMapper.Core/)                                               | [![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Fforevolve%2Fexception-mapper%2Fshield%2FForEvolve.ExceptionMapper.Core%2Flatest)](https://f.feedz.io/forevolve/exception-mapper/packages/ForEvolve.ExceptionMapper.Core/latest/download)                                               |
+| `dotnet add package ForEvolve.ExceptionMapper.FluentMapper`                | [![NuGet.org](https://img.shields.io/nuget/vpre/ForEvolve.ExceptionMapper.FluentMapper)](https://www.nuget.org/packages/ForEvolve.ExceptionMapper.FluentMapper/)                               | [![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Fforevolve%2Fexception-mapper%2Fshield%2FForEvolve.ExceptionMapper.FluentMapper%2Flatest)](https://f.feedz.io/forevolve/exception-mapper/packages/ForEvolve.ExceptionMapper.FluentMapper/latest/download)                               |
+| `dotnet add package ForEvolve.ExceptionMapper.HttpMiddleware`              | [![NuGet.org](https://img.shields.io/nuget/vpre/ForEvolve.ExceptionMapper.HttpMiddleware)](https://www.nuget.org/packages/ForEvolve.ExceptionMapper.HttpMiddleware/)                           | [![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Fforevolve%2Fexception-mapper%2Fshield%2FForEvolve.ExceptionMapper.HttpMiddleware%2Flatest)](https://f.feedz.io/forevolve/exception-mapper/packages/ForEvolve.ExceptionMapper.HttpMiddleware/latest/download)                           |
+| `dotnet add package ForEvolve.ExceptionMapper.Scrutor`                     | [![NuGet.org](https://img.shields.io/nuget/vpre/ForEvolve.ExceptionMapper.Scrutor)](https://www.nuget.org/packages/ForEvolve.ExceptionMapper.Scrutor/)                                         | [![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Fforevolve%2Fexception-mapper%2Fshield%2FForEvolve.ExceptionMapper.Scrutor%2Flatest)](https://f.feedz.io/forevolve/exception-mapper/packages/ForEvolve.ExceptionMapper.Scrutor/latest/download)                                         |
+| `dotnet add package ForEvolve.ExceptionMapper.Serialization.Json`          | [![NuGet.org](https://img.shields.io/nuget/vpre/ForEvolve.ExceptionMapper.Serialization.Json)](https://www.nuget.org/packages/ForEvolve.ExceptionMapper.Serialization.Json/)                   | [![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Fforevolve%2Fexception-mapper%2Fshield%2FForEvolve.ExceptionMapper.Serialization.Json%2Flatest)](https://f.feedz.io/forevolve/exception-mapper/packages/ForEvolve.ExceptionMapper.Serialization.Json/latest/download)                   |
 
 # ForEvolve.ExceptionMapper
+
+This package references the other packages.
+
+# ForEvolve.ExceptionMapper.Core
 
 This package contains the core components like the interfaces, the middleware, etc.
 You can load only this package to create your own exceptions and handlers.
@@ -237,20 +238,86 @@ services.AddExceptionMapper(builder => builder
 
 Under the hood, the `Map<TException>()` extension creates a `FluentExceptionHandler<TException>` that is configurable. You can append, prepend or replace handler actions.
 
+# ForEvolve.ExceptionMapper.Serialization.Json
+
+This package contains a handler that serializes exceptions as `ProblemDetails`.
+
+The following serializes all exception using the default options:
+
+```csharp
+services.AddExceptionMapper(builder => builder
+    // ...
+    .SerializeAsProblemDetails()
+);
+```
+
+## Configuring the serialization handler
+
+It is possible to configure the `ProblemDetailsSerializationOptions` like any other options, or using the following extension method:
+
+```csharp
+public class Startup
+{
+    public IConfiguration Configuration { get; }
+    // ...
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddExceptionMapper(builder => builder
+            // ...
+            .SerializeAsProblemDetails(Configuration.GetSection("ExceptionMapper"))
+        );
+    }
+    // ...
+}
+```
+
+Here is an example of `appsettings.json`:
+
+```json
+{
+    "ExceptionMapper": {
+        "SerializeExceptions": true,
+        "ContentType": "application/problem+json",
+        "JsonSerializerOptions": {
+            "IgnoreNullValues": true
+            // ...
+        }
+    }
+}
+```
+
+Another overload is to pass an instance of `ProblemDetailsSerializationOptions` directly like this:
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    var options = new ProblemDetailsSerializationOptions();
+    services.AddExceptionMapper(builder => builder
+        // ...
+        .SerializeAsProblemDetails(options)
+    );
+}
+```
+
 # Release notes
+
+## 1.1.0
+
+-   Add a handler that serializes exceptions to `ProblemDetails` (JSON)
+-   Add the `ForEvolve.ExceptionMapper.Serialization.Json` project
 
 ## 1.0.0
 
--   Initial release
+-   Initial release (no yet released)
 
 # Future/To do
 
 Here is a list of what I want to do:
 
 -   [x] Take the fallback out of `MapCommonHttpExceptions()` into its own extension, like `MapHttpFallback()`
--   [ ] Create a MVC/Razor Pages filter that could replace the middleware or work in conjunction of it, adding more control over the process for MVC applications.
--   [ ] Add one or more serialization handlers that at least support JSON serialization and that leverage `ProblemDetailsFactory` to create `ProblemDetails` objects.
+-   [x] Add one or more serialization handlers that at least support JSON serialization and that leverage `ProblemDetailsFactory` to create `ProblemDetails` objects.
 -   [ ] Write tests that covers `ForEvolve.ExceptionMapper.FluentMapper` and other missing pieces
+-   [ ] Create a MVC/Razor Pages filter that could replace the middleware or work in conjunction of it, adding more control over the process for MVC applications. _This may not be important._
 
 # Found a bug or have a feature request?
 
