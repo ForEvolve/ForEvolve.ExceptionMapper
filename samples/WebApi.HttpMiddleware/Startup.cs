@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using ForEvolve.ExceptionMapper;
 using ForEvolve.ExceptionMapper.Handlers.Fallback;
+using ForEvolve.ExceptionMapper.Serialization.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,6 +42,7 @@ namespace WebApi.HttpMiddleware
                         context.HttpContext.Response.WriteAsync("{\"title\":\"This operation is not supported at the moment!\"}");
                         return Task.CompletedTask;
                     }, ForEvolve.ExceptionMapper.FluentMapper.FluentHandlerStrategy.Append))
+                    .SerializeAsProblemDetails()
                 )
                 .AddControllers()
             ;
