@@ -45,6 +45,10 @@ namespace WebApi.HttpMiddleware
                     .SerializeAsProblemDetails()
                 )
                 .AddControllers()
+                .ConfigureApiBehaviorOptions(options =>
+                {
+                    options.ClientErrorMapping[StatusCodes.Status409Conflict].Link = "https://localhost:8828/Status409Conflict";
+                });
             ;
         }
 
@@ -89,7 +93,8 @@ namespace WebApi.HttpMiddleware
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/MyUnauthorizedException\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/GoneException\",");
                     await context.Response.WriteAsync($"\"{baseUri}/mvc/ImATeapotException\",");
-                    await context.Response.WriteAsync($"\"{baseUri}/mvc/MyForbiddenException\"");
+                    await context.Response.WriteAsync($"\"{baseUri}/mvc/MyForbiddenException\",");
+                    await context.Response.WriteAsync($"\"{baseUri}/mvc/ValidationError\"");
                     await context.Response.WriteAsync("]");
                     await context.Response.WriteAsync("}");
                 });

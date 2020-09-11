@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using System;
 using System.Text.Json;
 
 namespace ForEvolve.ExceptionMapper.Serialization.Json
@@ -9,8 +10,9 @@ namespace ForEvolve.ExceptionMapper.Serialization.Json
         {
             SerializeExceptions = true;
             DisplayDebugInformation = () => false;
-            ContentType = "application/problem+json";
+            ContentType = "application/problem+json; charset=utf-8";
         }
+
         public bool SerializeExceptions { get; set; }
         public Func<bool> DisplayDebugInformation { get; set; }
         public string ContentType { get; set; }

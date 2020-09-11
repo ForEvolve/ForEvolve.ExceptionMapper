@@ -28,22 +28,23 @@ namespace ForEvolve.ExceptionMapper.Serialization.Json
 
         public async Task ExecuteAsync(ExceptionHandlingContext ctx)
         {
-            var problemDetails = ctx.HttpContext.RequestServices
-                .GetService<ProblemDetailsFactory>()
-                .CreateProblemDetails(
-                    ctx.HttpContext,
-                    title: ctx.Error.Message,
-                    statusCode: ctx.HttpContext.Response.StatusCode
-                );
+            var problemDetails = _problemDetailsFactory.CreateProblemDetails(
+                ctx.HttpContext,
+                title: ctx.Error.Message,
+                statusCode: ctx.HttpContext.Response.StatusCode
+            );
 
             var displayDebugInformation = _options.DisplayDebugInformation?.Invoke() ?? false;
             if (displayDebugInformation || _hostEnvironment.IsDevelopment())
             {
+                var errorType = ctx.Error.GetType();
                 problemDetails.Extensions.Add(
                     "debug",
-                    new
-                    {
-                        type = ctx.Error.GetType().Name,
+                    new {
+                        type = new {
+                            name = errorType.Name,
+                            fullName = errorType.FullName,
+                        },
                         stackTrace = ctx.Error.StackTrace,
                     }
                 );

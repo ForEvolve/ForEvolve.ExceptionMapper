@@ -1,19 +1,20 @@
 ﻿using ForEvolve.ExceptionMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Shared
 {
     [ApiController]
     [Route("mvc")]
-    public class ExceptionController
+    public class ExceptionController : ControllerBase
     {
 #pragma warning disable IDE0022 // Use block body for methods
         [HttpGet("NotFound")]
-        public IActionResult NotFound() => throw new NotFoundException();
+        public IActionResult NotFoundException() => throw new NotFoundException();
 
         [HttpGet("Conflict")]
-        public IActionResult Conflict() => throw new ConflictException();
+        public IActionResult ConflictException() => throw new ConflictException();
 
         [HttpGet("InternalServerError")]
         public IActionResult InternalServerError() => throw new InternalServerErrorException(new Exception());
@@ -39,5 +40,26 @@ namespace WebApi.Shared
         [HttpGet("MyForbiddenException")]
         public IActionResult MyForbiddenException() => throw new MyForbiddenException();
 #pragma warning restore IDE0022 // Use block body for methods
+
+        [HttpGet("ValidationError")]
+        public IActionResult ValidationError([FromQuery]MyModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(new {
+                message = "This should not happen, please review the controller action."
+            });
+        }
+
+        public class MyModel
+        {
+            [Required]
+            public string Name { get; set; }
+
+            [Range(18, 35)]
+            public int Age { get; set; }
+        }
     }
 }
