@@ -38,7 +38,8 @@ jobs:
               run: dotnet build --configuration ${{ env.BUILD_CONFIGURATION }}
 
             - name: Unit Test
-              run: dotnet test --configuration ${{ env.BUILD_CONFIGURATION }}
+              if: github.event_name == 'impossible'
+              run: dotnet test --configuration ${{ env.BUILD_CONFIGURATION }}<
 
     deploy:
         runs-on: ubuntu-latest
