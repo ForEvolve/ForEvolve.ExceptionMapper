@@ -5,10 +5,12 @@ namespace Microsoft.AspNetCore.Builder
     {
         public static IApplicationBuilder UseExceptionMapper(this IApplicationBuilder app)
         {
-            return app.UseExceptionHandler(errorApp =>
+            app.UseExceptionHandler(errorApp =>
             {
                 errorApp.UseMiddleware<HttpExceptionHandlingMiddleware>();
             });
+            app.UseMiddleware<UnhandledStatusCodeMiddleware>();
+            return app;
         }
     }
 }
