@@ -12,9 +12,6 @@ on:
             - master
 
 env:
-#     DOTNET_2_VERSION: 2.1.808
-#     DOTNET_3_VERSION: 3.1.302
-#     DOTNET_5_VERSION: 5.0.100
     BUILD_CONFIGURATION: Release
     ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
@@ -24,8 +21,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                # dotnet: ['2.1.x', '3.1.x', '5.0.x']
-                dotnet: ['5.0.x']
+                dotnet: ['5.0.x', '6.0.x']
 
         steps:
             - uses: actions/checkout@v1
@@ -47,8 +43,7 @@ jobs:
         needs: build-and-test
         strategy:
             matrix:
-                # dotnet: ['2.1.x', '3.1.x', '5.0.x']
-                dotnet: ['5.0.x']
+                dotnet: ['5.0.x', '6.0.x']
         steps:
             - uses: actions/checkout@v1
 
