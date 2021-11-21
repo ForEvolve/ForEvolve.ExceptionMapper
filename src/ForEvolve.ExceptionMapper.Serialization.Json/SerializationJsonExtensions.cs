@@ -22,7 +22,7 @@ namespace ForEvolve.ExceptionMapper.Serialization.Json
             builder.Services
                 .Configure<ProblemDetailsSerializationOptions>(configuration)
                 .AddSingleton(ctx => ctx.GetService<IOptionsMonitor<ProblemDetailsSerializationOptions>>().CurrentValue)
-                .TryAddSingleton<ProblemDetailsFactory>()
+                .AddMvcCore() // Workaround
             ;
             return builder.AddExceptionHandler<ProblemDetailsSerializationHandler>();
         }
