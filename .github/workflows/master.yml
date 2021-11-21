@@ -21,7 +21,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                dotnet: ['5.0.x', '6.0.x']
+                dotnet: ['6.0.x']
 
         steps:
             - uses: actions/checkout@v1
@@ -43,7 +43,7 @@ jobs:
         needs: build-and-test
         strategy:
             matrix:
-                dotnet: ['5.0.x', '6.0.x']
+                dotnet: ['6.0.x']
         steps:
             - uses: actions/checkout@v1
 
