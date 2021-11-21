@@ -301,12 +301,17 @@ public void ConfigureServices(IServiceCollection services)
 
 # Release notes
 
-## 1.1.0
+## 2.0
+
+-   Drop .NET Core 3.1 support
+-   Add support for .NET 6.0
+
+## 1.1
 
 -   Add a handler that serializes exceptions to `ProblemDetails` (JSON)
 -   Add the `ForEvolve.ExceptionMapper.Serialization.Json` project
 
-## 1.0.0
+## 1.0
 
 -   Initial release (no yet released)
 
