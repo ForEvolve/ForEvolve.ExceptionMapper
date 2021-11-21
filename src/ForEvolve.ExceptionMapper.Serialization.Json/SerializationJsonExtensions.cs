@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 
 namespace ForEvolve.ExceptionMapper.Serialization.Json
@@ -20,6 +22,7 @@ namespace ForEvolve.ExceptionMapper.Serialization.Json
             builder.Services
                 .Configure<ProblemDetailsSerializationOptions>(configuration)
                 .AddSingleton(ctx => ctx.GetService<IOptionsMonitor<ProblemDetailsSerializationOptions>>().CurrentValue)
+                .TryAddSingleton<ProblemDetailsFactory>()
             ;
             return builder.AddExceptionHandler<ProblemDetailsSerializationHandler>();
         }
