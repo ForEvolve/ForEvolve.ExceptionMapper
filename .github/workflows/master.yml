@@ -12,6 +12,15 @@ on:
             - master
 
     workflow_dispatch:
+        inputs:
+            deployToFeedz:
+                description: 'Deploy the libraries to feedz.io'
+                required: true
+                default: false
+            deployToNuGet:
+                description: 'Deploy the libraries to NuGet.org'
+                required: true
+                default: false
 
 env:
     BUILD_CONFIGURATION: Release
@@ -63,8 +72,8 @@ jobs:
 
             - name: Push to feedz.io
               run: dotnet nuget push **/*.nupkg -k ${{ secrets.FEEDZ_API_KEY }} -s https://f.feedz.io/forevolve/exception-mapper/nuget/index.json
-              if: github.event_name == 'pull_request'
+              if: ${{ env.INPUT_DEPLOYTOFEEDZ == true || github.event_name == 'pull_request' }}
 
             - name: Push to NuGet.org
               run: dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
-              if: github.event_name == 'push'
+              if: ${{ env.INPUT_DEPLOYTONUGET == true || github.event_name == 'push' }}
