@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
-    <IsPackable>False</IsPackable>
+      <TargetFrameworks>$(FETestsTargetFrameworks)</TargetFrameworks>
+      <IsPackable>False</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
