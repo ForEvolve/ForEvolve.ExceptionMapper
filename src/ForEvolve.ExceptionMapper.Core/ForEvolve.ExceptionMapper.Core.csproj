@@ -1,12 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-      <TargetFrameworks>$(FETargetFrameworks)</TargetFrameworks>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="ForEvolve.Core" Version="2.3.5" />
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFrameworks>$(FETargetFrameworks)</TargetFrameworks>
+    </PropertyGroup>
 
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />

@@ -8,8 +8,4 @@
       <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\ForEvolve.ExceptionMapper.HttpMiddleware\ForEvolve.ExceptionMapper.HttpMiddleware.csproj" />
-  </ItemGroup>
-
 </Project>

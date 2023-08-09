@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ForEvolve.ExceptionMapper.CommonExceptions\ForEvolve.ExceptionMapper.CommonExceptions.csproj" />
+    <ProjectReference Include="..\..\src\ForEvolve.ExceptionMapper.Core\ForEvolve.ExceptionMapper.Core.csproj" />
   </ItemGroup>
 
 </Project>

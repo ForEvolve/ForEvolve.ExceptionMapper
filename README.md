@@ -302,8 +302,9 @@ public void ConfigureServices(IServiceCollection services)
 ## 3.0
 
 -   Add support to .NET 7 and .NET 8
--   Drop support for .NET Standard 2.0
+-   Only `ForEvolve.ExceptionMapper.CommonExceptions` supports for .NET Standard 2.0
 -   Remove transitive dependency on JSON.NET (`Newtonsoft.Json`).
+-   Reduce the number of assemblies.
 
 ### Breaking changes .NET 7+
 

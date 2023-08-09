@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\ForEvolve.ExceptionMapper.Serialization.Json\ForEvolve.ExceptionMapper.Serialization.Json.csproj" />
     <ProjectReference Include="..\..\src\ForEvolve.ExceptionMapper\ForEvolve.ExceptionMapper.csproj" />
     <ProjectReference Include="..\WebApi.Shared\WebApi.Shared.csproj" />
   </ItemGroup>

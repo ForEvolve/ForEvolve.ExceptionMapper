@@ -8,8 +8,4 @@
       <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\ForEvolve.ExceptionMapper.Serialization.Json\ForEvolve.ExceptionMapper.Serialization.Json.csproj" />
-  </ItemGroup>
-
 </Project>
