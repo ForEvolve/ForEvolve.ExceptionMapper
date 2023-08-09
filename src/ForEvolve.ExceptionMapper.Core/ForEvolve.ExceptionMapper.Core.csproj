@@ -5,11 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ForEvolve.Core" Version="1.0.0" />
-    <!--<PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1" />-->
+    <PackageReference Include="ForEvolve.Core" Version="2.3.5" />
   </ItemGroup>
 
     <ItemGroup>

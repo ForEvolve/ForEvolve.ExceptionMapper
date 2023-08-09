@@ -303,7 +303,7 @@ public void ConfigureServices(IServiceCollection services)
 
 -   Add support to .NET 7 and .NET 8
 -   Drop support for .NET Standard 2.0
--   ...
+-   Remove transitive dependency on JSON.NET (`Newtonsoft.Json`).
 
 ### Breaking changes .NET 7+
 
