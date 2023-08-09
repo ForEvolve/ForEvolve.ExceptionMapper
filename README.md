@@ -9,8 +9,6 @@ There are a few predefined exceptions and their respective handler, but you can 
 All of the handlers are iterated through, in order, so you can build a pipeline to handle exceptions where multiple handlers have a single responsibility.
 For example, you could have handlers that respond to certain exception types, then one or more fallback handlers that react only if no previous handler handled the exception. Finally, there could be a serializer that convert handled exceptions to JSON, in the format of your choice, making your API linear between endpoints and exception types without much effort.
 
-> I plan on adding serialization handlers and Asp.Net Core MVC specific tweaks in a near future.
-
 ## Versioning
 
 The packages follows _semantic versioning_. I use `Nerdbank.GitVersioning` to automatically version packages based on git commits/hashes.
@@ -301,6 +299,17 @@ public void ConfigureServices(IServiceCollection services)
 
 # Release notes
 
+## 3.0
+
+-   Add support to .NET 7 and .NET 8
+-   Drop support for .NET Standard 2.0
+-   ...
+
+### Breaking changes .NET 7+
+
+-   Removed the `ContentType` and `JsonSerializerOptions` properties from the `ProblemDetailsSerializationOptions` class (`ForEvolve.ExceptionMapper.Serialization.Json`).
+-   The `ProblemDetailsSerializationHandler` class now leverages the `IProblemDetailsService` interface to write the `ProblemDetails` object to the response stream instead of serializing it with the `JsonSerializer`, relinguishing the control of the process to .NET.
+
 ## 2.0
 
 -   Drop .NET Core 3.1 support
@@ -322,7 +331,6 @@ Here is a list of what I want to do:
 -   [x] Take the fallback out of `MapCommonHttpExceptions()` into its own extension, like `MapHttpFallback()`
 -   [x] Add one or more serialization handlers that at least support JSON serialization and that leverage `ProblemDetailsFactory` to create `ProblemDetails` objects.
 -   [ ] Write tests that covers `ForEvolve.ExceptionMapper.FluentMapper` and other missing pieces
--   [ ] Create a MVC/Razor Pages filter that could replace the middleware or work in conjunction of it, adding more control over the process for MVC applications. _This may not be important._
 
 # Found a bug or have a feature request?
 
