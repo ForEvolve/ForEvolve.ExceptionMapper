@@ -11,9 +11,6 @@
     <ProjectReference Include="..\ForEvolve.ExceptionMapper.FluentMapper\ForEvolve.ExceptionMapper.FluentMapper.csproj" />
     <ProjectReference Include="..\ForEvolve.ExceptionMapper.HttpMiddleware\ForEvolve.ExceptionMapper.HttpMiddleware.csproj" />
     <ProjectReference Include="..\ForEvolve.ExceptionMapper.Scrutor\ForEvolve.ExceptionMapper.Scrutor.csproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' != 'netstandard2.0'">
     <ProjectReference Include="..\ForEvolve.ExceptionMapper.Serialization.Json\ForEvolve.ExceptionMapper.Serialization.Json.csproj" />
   </ItemGroup>
 

@@ -19,7 +19,7 @@ namespace ForEvolve.ExceptionMapper.Serialization.Json
         {
             builder.Services
                 .Configure<ProblemDetailsSerializationOptions>(configuration)
-                .AddSingleton(ctx => ctx.GetService<IOptionsMonitor<ProblemDetailsSerializationOptions>>().CurrentValue)
+                .AddSingleton(ctx => ctx.GetRequiredService<IOptionsMonitor<ProblemDetailsSerializationOptions>>().CurrentValue)
             ;
             return builder.SerializeAsProblemDetailsCore();
         }
@@ -27,8 +27,10 @@ namespace ForEvolve.ExceptionMapper.Serialization.Json
         private static IExceptionMappingBuilder SerializeAsProblemDetailsCore(this IExceptionMappingBuilder builder)
         {
             builder.Services.AddMvcCore(); // Workaround
+#if NET7_0_OR_GREATER
+            builder.Services.AddProblemDetails();
+#endif
             return builder.AddExceptionHandler<ProblemDetailsSerializationHandler>();
         }
-
     }
 }
