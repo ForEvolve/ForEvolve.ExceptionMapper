@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ForEvolve.ExceptionMapper.Core\ForEvolve.ExceptionMapper.Core.csproj" />
+    <ProjectReference Include="..\ForEvolve.ExceptionMapper\ForEvolve.ExceptionMapper.csproj" />
   </ItemGroup>
 
 </Project>
