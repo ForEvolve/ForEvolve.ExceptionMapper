@@ -46,7 +46,6 @@ jobs:
         run: dotnet build -c ${{ env.BUILD_CONFIGURATION }}
 
       - name: Unit Test
-        if: github.event_name == 'impossible'
         run: dotnet test -c ${{ env.BUILD_CONFIGURATION }}
 
   deploy:
