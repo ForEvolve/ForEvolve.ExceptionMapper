@@ -1,42 +1,41 @@
 ﻿using Microsoft.AspNetCore.Http;
-namespace ForEvolve.ExceptionMapper
+namespace ForEvolve.ExceptionMapper;
+
+public class UnhandledStatusCodeMiddleware
 {
-    public class UnhandledStatusCodeMiddleware
+    private readonly RequestDelegate _next;
+
+    public UnhandledStatusCodeMiddleware(RequestDelegate next) => _next = next;
+
+    public async Task InvokeAsync(HttpContext context)
     {
-        private readonly RequestDelegate _next;
+        await _next(context);
 
-        public UnhandledStatusCodeMiddleware(RequestDelegate next) => _next = next;
-
-        public async Task InvokeAsync(HttpContext context)
+        if (context.Response.HasStarted)
         {
-            await _next(context);
+            return;
+        }
 
-            if (context.Response.HasStarted)
+        // Client errors (400–499)
+        // Server errors (500–599)
+        if (context.Response.StatusCode >= 400)
+        {
+            switch (context.Response.StatusCode)
             {
-                return;
-            }
-
-            // Client errors (400–499)
-            // Server errors (500–599)
-            if (context.Response.StatusCode >= 400)
-            {
-                switch (context.Response.StatusCode)
-                {
-                    case StatusCodes.Status400BadRequest:
-                        throw new BadRequestException();
-                    case StatusCodes.Status401Unauthorized:
-                        throw new UnauthorizedException();
-                    case StatusCodes.Status403Forbidden:
-                        throw new ForbiddenException();
-                    case StatusCodes.Status404NotFound:
-                        throw new ResourceNotFoundException(context);
-                    case StatusCodes.Status409Conflict:
-                        throw new ConflictException();
-                    case StatusCodes.Status500InternalServerError:
-                        throw new InternalServerErrorException(new UnhandledStatusCodeException());
-                    case StatusCodes.Status501NotImplemented:
-                        throw new NotImplementedException();
-                }
+                case StatusCodes.Status400BadRequest:
+                    throw new BadRequestException();
+                case StatusCodes.Status401Unauthorized:
+                    throw new UnauthorizedException();
+                case StatusCodes.Status403Forbidden:
+                    throw new ForbiddenException();
+                case StatusCodes.Status404NotFound:
+                    throw new ResourceNotFoundException(context);
+                case StatusCodes.Status409Conflict:
+                    throw new ConflictException();
+                case StatusCodes.Status500InternalServerError:
+                    throw new InternalServerErrorException(new UnhandledStatusCodeException());
+                case StatusCodes.Status501NotImplemented:
+                    throw new NotImplementedException();
             }
         }
     }

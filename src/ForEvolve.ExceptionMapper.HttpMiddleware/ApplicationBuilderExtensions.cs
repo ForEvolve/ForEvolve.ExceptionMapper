@@ -1,16 +1,15 @@
 ﻿using ForEvolve.ExceptionMapper;
-namespace Microsoft.AspNetCore.Builder
+namespace Microsoft.AspNetCore.Builder;
+
+public static class ApplicationBuilderExtensions
 {
-    public static class ApplicationBuilderExtensions
+    public static IApplicationBuilder UseExceptionMapper(this IApplicationBuilder app)
     {
-        public static IApplicationBuilder UseExceptionMapper(this IApplicationBuilder app)
+        app.UseExceptionHandler(errorApp =>
         {
-            app.UseExceptionHandler(errorApp =>
-            {
-                errorApp.UseMiddleware<HttpExceptionHandlingMiddleware>();
-            });
-            app.UseMiddleware<UnhandledStatusCodeMiddleware>();
-            return app;
-        }
+            errorApp.UseMiddleware<HttpExceptionHandlingMiddleware>();
+        });
+        app.UseMiddleware<UnhandledStatusCodeMiddleware>();
+        return app;
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace ForEvolve.ExceptionMapper
+﻿namespace ForEvolve.ExceptionMapper;
+
+public interface IExceptionHandlingResult
 {
-    public interface IExceptionHandlingResult
-    {
-        bool ExceptionHandled { get; }
-        Exception? Error { get; }
-        bool ExceptionHandlerFeatureSupported { get; }
-    }
+    bool ExceptionHandled { get; }
+    Exception? Error { get; }
+    bool ExceptionHandlerFeatureSupported { get; }
 }

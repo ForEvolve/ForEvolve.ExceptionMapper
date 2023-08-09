@@ -1,8 +1,7 @@
 ﻿using System;
 
-namespace WebApi.Shared
+namespace WebApi.Shared;
+
+public class GoneException : Exception
 {
-    public class GoneException : Exception
-    {
-    }
 }

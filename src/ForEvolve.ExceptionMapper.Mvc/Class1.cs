@@ -1,6 +1,5 @@
-﻿namespace ForEvolve.ExceptionMapper.Mvc
+﻿namespace ForEvolve.ExceptionMapper.Mvc;
+
+public class Class1
 {
-    public class Class1
-    {
-    }
 }

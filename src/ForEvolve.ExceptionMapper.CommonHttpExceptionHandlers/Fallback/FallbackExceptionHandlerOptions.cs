@@ -1,7 +1,6 @@
-﻿namespace ForEvolve.ExceptionMapper.Handlers.Fallback
+﻿namespace ForEvolve.ExceptionMapper.Handlers.Fallback;
+
+public class FallbackExceptionHandlerOptions
 {
-    public class FallbackExceptionHandlerOptions
-    {
-        public FallbackStrategy Strategy { get; set; }
-    }
+    public FallbackStrategy Strategy { get; set; }
 }

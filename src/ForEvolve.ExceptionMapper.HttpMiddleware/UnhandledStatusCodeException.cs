@@ -1,8 +1,7 @@
-﻿namespace ForEvolve.ExceptionMapper
+﻿namespace ForEvolve.ExceptionMapper;
+
+public class UnhandledStatusCodeException : Exception
 {
-    public class UnhandledStatusCodeException : Exception
-    {
-        public UnhandledStatusCodeException()
-            : base($"An unhandled error occured.") { }
-    }
+    public UnhandledStatusCodeException()
+        : base($"An unhandled error occured.") { }
 }

@@ -1,8 +1,7 @@
 ﻿using ForEvolve.ExceptionMapper;
 
-namespace WebApi.Shared
+namespace WebApi.Shared;
+
+public class MyNotFoundException : NotFoundException
 {
-    public class MyNotFoundException : NotFoundException
-    {
-    }
 }

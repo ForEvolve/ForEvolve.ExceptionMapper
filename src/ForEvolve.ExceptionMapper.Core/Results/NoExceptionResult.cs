@@ -1,14 +1,13 @@
-﻿namespace ForEvolve.ExceptionMapper
-{
-    public class NoExceptionResult : IExceptionHandlingResult
-    {
-        public NoExceptionResult()
-        {
-            ExceptionHandlerFeatureSupported = true;
-        }
+﻿namespace ForEvolve.ExceptionMapper;
 
-        public bool ExceptionHandled { get; }
-        public Exception? Error { get; }
-        public bool ExceptionHandlerFeatureSupported { get; }
+public class NoExceptionResult : IExceptionHandlingResult
+{
+    public NoExceptionResult()
+    {
+        ExceptionHandlerFeatureSupported = true;
     }
+
+    public bool ExceptionHandled { get; }
+    public Exception? Error { get; }
+    public bool ExceptionHandlerFeatureSupported { get; }
 }

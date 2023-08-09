@@ -1,17 +1,16 @@
-﻿namespace ForEvolve.ExceptionMapper
+﻿namespace ForEvolve.ExceptionMapper;
+
+public abstract class ClientErrorException : ForEvolveException
 {
-    public abstract class ClientErrorException : ForEvolveException
+    public ClientErrorException()
     {
-        public ClientErrorException()
-        {
-        }
+    }
 
-        public ClientErrorException(string message) : base(message)
-        {
-        }
+    public ClientErrorException(string message) : base(message)
+    {
+    }
 
-        public ClientErrorException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
+    public ClientErrorException(string message, Exception innerException) : base(message, innerException)
+    {
     }
 }

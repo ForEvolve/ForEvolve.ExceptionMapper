@@ -1,8 +1,7 @@
 ﻿using System;
 
-namespace WebApi.Shared
+namespace WebApi.Shared;
+
+public class MyUnauthorizedException : Exception
 {
-    public class MyUnauthorizedException : Exception
-    {
-    }
 }

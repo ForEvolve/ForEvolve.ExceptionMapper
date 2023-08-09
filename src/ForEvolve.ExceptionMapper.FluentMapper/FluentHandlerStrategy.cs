@@ -1,9 +1,8 @@
-﻿namespace ForEvolve.ExceptionMapper.FluentMapper
+﻿namespace ForEvolve.ExceptionMapper.FluentMapper;
+
+public enum FluentHandlerStrategy
 {
-    public enum FluentHandlerStrategy
-    {
-        Append,
-        Prepend,
-        Replace
-    }
+    Append,
+    Prepend,
+    Replace
 }

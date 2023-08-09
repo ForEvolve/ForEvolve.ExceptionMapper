@@ -1,8 +1,7 @@
-﻿namespace ForEvolve.ExceptionMapper.Handlers.Fallback
+﻿namespace ForEvolve.ExceptionMapper.Handlers.Fallback;
+
+public enum FallbackStrategy
 {
-    public enum FallbackStrategy
-    {
-        Ignore = 0,
-        Handle = 1
-    }
+    Ignore = 0,
+    Handle = 1
 }

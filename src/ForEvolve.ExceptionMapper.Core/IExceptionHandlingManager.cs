@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-namespace ForEvolve.ExceptionMapper
+namespace ForEvolve.ExceptionMapper;
+
+public interface IExceptionHandlingManager
 {
-    public interface IExceptionHandlingManager
-    {
-        Task<IExceptionHandlingResult> HandleAsync(HttpContext context);
-    }
+    Task<IExceptionHandlingResult> HandleAsync(HttpContext context);
 }

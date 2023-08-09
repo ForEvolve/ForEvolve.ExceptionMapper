@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace ForEvolve.ExceptionMapper.Handlers
+namespace ForEvolve.ExceptionMapper.Handlers;
+
+public class ForbiddenExceptionHandler : ExceptionHandler<ForbiddenException>
 {
-    public class ForbiddenExceptionHandler : ExceptionHandler<ForbiddenException>
-    {
-        public override int StatusCode => StatusCodes.Status403Forbidden;
-    }
+    public override int StatusCode => StatusCodes.Status403Forbidden;
 }

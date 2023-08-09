@@ -1,32 +1,31 @@
 ﻿using System;
 using Xunit;
 
-namespace ForEvolve.ExceptionMapper
+namespace ForEvolve.ExceptionMapper;
+
+public class ExceptionNotHandledResultTest
 {
-    public class ExceptionNotHandledResultTest
+    [Fact]
+    public void Should_set_the_expected_values()
     {
-        [Fact]
-        public void Should_set_the_expected_values()
-        {
-            // Arrange
-            var exception = new Exception();
+        // Arrange
+        var exception = new Exception();
 
-            // Act
-            var result = new ExceptionNotHandledResult(exception);
+        // Act
+        var result = new ExceptionNotHandledResult(exception);
 
-            // Assert
-            Assert.Equal(exception, result.Error);
-            Assert.False(result.ExceptionHandled);
-            Assert.True(result.ExceptionHandlerFeatureSupported);
-        }
+        // Assert
+        Assert.Equal(exception, result.Error);
+        Assert.False(result.ExceptionHandled);
+        Assert.True(result.ExceptionHandlerFeatureSupported);
+    }
 
-        [Fact]
-        public void Should_guard_against_null()
-        {
-            Assert.Throws<ArgumentNullException>(
-                "error",
-                () => new ExceptionNotHandledResult(default)
-            );
-        }
+    [Fact]
+    public void Should_guard_against_null()
+    {
+        Assert.Throws<ArgumentNullException>(
+            "error",
+            () => new ExceptionNotHandledResult(default)
+        );
     }
 }
