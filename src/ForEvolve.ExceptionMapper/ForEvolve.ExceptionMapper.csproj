@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>$(FETargetFrameworks)</TargetFrameworks>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ForEvolve.ExceptionMapper.Core\ForEvolve.ExceptionMapper.Core.csproj" />
-  </ItemGroup>
-
+    <PropertyGroup>
+        <TargetFrameworks>$(FETargetFrameworks)</TargetFrameworks>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="ForEvolve.Core" Version="2.3.5" />
+    </ItemGroup>
 </Project>
