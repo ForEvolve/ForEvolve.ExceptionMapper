@@ -70,6 +70,7 @@ public class ProblemDetailsSerializationHandler : IExceptionHandler
         };
         await _problemDetailsService.WriteAsync(problemDetailsContext);
 #else
+#pragma warning disable CS0618 // Type or member is obsolete
         ctx.HttpContext.Response.ContentType = _options.ContentType;
         if (_options.JsonSerializerOptions is null)
         {
@@ -88,6 +89,7 @@ public class ProblemDetailsSerializationHandler : IExceptionHandler
                 cancellationToken: ctx.HttpContext.RequestAborted
             );
         }
+#pragma warning restore CS0618 // Type or member is obsolete
 #endif
 
     }
