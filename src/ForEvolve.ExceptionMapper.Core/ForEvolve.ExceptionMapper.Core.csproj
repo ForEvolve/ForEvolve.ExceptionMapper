@@ -7,5 +7,8 @@
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="ForEvolve.Core" Version="2.3.5" />
+    </ItemGroup>
 
 </Project>
