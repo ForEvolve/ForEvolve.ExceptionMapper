@@ -17,7 +17,6 @@ public class ExceptionNotHandledResultTest
         // Assert
         Assert.Equal(exception, result.Error);
         Assert.False(result.ExceptionHandled);
-        Assert.True(result.ExceptionHandlerFeatureSupported);
     }
 
     [Fact]

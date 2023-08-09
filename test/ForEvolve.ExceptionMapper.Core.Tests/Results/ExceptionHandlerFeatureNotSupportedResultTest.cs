@@ -13,6 +13,5 @@ public class ExceptionHandlerFeatureNotSupportedResultTest
         // Assert
         Assert.Null(result.Error);
         Assert.False(result.ExceptionHandled);
-        Assert.False(result.ExceptionHandlerFeatureSupported);
     }
 }

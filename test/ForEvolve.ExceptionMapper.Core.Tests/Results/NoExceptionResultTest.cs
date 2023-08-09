@@ -13,6 +13,5 @@ public class NoExceptionResultTest
         // Assert
         Assert.Null(result.Error);
         Assert.False(result.ExceptionHandled);
-        Assert.True(result.ExceptionHandlerFeatureSupported);
     }
 }

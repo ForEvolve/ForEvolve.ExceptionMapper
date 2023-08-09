@@ -4,5 +4,4 @@ public sealed class ExceptionHandlerFeatureNotSupportedResult : IExceptionHandli
 {
     public bool ExceptionHandled { get; }
     public Exception? Error { get; }
-    public bool ExceptionHandlerFeatureSupported => false;
 }

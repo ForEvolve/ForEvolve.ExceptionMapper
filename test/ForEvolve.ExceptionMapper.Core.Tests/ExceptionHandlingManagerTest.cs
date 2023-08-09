@@ -108,8 +108,6 @@ public class ExceptionHandlingManagerTest
                         public bool ExceptionHandled => throw new NotImplementedException();
 
                         public Exception Error => throw new NotImplementedException();
-
-                        public bool ExceptionHandlerFeatureSupported => throw new NotImplementedException();
                     }
                 }
 
