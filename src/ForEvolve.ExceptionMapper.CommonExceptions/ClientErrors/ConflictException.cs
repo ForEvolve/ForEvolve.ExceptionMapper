@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ForEvolve.ExceptionMapper
+﻿namespace ForEvolve.ExceptionMapper
 {
     public class ConflictException : ClientErrorException
     {

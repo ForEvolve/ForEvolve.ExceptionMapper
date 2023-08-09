@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 namespace ForEvolve.ExceptionMapper
 {
     public class ExceptionHandlingManager : IExceptionHandlingManager
@@ -63,7 +59,7 @@ namespace ForEvolve.ExceptionMapper
         {
         }
 
-        public ExceptionHandlingContext(HttpContext httpContext, TException error, IExceptionHandlingResult initialResult)
+        public ExceptionHandlingContext(HttpContext httpContext, TException? error, IExceptionHandlingResult initialResult)
         {
             HttpContext = httpContext ?? throw new ArgumentNullException(nameof(httpContext));
             Error = error ?? throw new ArgumentNullException(nameof(error));

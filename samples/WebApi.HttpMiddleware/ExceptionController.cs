@@ -42,13 +42,14 @@ namespace WebApi.Shared
 #pragma warning restore IDE0022 // Use block body for methods
 
         [HttpGet("ValidationError")]
-        public IActionResult ValidationError([FromQuery]MyModel model)
+        public IActionResult ValidationError([FromQuery] MyModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(new {
+            return Ok(new
+            {
                 message = "This should not happen, please review the controller action."
             });
         }

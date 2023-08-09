@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using System;
-using System.Threading.Tasks;
 
 namespace ForEvolve.ExceptionMapper.Handlers.Fallback
 {

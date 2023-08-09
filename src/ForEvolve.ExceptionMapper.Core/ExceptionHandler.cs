@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Threading.Tasks;
-namespace ForEvolve.ExceptionMapper
+﻿namespace ForEvolve.ExceptionMapper
 {
     public abstract class ExceptionHandler<TException> : IExceptionHandler
         where TException : Exception

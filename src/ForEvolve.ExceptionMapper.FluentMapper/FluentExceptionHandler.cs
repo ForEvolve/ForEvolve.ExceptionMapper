@@ -1,14 +1,10 @@
-﻿using ForEvolve.ExceptionMapper;
-using System;
-using System.Threading.Tasks;
-
-namespace ForEvolve.ExceptionMapper.FluentMapper
+﻿namespace ForEvolve.ExceptionMapper.FluentMapper
 {
     public class FluentExceptionHandler<TException> : IExceptionHandler
             where TException : Exception
     {
         public int Order { get; set; } = HandlerOrder.DefaultOrder;
-        private Func<ExceptionHandlingContext, Task> _handler;
+        private Func<ExceptionHandlingContext, Task>? _handler;
 
         public Task ExecuteAsync(ExceptionHandlingContext context)
         {
@@ -21,7 +17,7 @@ namespace ForEvolve.ExceptionMapper.FluentMapper
             {
                 context.Result = new ExceptionHandledResult(context.Error);
             }
-            return task;
+            return task ?? Task.CompletedTask;
         }
 
         public Task<bool> KnowHowToHandleAsync(Exception exception)

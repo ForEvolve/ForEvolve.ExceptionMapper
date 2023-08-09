@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
 
 namespace ForEvolve.ExceptionMapper.Handlers
 {
