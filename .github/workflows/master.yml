@@ -30,16 +30,15 @@ jobs:
     build-and-test:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v1
+            - uses: actions/checkout@v3
 
             - name: Setup .NET Core
-              uses: actions/setup-dotnet@v1
+              uses: actions/setup-dotnet@v3
               with:
                   dotnet-version: |
                       '6.0.x'
                       '7.0.x'
                       '8.0.x'
-                  include-prerelease: true
 
             - name: Build
               run: dotnet build -c ${{ env.BUILD_CONFIGURATION }} -f ${{ matrix.dotnet }}
@@ -52,16 +51,15 @@ jobs:
         runs-on: ubuntu-latest
         needs: build-and-test
         steps:
-            - uses: actions/checkout@v1
+            - uses: actions/checkout@v3
 
             - name: Setup .NET Core
-              uses: actions/setup-dotnet@v1
+              uses: actions/setup-dotnet@v3
               with:
                   dotnet-version: |
                       '6.0.x'
                       '7.0.x'
                       '8.0.x'
-                  include-prerelease: true
 
             - uses: aarnott/nbgv@v0.3
               with:
