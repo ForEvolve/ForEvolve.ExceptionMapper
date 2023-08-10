@@ -295,6 +295,7 @@ public void ConfigureServices(IServiceCollection services)
 -   Remove transitive dependency on JSON.NET (`Newtonsoft.Json`).
 -   Drop support for .NET Standard 2.0 because `ExceptionMapper` depends on the `HttpContext` class which requires a `<FrameworkReference Include="Microsoft.AspNetCore.App" />` which is not compatible with `netstandard2.0`.
 -   Merge all assemblies in `ForEvolve.ExceptionMapper` but `ForEvolve.ExceptionMapper.Scrutor`.
+-   Replace the `AddMvcCore` call by registering a copy of the `DefaultProblemDetailsFactory` using a `TryAddSingleton` call, so you must register your custom `ProblemDetailsFactory` implementation before `AddExceptionMapper`. The good news is, if you are using a custom factory, the `ProblemDetailsSerializationHandler` will use it!
 
 ### Breaking changes .NET 7+
 

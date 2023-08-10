@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 
 namespace ForEvolve.ExceptionMapper.Serialization.Json;
@@ -26,10 +28,14 @@ public static class SerializationJsonExtensions
 
     private static IExceptionMappingBuilder SerializeAsProblemDetailsCore(this IExceptionMappingBuilder builder)
     {
-        builder.Services.AddMvcCore(); // Workaround
 #if NET7_0_OR_GREATER
         builder.Services.AddProblemDetails();
 #endif
+        // Workaround: binding a local copy of the DefaultProblemDetailsFactory because the .NET class is internal.
+        // Moreover, the only way to add the class is by calling the AddMvcCore method, which add way more services.
+        // So until we can add the DefaultProblemDetailsFactory
+        builder.Services.TryAddSingleton<ProblemDetailsFactory, DefaultProblemDetailsFactory>();
+
         return builder.AddExceptionHandler<ProblemDetailsSerializationHandler>();
     }
 }
