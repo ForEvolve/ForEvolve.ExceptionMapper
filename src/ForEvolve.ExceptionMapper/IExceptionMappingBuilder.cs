@@ -1,6 +1,4 @@
-﻿using ForEvolve.ExceptionMapper;
-
-namespace Microsoft.Extensions.DependencyInjection;
+﻿namespace Microsoft.Extensions.DependencyInjection;
 
 public interface IExceptionMappingBuilder
 {
