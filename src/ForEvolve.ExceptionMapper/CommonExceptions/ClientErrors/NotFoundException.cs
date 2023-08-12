@@ -8,6 +8,7 @@
 public class NotFoundException : ClientErrorException
 {
     public NotFoundException()
+        : base("The server cannot find the requested resource.")
     {
     }
 

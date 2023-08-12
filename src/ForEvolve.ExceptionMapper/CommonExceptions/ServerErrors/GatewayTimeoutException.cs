@@ -8,6 +8,7 @@
 public class GatewayTimeoutException : ServerErrorException
 {
     public GatewayTimeoutException()
+        : base("The server was not able to get the response in time.")
     {
     }
 

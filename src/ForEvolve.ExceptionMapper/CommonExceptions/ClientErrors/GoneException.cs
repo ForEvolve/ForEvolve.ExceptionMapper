@@ -8,6 +8,7 @@
 public class GoneException : ClientErrorException
 {
     public GoneException()
+        : base("The requested content has been permanently deleted from server.")
     {
     }
 

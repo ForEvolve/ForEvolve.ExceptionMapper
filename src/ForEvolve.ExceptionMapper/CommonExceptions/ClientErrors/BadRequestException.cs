@@ -8,6 +8,7 @@
 public class BadRequestException : ClientErrorException
 {
     public BadRequestException()
+        : base("The server can not process the request due to a client error. Resolve the issue and try again.")
     {
     }
 

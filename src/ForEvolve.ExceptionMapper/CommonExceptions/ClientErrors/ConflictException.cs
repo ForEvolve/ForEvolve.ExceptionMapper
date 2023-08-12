@@ -8,6 +8,7 @@
 public class ConflictException : ClientErrorException
 {
     public ConflictException()
+        : base("The request conflicts with the current state of the server.")
     {
     }
 

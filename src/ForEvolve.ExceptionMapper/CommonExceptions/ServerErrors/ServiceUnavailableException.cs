@@ -8,6 +8,7 @@
 public class ServiceUnavailableException : ServerErrorException
 {
     public ServiceUnavailableException()
+        : base("The server is not ready to handle the request.")
     {
     }
 

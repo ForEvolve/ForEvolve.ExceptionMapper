@@ -8,6 +8,7 @@
 public class ForbiddenException : ClientErrorException
 {
     public ForbiddenException()
+        : base("You do not have access rights to the content.")
     {
     }
 

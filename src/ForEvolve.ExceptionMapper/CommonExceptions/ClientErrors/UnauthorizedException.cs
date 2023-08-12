@@ -8,6 +8,7 @@
 public class UnauthorizedException : ClientErrorException
 {
     public UnauthorizedException()
+        : base("You must be authenticated to access the requested resource.")
     {
     }
 

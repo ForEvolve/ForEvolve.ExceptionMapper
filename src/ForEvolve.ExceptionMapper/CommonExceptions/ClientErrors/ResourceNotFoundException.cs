@@ -11,7 +11,7 @@ namespace ForEvolve.ExceptionMapper;
 public class ResourceNotFoundException : NotFoundException
 {
     public ResourceNotFoundException(HttpContext context)
-        : base($"No resource were found at '{context.Request.GetDisplayUrl()}'.")
+        : base($"The server cannot find the following resource: '{context.Request.GetDisplayUrl()}'.")
     {
 
     }
