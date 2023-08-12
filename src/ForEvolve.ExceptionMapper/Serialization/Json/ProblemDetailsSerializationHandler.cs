@@ -1,8 +1,14 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ForEvolve.ExceptionMapper.Serialization.Json;
 
@@ -14,6 +20,7 @@ public class ProblemDetailsSerializationHandler : IExceptionSerializer
 #if NET7_0_OR_GREATER
     private readonly IProblemDetailsService _problemDetailsService;
 #endif
+    private readonly JsonSerializerOptions _jsonSerializerOptions;
 
     public ProblemDetailsSerializationHandler(
 #if NET7_0_OR_GREATER
@@ -21,7 +28,8 @@ public class ProblemDetailsSerializationHandler : IExceptionSerializer
 #endif
         ProblemDetailsFactory problemDetailsFactory,
         IHostEnvironment hostEnvironment,
-        ProblemDetailsSerializationOptions options)
+        ProblemDetailsSerializationOptions options,
+        IOptions<JsonOptions> jsonOptions)
     {
         _problemDetailsFactory = problemDetailsFactory ?? throw new ArgumentNullException(nameof(problemDetailsFactory));
         _hostEnvironment = hostEnvironment ?? throw new ArgumentNullException(nameof(hostEnvironment));
@@ -29,6 +37,7 @@ public class ProblemDetailsSerializationHandler : IExceptionSerializer
 #if NET7_0_OR_GREATER
         _problemDetailsService = problemDetailsService ?? throw new ArgumentNullException(nameof(problemDetailsService));
 #endif
+        _jsonSerializerOptions = jsonOptions.Value.SerializerOptions ?? throw new ArgumentNullException(nameof(jsonOptions));
     }
 
     public async Task ExecuteAsync(ExceptionHandlingContext ctx)
@@ -39,12 +48,13 @@ public class ProblemDetailsSerializationHandler : IExceptionSerializer
             statusCode: ctx.HttpContext.Response.StatusCode
         );
 
+        // Add debug info
         var displayDebugInformation = _options.DisplayDebugInformation?.Invoke() ?? false;
         if (displayDebugInformation || _hostEnvironment.IsDevelopment())
         {
             var errorType = ctx.Error.GetType();
             problemDetails.Extensions.Add(
-                "debug",
+                FormatName("debug"),
                 new
                 {
                     type = new
@@ -57,6 +67,46 @@ public class ProblemDetailsSerializationHandler : IExceptionSerializer
             );
         }
 
+        // Remove the default "traceId" property and
+        // add it back with a key that is in line with the JSON serializer options.
+        var traceId = Activity.Current?.Id ?? ctx.HttpContext.TraceIdentifier;
+        if (traceId != null)
+        {
+            var traceIdKey = "traceId";
+            problemDetails.Extensions.Remove(traceIdKey);
+            problemDetails.Extensions.Add(FormatName(traceIdKey),  traceId);
+        }
+
+        // Transfer non-excluded and non-JsonIgnored properties to the problem details.
+        var properties = TypeDescriptor.GetProperties(ctx.Error);
+        var propertiesToExclude = new string[] {
+            nameof(Exception.StackTrace),
+            nameof(Exception.Data),
+            nameof(Exception.HResult),
+            nameof(Exception.TargetSite),
+            nameof(Exception.Message),
+            nameof(Exception.Source),
+            nameof(Exception.InnerException),
+        };
+        foreach (PropertyDescriptor property in properties)
+        {
+            if (propertiesToExclude.Contains(property.Name))
+            {
+                continue;
+            }
+            if (property.Attributes.OfType<JsonIgnoreAttribute>().Any())
+            {
+                continue;
+            }
+
+            var value = property.GetValue(ctx.Error);
+            if (value != null)
+            {
+                problemDetails.Extensions.Add(FormatName(property.Name), value);
+            }
+        }
+
+        // Output the problem details
 #if NET7_0_OR_GREATER
         var problemDetailsContext = new ProblemDetailsContext
         {
@@ -70,25 +120,21 @@ public class ProblemDetailsSerializationHandler : IExceptionSerializer
 #else
 #pragma warning disable CS0618 // Type or member is obsolete
         ctx.HttpContext.Response.ContentType = _options.ContentType;
-        if (_options.JsonSerializerOptions is null)
-        {
-            await JsonSerializer.SerializeAsync(
-                ctx.HttpContext.Response.Body,
-                problemDetails,
-                cancellationToken: ctx.HttpContext.RequestAborted
-            );
-        }
-        else
-        {
-            await JsonSerializer.SerializeAsync(
-                ctx.HttpContext.Response.Body,
-                problemDetails,
-                _options.JsonSerializerOptions,
-                cancellationToken: ctx.HttpContext.RequestAborted
-            );
-        }
+        await JsonSerializer.SerializeAsync(
+            ctx.HttpContext.Response.Body,
+            problemDetails,
+            _jsonSerializerOptions,
+            cancellationToken: ctx.HttpContext.RequestAborted
+        );
 #pragma warning restore CS0618 // Type or member is obsolete
 #endif
+    }
 
+    private string FormatName(string name)
+    {
+        return _jsonSerializerOptions.PropertyNamingPolicy?.ConvertName(name) ?? FormatToCamelCase(name);
+
+        static string FormatToCamelCase(string name)
+            => string.Concat(name[0].ToString().ToLower(), name.AsSpan(1));
     }
 }

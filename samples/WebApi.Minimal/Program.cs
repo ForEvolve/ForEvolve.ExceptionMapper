@@ -5,6 +5,11 @@ using System.Text.Json;
 using WebApi.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
+#if NET8_0_OR_GREATER
+builder.Services.ConfigureHttpJsonOptions(options => {
+    options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseUpper;
+});
+#endif
 builder.AddExceptionMapper(builder =>
 {
     builder.AddExceptionHandler<MyForbiddenExceptionHandler>();

@@ -11,8 +11,5 @@ public class ProblemDetailsSerializationOptions
 
     [Obsolete(_obsoleteMessage)]
     public string ContentType { get; set; } = "application/problem+json; charset=utf-8";
-
-    [Obsolete(_obsoleteMessage)]
-    public JsonSerializerOptions JsonSerializerOptions { get; set; } = new JsonSerializerOptions(JsonSerializerDefaults.Web);
 #endif
 }
