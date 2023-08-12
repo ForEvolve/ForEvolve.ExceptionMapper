@@ -2,5 +2,5 @@
 
 public class FallbackExceptionHandlerOptions
 {
-    public FallbackStrategy Strategy { get; set; }
+    public FallbackStrategy Strategy { get; set; } = FallbackStrategy.Handle;
 }
