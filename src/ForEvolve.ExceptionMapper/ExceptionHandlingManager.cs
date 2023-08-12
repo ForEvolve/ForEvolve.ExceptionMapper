@@ -1,23 +1,21 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.ObjectModel;
 namespace ForEvolve.ExceptionMapper;
 
 public class ExceptionHandlingManager : IExceptionHandlingManager
 {
-    private readonly List<IExceptionHandler> _handlers;
+    private readonly ExceptionMapperOptions _options;
 
-    public ExceptionHandlingManager(IEnumerable<IExceptionHandler> handlers)
+    public ExceptionHandlingManager(ExceptionMapperOptions options)
     {
-        if (handlers == null) { throw new ArgumentNullException(nameof(handlers)); }
-
-        _handlers = handlers
-            .OrderBy(x => x.Order)
-            .ToList();
+        _options = options ?? throw new ArgumentNullException(nameof(options));
     }
 
     public IReadOnlyCollection<IExceptionHandler> Handlers
-        => new ReadOnlyCollection<IExceptionHandler>(_handlers);
+        => new ReadOnlyCollection<IExceptionHandler>(_options.Handlers);
 
     public async Task<IExceptionHandlingResult> HandleAsync(HttpContext httpContext)
     {
@@ -34,13 +32,15 @@ public class ExceptionHandlingManager : IExceptionHandlingManager
         }
 
         var context = new ExceptionHandlingContext(httpContext, exception, new ExceptionNotHandledResult(exception));
-        foreach (var handler in _handlers)
+        foreach (var handler in _options.Handlers)
         {
-            if (await handler.KnowHowToHandleAsync(exception))
+            if (await handler.CanHandle(exception))
             {
                 await handler.ExecuteAsync(context);
             }
         }
+
+        await _options.Serializer.ExecuteAsync(context);
 
         return context.Result;
     }

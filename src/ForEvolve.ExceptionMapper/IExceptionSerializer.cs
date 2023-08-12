@@ -1,7 +1,6 @@
 ﻿namespace ForEvolve.ExceptionMapper;
 
-public interface IExceptionHandler
+public interface IExceptionSerializer
 {
-    Task<bool> CanHandle(Exception exception);
     Task ExecuteAsync(ExceptionHandlingContext context);
 }

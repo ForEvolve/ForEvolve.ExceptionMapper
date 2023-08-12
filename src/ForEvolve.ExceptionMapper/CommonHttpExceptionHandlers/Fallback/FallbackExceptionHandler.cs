@@ -5,15 +5,13 @@ namespace ForEvolve.ExceptionMapper.Handlers.Fallback;
 
 public class FallbackExceptionHandler : IExceptionHandler
 {
-    public int Order => HandlerOrder.FallbackOrder;
-
     private readonly FallbackExceptionHandlerOptions _options;
     public FallbackExceptionHandler(IOptionsMonitor<FallbackExceptionHandlerOptions> options)
     {
         _options = options.CurrentValue;
     }
 
-    public Task<bool> KnowHowToHandleAsync(Exception exception)
+    public Task<bool> CanHandle(Exception exception)
     {
         if (_options.Strategy == FallbackStrategy.Handle)
         {

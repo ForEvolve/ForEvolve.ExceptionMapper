@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace ForEvolve.ExceptionMapper.Serialization.Json;
 
-public class ProblemDetailsSerializationHandler : IExceptionHandler
+public class ProblemDetailsSerializationHandler : IExceptionSerializer
 {
     private readonly ProblemDetailsFactory _problemDetailsFactory;
     private readonly IHostEnvironment _hostEnvironment;
@@ -30,8 +30,6 @@ public class ProblemDetailsSerializationHandler : IExceptionHandler
         _problemDetailsService = problemDetailsService ?? throw new ArgumentNullException(nameof(problemDetailsService));
 #endif
     }
-
-    public int Order => HandlerOrder.SerializerOrder;
 
     public async Task ExecuteAsync(ExceptionHandlingContext ctx)
     {
@@ -92,10 +90,5 @@ public class ProblemDetailsSerializationHandler : IExceptionHandler
 #pragma warning restore CS0618 // Type or member is obsolete
 #endif
 
-    }
-
-    public Task<bool> KnowHowToHandleAsync(Exception exception)
-    {
-        return Task.FromResult(_options.SerializeExceptions);
     }
 }

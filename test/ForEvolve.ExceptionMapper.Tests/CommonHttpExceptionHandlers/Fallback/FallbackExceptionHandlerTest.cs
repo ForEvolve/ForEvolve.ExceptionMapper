@@ -21,22 +21,13 @@ public class FallbackExceptionHandlerTest
         sut = new FallbackExceptionHandler(_optionsMonitorMock.Object);
     }
 
-    public class Order : FallbackExceptionHandlerTest
-    {
-        [Fact]
-        public void Should_be_equal_to_FallbackOrder()
-        {
-            Assert.Equal(HandlerOrder.FallbackOrder, sut.Order);
-        }
-    }
-
     public class KnowHowToHandleAsync : FallbackExceptionHandlerTest
     {
         [Fact]
         public async Task Should_return_true_when_FallbackStrategy_equals_Handle()
         {
             _options.Strategy = FallbackStrategy.Handle;
-            var result = await sut.KnowHowToHandleAsync(new Exception());
+            var result = await sut.CanHandle(new Exception());
             Assert.True(result);
         }
 
@@ -44,7 +35,7 @@ public class FallbackExceptionHandlerTest
         public async Task Should_return_false_when_FallbackStrategy_equals_Ignore()
         {
             _options.Strategy = FallbackStrategy.Ignore;
-            var result = await sut.KnowHowToHandleAsync(new Exception());
+            var result = await sut.CanHandle(new Exception());
             Assert.False(result);
         }
     }

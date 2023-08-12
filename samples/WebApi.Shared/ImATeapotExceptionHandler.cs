@@ -7,8 +7,6 @@ namespace WebApi.Shared;
 
 public class ImATeapotExceptionHandler : IExceptionHandler
 {
-    public int Order => HandlerOrder.DefaultOrder;
-
     public async Task ExecuteAsync(ExceptionHandlingContext context)
     {
         var response = context.HttpContext.Response;
@@ -26,7 +24,7 @@ Source: <a href=""https://www.asciiart.eu/food-and-drinks/coffee-and-tea"" targe
         await response.WriteAsync("</pre></body></html>");
     }
 
-    public Task<bool> KnowHowToHandleAsync(Exception exception)
+    public Task<bool> CanHandle(Exception exception)
     {
         return Task.FromResult(exception is ImATeapotException);
     }

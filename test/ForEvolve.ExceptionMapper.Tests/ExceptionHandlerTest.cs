@@ -27,7 +27,7 @@ public class ExceptionHandlerTest
         public async Task Should_return_true_when_the_exception_is_a_TException(TestException exception)
         {
             var sut = new ExceptionTestHandler<TestException>();
-            var result = await sut.KnowHowToHandleAsync(exception);
+            var result = await sut.CanHandle(exception);
             Assert.True(result);
         }
 
@@ -36,7 +36,7 @@ public class ExceptionHandlerTest
         public async Task Should_return_false_when_the_exception_type_is_not_a_TException(Exception exception)
         {
             var sut = new ExceptionTestHandler<TestException>();
-            var result = await sut.KnowHowToHandleAsync(exception);
+            var result = await sut.CanHandle(exception);
             Assert.False(result);
         }
 

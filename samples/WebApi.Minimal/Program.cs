@@ -4,26 +4,8 @@ using ForEvolve.ExceptionMapper.Serialization.Json;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.AddExceptionMapper();
 builder.Services
-    .AddExceptionMapper(builder => builder
-        //.AddExceptionHandler<ImATeapotExceptionHandler>()
-        //.AddExceptionHandler<MyForbiddenExceptionHandler>()
-        .MapCommonHttpExceptions()
-        .MapHttpFallback(options =>
-        {
-            options.Strategy = FallbackStrategy.Handle;
-        })
-        //.Map<MyUnauthorizedException>(map => map.ToStatusCode(401))
-        //.Map<GoneException>(map => map.ToStatusCode(410))
-        .Map<NotSupportedException>(map => map.To(context =>
-        {
-            context.HttpContext.Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
-            context.Result = new ExceptionHandledResult(context.Error);
-            //context.HttpContext.Response.WriteAsync("{\"title\":\"This operation is not supported at the moment!\"}");
-            return Task.CompletedTask;
-        }, ForEvolve.ExceptionMapper.FluentMapper.FluentHandlerStrategy.Append))
-        .SerializeAsProblemDetails()
-    )
     .Configure<ApiBehaviorOptions>(options =>
     {
         options.ClientErrorMapping.Add(StatusCodes.Status409Conflict, new ClientErrorData
@@ -38,25 +20,26 @@ var app = builder.Build();
 app.UseExceptionMapper();
 app.MapGet("/", () => new string[]
 {
-    "/NotFound",
-    "/Conflict",
-    "/InternalServerError",
-    "/NotImplemented",
-    "/Fallback",
     "/BadRequestException",
-    "/NotSupportedException"
+    "/ConflictException",
+    "/ForbiddenException",
+    "/GoneException",
+    "/NotFoundException",
+    "/ResourceNotFoundException",
+    "/UnauthorizedException",
+    "/GatewayTimeoutException",
+    "/InternalServerErrorException",
+    "/ServiceUnavailableException",
 });
-app.MapGet("/NotFound", context => throw new NotFoundException());
-app.MapGet("/Conflict", context => throw new ConflictException());
-app.MapGet("/InternalServerError", context => throw new InternalServerErrorException(new Exception()));
-app.MapGet("/NotImplemented", context => throw new NotImplementedException());
-//app.MapGet("/MyNotFoundException", context => throw new MyNotFoundException());
-app.MapGet("/Fallback", context => throw new Exception());
-//app.MapGet("/MyUnauthorizedException", context => throw new MyUnauthorizedException());
-//app.MapGet("/GoneException", context => throw new GoneException());
-//app.MapGet("/ImATeapotException", context => throw new ImATeapotException());
-//app.MapGet("/MyForbiddenException", context => throw new MyForbiddenException());
 app.MapGet("/BadRequestException", context => throw new BadRequestException());
-app.MapGet("/NotSupportedException", context => throw new NotSupportedException());
+app.MapGet("/ConflictException", context => throw new ConflictException());
+app.MapGet("/ForbiddenException", context => throw new ForbiddenException());
+app.MapGet("/GoneException", context => throw new GoneException());
+app.MapGet("/NotFoundException", context => throw new NotFoundException());
+app.MapGet("/ResourceNotFoundException", context => throw new ResourceNotFoundException(context));
+app.MapGet("/UnauthorizedException", context => throw new UnauthorizedException());
+app.MapGet("/GatewayTimeoutException", context => throw new GatewayTimeoutException());
+app.MapGet("/InternalServerErrorException", context => throw new InternalServerErrorException(new Exception("Some other error that occurred.")));
+app.MapGet("/ServiceUnavailableException", context => throw new ServiceUnavailableException());
 
 app.Run();

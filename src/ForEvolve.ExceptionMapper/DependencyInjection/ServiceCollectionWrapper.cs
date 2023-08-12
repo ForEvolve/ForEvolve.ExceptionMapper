@@ -1,11 +1,14 @@
-﻿namespace Microsoft.Extensions.DependencyInjection;
+﻿using ForEvolve.ExceptionMapper;
 
-public class ServiceCollectionWrapper : IExceptionMappingBuilder
+namespace Microsoft.Extensions.DependencyInjection;
+
+public class ExceptionMappingBuilder : IExceptionMappingBuilder
 {
-    public ServiceCollectionWrapper(IServiceCollection services)
+    public ExceptionMappingBuilder(IServiceCollection services)
     {
         Services = services ?? throw new ArgumentNullException(nameof(services));
     }
 
     public IServiceCollection Services { get; }
+    public IList<IExceptionHandler> Handlers { get; } = new List<IExceptionHandler>();
 }

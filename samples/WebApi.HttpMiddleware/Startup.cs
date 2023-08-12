@@ -1,43 +1,29 @@
 using ForEvolve.ExceptionMapper;
-using ForEvolve.ExceptionMapper.Handlers.Fallback;
-using ForEvolve.ExceptionMapper.Serialization.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Threading.Tasks;
 using WebApi.Shared;
 
 namespace WebApi.HttpMiddleware;
 
 public class Startup
 {
+    public Startup(IConfigurationRoot configuration)
+    {
+        Configuration = configuration;
+    }
+    public IConfigurationRoot Configuration { get; }
+
     // This method gets called by the runtime. Use this method to add services to the container.
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
         services
-            .AddExceptionMapper(builder => builder
-                .AddExceptionHandler<ImATeapotExceptionHandler>()
-                .AddExceptionHandler<MyForbiddenExceptionHandler>()
-                .MapCommonHttpExceptions()
-                .MapHttpFallback(options =>
-                {
-                    options.Strategy = FallbackStrategy.Handle;
-                })
-                .Map<MyUnauthorizedException>(map => map.ToStatusCode(401))
-                .Map<GoneException>(map => map.ToStatusCode(410))
-                .Map<NotSupportedException>(map => map.To(context =>
-                {
-                    context.HttpContext.Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
-                    context.Result = new ExceptionHandledResult(context.Error);
-                    context.HttpContext.Response.WriteAsync("{\"title\":\"This operation is not supported at the moment!\"}");
-                    return Task.CompletedTask;
-                }, ForEvolve.ExceptionMapper.FluentMapper.FluentHandlerStrategy.Append))
-                .SerializeAsProblemDetails()
-            )
+            .AddExceptionMapper(Configuration)
             .AddControllers()
             .ConfigureApiBehaviorOptions(options =>
             {

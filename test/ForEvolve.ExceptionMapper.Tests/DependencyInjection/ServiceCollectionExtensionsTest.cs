@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Moq;
 using Xunit;
 
 namespace ForEvolve.ExceptionMapper;
@@ -9,8 +12,11 @@ public class ServiceCollectionExtensionsTest
     public void Should_register_all_dependencies()
     {
         // Arrange
+        var configuration = new ConfigurationBuilder().Build();
+        var hostEnvironmentMock = new Mock<IHostEnvironment>();
         var services = new ServiceCollection();
-        services.AddExceptionMapper();
+        services.AddSingleton(hostEnvironmentMock.Object);
+        services.AddExceptionMapper(configuration);
         var serviceProvider = services.BuildServiceProvider();
 
         // Act

@@ -4,9 +4,8 @@ public abstract class ExceptionHandler<TException> : IExceptionHandler
     where TException : Exception
 {
     public abstract int StatusCode { get; }
-    public virtual int Order => HandlerOrder.DefaultOrder;
 
-    public virtual Task<bool> KnowHowToHandleAsync(Exception exception)
+    public virtual Task<bool> CanHandle(Exception exception)
     {
         return Task.FromResult(exception is TException);
     }
