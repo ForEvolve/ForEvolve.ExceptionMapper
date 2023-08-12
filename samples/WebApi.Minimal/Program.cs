@@ -1,7 +1,7 @@
+using FluentValidation;
 using ForEvolve.ExceptionMapper;
-using ForEvolve.ExceptionMapper.Handlers.Fallback;
-using ForEvolve.ExceptionMapper.Serialization.Json;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using WebApi.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,6 +45,9 @@ app.MapGet("/", () => new string[]
     "---[Others]---",
     "/fallback",
     "/a-url-that-does-not-exist",
+#if NET7_0_OR_GREATER
+    "/fluent-validation?name=&description=&range=0",
+#endif
 });
 app.MapGet("/BadRequestException", context => throw new BadRequestException());
 app.MapGet("/ConflictException", context => throw new ConflictException());
@@ -64,5 +67,28 @@ app.MapGet("/MyNotFoundException", context => throw new MyNotFoundException());
 app.MapGet("/MyUnauthorizedException", context => throw new MyUnauthorizedException(Random.Shared.Next(100) % 2 == 0 ? "John" : "Jane"));
 
 app.MapGet("/fallback", context => throw new Exception("An error that gets handled by the fallback handler."));
-
+#if NET7_0_OR_GREATER
+app.MapGet("/fluent-validation", ([AsParameters] Entity entity) =>
+{
+    var validator = new EntityValidator();
+    var result = validator.Validate(entity);
+    if (!result.IsValid)
+    {
+        throw new ValidationException(result.Errors);
+    }
+    return TypedResults.Ok(entity);
+});
+#endif
 app.Run();
+
+
+public record class Entity(string Name, string Description, int Range);
+public class EntityValidator : AbstractValidator<Entity>
+{
+    public EntityValidator()
+    {
+        RuleFor(x => x.Name).NotEmpty();
+        RuleFor(x => x.Description).NotEmpty();
+        RuleFor(x => x.Range).GreaterThanOrEqualTo(20).LessThanOrEqualTo(40);
+    }
+}
