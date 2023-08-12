@@ -15,7 +15,11 @@ public static class ServiceCollectionExceptionFiltersExtensions
 {
     public static IServiceCollection AddExceptionMapper(this IServiceCollection services, IConfiguration configuration, Action<IExceptionMappingBuilder>? exceptionMappingBuilder = null)
     {
-        //services.AddLogging();
+#if NET7_0_OR_GREATER
+        services.ConfigureHttpJsonOptions(options => {
+            options.SerializerOptions.DictionaryKeyPolicy = options.SerializerOptions.PropertyNamingPolicy;
+        });
+#endif
         services.AddSingleton<ExceptionHandlerCollection>();
         services.AddSingleton<ExceptionMapperOptions>();
         services.TryAddSingleton<IExceptionHandlingManager, ExceptionHandlingManager>();
@@ -31,6 +35,9 @@ public static class ServiceCollectionExceptionFiltersExtensions
             .Map<NotFoundException>().ToStatusCode(StatusCodes.Status404NotFound)
             .Map<ResourceNotFoundException>().ToStatusCode(StatusCodes.Status404NotFound)
             .Map<UnauthorizedException>().ToStatusCode(StatusCodes.Status401Unauthorized)
+
+            // ASP.NET Core exceptions
+            .Map<BadHttpRequestException>().ToStatusCode(StatusCodes.Status400BadRequest)
 
             // Common server exceptions
             .Map<GatewayTimeoutException>().ToStatusCode(StatusCodes.Status504GatewayTimeout)
