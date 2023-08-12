@@ -12,18 +12,22 @@ namespace WebApi.HttpMiddleware;
 
 public class Startup
 {
-    public Startup(IConfigurationRoot configuration)
+    public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
     }
-    public IConfigurationRoot Configuration { get; }
+    public IConfiguration Configuration { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
         services
-            .AddExceptionMapper(Configuration)
+            .AddExceptionMapper(Configuration, builder =>
+            {
+                builder.AddExceptionHandler<MyForbiddenExceptionHandler>();
+                builder.Map<ImATeapotException>().ToStatusCode(StatusCodes.Status418ImATeapot);
+            })
             .AddControllers()
             .ConfigureApiBehaviorOptions(options =>
             {
@@ -45,49 +49,73 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
-            endpoints.MapGet("/", async context =>
+            endpoints.MapGet("/", () => new
             {
-                var baseUri = $"{context.Request.Scheme}://{context.Request.Host}";
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync("{");
-                await context.Response.WriteAsync("\"name\":\"Exploration document\",");
-                await context.Response.WriteAsync("\"routing\":[");
-                await context.Response.WriteAsync($"\"{baseUri}/Routing/NotFound\",");
-                await context.Response.WriteAsync($"\"{baseUri}/Routing/Conflict\",");
-                await context.Response.WriteAsync($"\"{baseUri}/Routing/InternalServerError\",");
-                await context.Response.WriteAsync($"\"{baseUri}/Routing/NotImplemented\",");
-                await context.Response.WriteAsync($"\"{baseUri}/Routing/MyNotFoundException\",");
-                await context.Response.WriteAsync($"\"{baseUri}/Routing/Fallback\",");
-                await context.Response.WriteAsync($"\"{baseUri}/Routing/MyUnauthorizedException\",");
-                await context.Response.WriteAsync($"\"{baseUri}/Routing/GoneException\",");
-                await context.Response.WriteAsync($"\"{baseUri}/Routing/ImATeapotException\",");
-                await context.Response.WriteAsync($"\"{baseUri}/Routing/MyForbiddenException\"");
-                await context.Response.WriteAsync("],");
-                await context.Response.WriteAsync("\"mvc\":[");
-                await context.Response.WriteAsync($"\"{baseUri}/mvc/NotFound\",");
-                await context.Response.WriteAsync($"\"{baseUri}/mvc/Conflict\",");
-                await context.Response.WriteAsync($"\"{baseUri}/mvc/InternalServerError\",");
-                await context.Response.WriteAsync($"\"{baseUri}/mvc/NotImplemented\",");
-                await context.Response.WriteAsync($"\"{baseUri}/mvc/MyNotFoundException\",");
-                await context.Response.WriteAsync($"\"{baseUri}/mvc/Fallback\",");
-                await context.Response.WriteAsync($"\"{baseUri}/mvc/MyUnauthorizedException\",");
-                await context.Response.WriteAsync($"\"{baseUri}/mvc/GoneException\",");
-                await context.Response.WriteAsync($"\"{baseUri}/mvc/ImATeapotException\",");
-                await context.Response.WriteAsync($"\"{baseUri}/mvc/MyForbiddenException\",");
-                await context.Response.WriteAsync($"\"{baseUri}/mvc/ValidationError\"");
-                await context.Response.WriteAsync("]");
-                await context.Response.WriteAsync("}");
+                routing = new string[]
+                {
+                    "---[Client]---",
+                    "/Routing/BadRequestException",
+                    "/Routing/ConflictException",
+                    "/Routing/ForbiddenException",
+                    "/Routing/GoneException",
+                    "/Routing/NotFoundException",
+                    "/Routing/ResourceNotFoundException",
+                    "/Routing/UnauthorizedException",
+                    "---[Server]---",
+                    "/Routing/GatewayTimeoutException",
+                    "/Routing/InternalServerErrorException",
+                    "/Routing/ServiceUnavailableException",
+                    "---[Custom]---",
+                    "/Routing/ImATeapotException",
+                    "/Routing/MyForbiddenException",
+                    "/Routing/MyNotFoundException",
+                    "/Routing/MyUnauthorizedException",
+                    "---[Others]---",
+                    "/Routing/fallback",
+                },
+                mvc = new string[]
+                {
+                    "---[Client]---",
+                    "/mvc/BadRequestException",
+                    "/mvc/ConflictException",
+                    "/mvc/ForbiddenException",
+                    "/mvc/GoneException",
+                    "/mvc/NotFoundException",
+                    "/mvc/ResourceNotFoundException",
+                    "/mvc/UnauthorizedException",
+                    "---[Server]---",
+                    "/mvc/GatewayTimeoutException",
+                    "/mvc/InternalServerErrorException",
+                    "/mvc/ServiceUnavailableException",
+                    "---[Custom]---",
+                    "/mvc/ImATeapotException",
+                    "/mvc/MyForbiddenException",
+                    "/mvc/MyNotFoundException",
+                    "/mvc/MyUnauthorizedException",
+                    "---[Others]---",
+                    "/mvc/fallback",
+                    "/mvc/ValidationError"
+                }
             });
-            endpoints.MapGet("/Routing/NotFound", context => throw new NotFoundException());
-            endpoints.MapGet("/Routing/Conflict", context => throw new ConflictException());
-            endpoints.MapGet("/Routing/InternalServerError", context => throw new InternalServerErrorException(new Exception()));
-            endpoints.MapGet("/Routing/NotImplemented", context => throw new NotImplementedException());
-            endpoints.MapGet("/Routing/MyNotFoundException", context => throw new MyNotFoundException());
-            endpoints.MapGet("/Routing/Fallback", context => throw new Exception());
-            endpoints.MapGet("/Routing/MyUnauthorizedException", context => throw new MyUnauthorizedException());
+           
+            endpoints.MapGet("/Routing/BadRequestException", context => throw new BadRequestException());
+            endpoints.MapGet("/Routing/ConflictException", context => throw new ConflictException());
+            endpoints.MapGet("/Routing/ForbiddenException", context => throw new ForbiddenException());
             endpoints.MapGet("/Routing/GoneException", context => throw new GoneException());
+            endpoints.MapGet("/Routing/NotFoundException", context => throw new NotFoundException());
+            endpoints.MapGet("/Routing/ResourceNotFoundException", context => throw new ResourceNotFoundException(context));
+            endpoints.MapGet("/Routing/UnauthorizedException", context => throw new UnauthorizedException());
+
+            endpoints.MapGet("/Routing/GatewayTimeoutException", context => throw new GatewayTimeoutException());
+            endpoints.MapGet("/Routing/InternalServerErrorException", context => throw new InternalServerErrorException(new Exception("Some other error that occurred.")));
+            endpoints.MapGet("/Routing/ServiceUnavailableException", context => throw new ServiceUnavailableException());
+
             endpoints.MapGet("/Routing/ImATeapotException", context => throw new ImATeapotException());
             endpoints.MapGet("/Routing/MyForbiddenException", context => throw new MyForbiddenException());
+            endpoints.MapGet("/Routing/MyNotFoundException", context => throw new MyNotFoundException());
+            endpoints.MapGet("/Routing/MyUnauthorizedException", context => throw new MyUnauthorizedException(Random.Shared.Next(100) % 2 == 0 ? "John" : "Jane"));
+
+            endpoints.MapGet("/Routing/Fallback", context => throw new Exception("An error that gets handled by the fallback handler."));
         });
     }
 }

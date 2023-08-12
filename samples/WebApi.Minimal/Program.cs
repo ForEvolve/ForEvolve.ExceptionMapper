@@ -2,9 +2,14 @@ using ForEvolve.ExceptionMapper;
 using ForEvolve.ExceptionMapper.Handlers.Fallback;
 using ForEvolve.ExceptionMapper.Serialization.Json;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.AddExceptionMapper();
+builder.AddExceptionMapper(builder =>
+{
+    builder.AddExceptionHandler<MyForbiddenExceptionHandler>();
+    builder.Map<ImATeapotException>().ToStatusCode(StatusCodes.Status418ImATeapot);
+});
 builder.Services
     .Configure<ApiBehaviorOptions>(options =>
     {
@@ -20,6 +25,7 @@ var app = builder.Build();
 app.UseExceptionMapper();
 app.MapGet("/", () => new string[]
 {
+    "---[Client]---",
     "/BadRequestException",
     "/ConflictException",
     "/ForbiddenException",
@@ -27,9 +33,17 @@ app.MapGet("/", () => new string[]
     "/NotFoundException",
     "/ResourceNotFoundException",
     "/UnauthorizedException",
+    "---[Server]---",
     "/GatewayTimeoutException",
     "/InternalServerErrorException",
     "/ServiceUnavailableException",
+    "---[Custom]---",
+    "/ImATeapotException",
+    "/MyForbiddenException",
+    "/MyNotFoundException",
+    "/MyUnauthorizedException",
+    "---[Others]---",
+    "/fallback",
 });
 app.MapGet("/BadRequestException", context => throw new BadRequestException());
 app.MapGet("/ConflictException", context => throw new ConflictException());
@@ -38,8 +52,16 @@ app.MapGet("/GoneException", context => throw new GoneException());
 app.MapGet("/NotFoundException", context => throw new NotFoundException());
 app.MapGet("/ResourceNotFoundException", context => throw new ResourceNotFoundException(context));
 app.MapGet("/UnauthorizedException", context => throw new UnauthorizedException());
+
 app.MapGet("/GatewayTimeoutException", context => throw new GatewayTimeoutException());
 app.MapGet("/InternalServerErrorException", context => throw new InternalServerErrorException(new Exception("Some other error that occurred.")));
 app.MapGet("/ServiceUnavailableException", context => throw new ServiceUnavailableException());
+
+app.MapGet("/ImATeapotException", context => throw new ImATeapotException());
+app.MapGet("/MyForbiddenException", context => throw new MyForbiddenException());
+app.MapGet("/MyNotFoundException", context => throw new MyNotFoundException());
+app.MapGet("/MyUnauthorizedException", context => throw new MyUnauthorizedException(Random.Shared.Next(100) % 2 == 0 ? "John" : "Jane"));
+
+app.MapGet("/fallback", context => throw new Exception("An error that gets handled by the fallback handler."));
 
 app.Run();
