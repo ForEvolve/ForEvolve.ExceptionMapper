@@ -331,11 +331,9 @@ The version 3 of ExceptionMapper is a major rewrite that simplifies the codebase
 
 Here is a list of what I want to do:
 
--   [x] Take the fallback out of `MapCommonHttpExceptions()` into its own extension, like `MapHttpFallback()`
--   [x] Add one or more serialization handlers that at least support JSON serialization and that leverage `ProblemDetailsFactory` to create `ProblemDetails` objects.
--   [ ] Write tests that covers `ForEvolve.ExceptionMapper.FluentMapper` and other missing pieces.
 -   [ ] Improve overall test coverage.
--   [ ] Create a Minimal API project sample.
+-   [ ] Implement custom type converter. The serializer would either use the converter or fall back to the reflection-based code if no type converter is available.
+-   [ ] Create a more "real-life" code sample.
 
 # Found a bug or have a feature request?
 
