@@ -42,6 +42,12 @@ public class ProblemDetailsSerializationHandler : IExceptionSerializer
 
     public async Task ExecuteAsync(ExceptionHandlingContext ctx)
     {
+        if (!_options.SerializeExceptions)
+        {
+            await ctx.HttpContext.Response.CompleteAsync();
+            return;
+        }
+
         var problemDetails = _problemDetailsFactory.CreateProblemDetails(
             ctx.HttpContext,
             title: ctx.Error.Message,
@@ -49,7 +55,7 @@ public class ProblemDetailsSerializationHandler : IExceptionSerializer
         );
 
         // Add debug info
-        var displayDebugInformation = _options.DisplayDebugInformation?.Invoke() ?? false;
+        var displayDebugInformation = _options.DisplayDebugInformation?.Invoke(ctx) ?? false;
         if (displayDebugInformation || _hostEnvironment.IsDevelopment())
         {
             var errorType = ctx.Error.GetType();
