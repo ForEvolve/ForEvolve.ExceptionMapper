@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using System.Reflection.PortableExecutable;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

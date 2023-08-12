@@ -44,6 +44,7 @@ app.MapGet("/", () => new string[]
     "/MyUnauthorizedException",
     "---[Others]---",
     "/fallback",
+    "/a-url-that-does-not-exist",
 });
 app.MapGet("/BadRequestException", context => throw new BadRequestException());
 app.MapGet("/ConflictException", context => throw new ConflictException());

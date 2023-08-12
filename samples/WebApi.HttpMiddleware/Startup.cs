@@ -95,6 +95,10 @@ public class Startup
                     "---[Others]---",
                     "/mvc/fallback",
                     "/mvc/ValidationError"
+                },
+                other = new string[]
+                {
+                    "/a-url-that-does-not-exist"
                 }
             });
            
