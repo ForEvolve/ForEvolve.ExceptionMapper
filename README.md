@@ -238,7 +238,7 @@ Use the `DisplayDebugInformation` function to display the debug info in other en
 
 ## Property names
 
-To change the way the property name are serialzied, you can configure the `JsonOptions` and change the `PropertyNamingPolicy` property.
+To change the way the property name are serialized, you can configure the `JsonOptions` and change the `PropertyNamingPolicy` property.
 
 **.NET 8+**
 
@@ -260,7 +260,7 @@ builder.Services.Configure<JsonOptions>(options => {
 
 For .NET 7+ projects, ExceptionMapper sets the `DictionaryKeyPolicy` property to the `PropertyNamingPolicy` property value so dictionaries are serialized the same way as the normal properties.
 
-## Ensuring a property is not serialzied
+## Ensuring a property is not serialized
 
 If your custom exception has properties that should not be serialized, you can mark them with the `[JsonIgnore]` attribute, like the following and the serializer will ignore them:
 
