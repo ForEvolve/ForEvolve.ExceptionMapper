@@ -68,7 +68,7 @@ public class Startup
                     "---[Custom]---",
                     "/Routing/ImATeapotException",
                     "/Routing/MyForbiddenException",
-                    "/Routing/MyNotFoundException",
+                    "/Routing/DroidNotFoundException",
                     "/Routing/MyUnauthorizedException",
                     "---[Others]---",
                     "/Routing/fallback",
@@ -90,7 +90,7 @@ public class Startup
                     "---[Custom]---",
                     "/mvc/ImATeapotException",
                     "/mvc/MyForbiddenException",
-                    "/mvc/MyNotFoundException",
+                    "/mvc/DroidNotFoundException",
                     "/mvc/MyUnauthorizedException",
                     "---[Others]---",
                     "/mvc/fallback",
@@ -116,7 +116,7 @@ public class Startup
 
             endpoints.MapGet("/Routing/ImATeapotException", context => throw new ImATeapotException());
             endpoints.MapGet("/Routing/MyForbiddenException", context => throw new MyForbiddenException());
-            endpoints.MapGet("/Routing/MyNotFoundException", context => throw new MyNotFoundException());
+            endpoints.MapGet("/Routing/DroidNotFoundException", context => throw new DroidNotFoundException());
             endpoints.MapGet("/Routing/MyUnauthorizedException", context => throw new MyUnauthorizedException(Random.Shared.Next(100) % 2 == 0 ? "John" : "Jane"));
 
             endpoints.MapGet("/Routing/Fallback", context => throw new Exception("An error that gets handled by the fallback handler."));

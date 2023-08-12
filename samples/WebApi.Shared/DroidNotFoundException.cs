@@ -2,9 +2,9 @@
 
 namespace WebApi.Shared;
 
-public class MyNotFoundException : NotFoundException
+public class DroidNotFoundException : NotFoundException
 {
-    public MyNotFoundException()
+    public DroidNotFoundException()
         : base("These aren't the droids we're looking for.")
     {
             

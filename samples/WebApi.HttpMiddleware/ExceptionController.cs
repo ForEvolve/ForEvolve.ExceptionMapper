@@ -50,8 +50,8 @@ public class ExceptionController : ControllerBase
     [HttpGet("MyForbiddenException")]
     public IActionResult MyForbiddenException() => throw new MyForbiddenException();
 
-    [HttpGet("MyNotFoundException")]
-    public IActionResult MyNotFoundException() => throw new MyNotFoundException();
+    [HttpGet("DroidNotFoundException")]
+    public IActionResult DroidNotFoundException() => throw new DroidNotFoundException();
 
     [HttpGet("MyUnauthorizedException")]
     public IActionResult MyUnauthorizedException() => throw new MyUnauthorizedException(Random.Shared.Next(100) % 2 == 0 ? "John" : "Jane");

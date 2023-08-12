@@ -1,14 +1,23 @@
+#undef CHANGE_PROPERTY_NAME_POLICY
+#undef CONFIGURE_OPTIONS
 using FluentValidation;
 using ForEvolve.ExceptionMapper;
+using ForEvolve.ExceptionMapper.Serialization.Json;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using WebApi.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
+#if CHANGE_PROPERTY_NAME_POLICY
 #if NET8_0_OR_GREATER
 builder.Services.ConfigureHttpJsonOptions(options => {
     options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseUpper;
 });
+#else
+builder.Services.Configure<JsonOptions>(options => {
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+});
+#endif
 #endif
 builder.AddExceptionMapper(builder =>
 {
@@ -25,6 +34,21 @@ builder.Services
         });
     })
 ;
+
+#if CONFIGURE_OPTIONS
+builder.Services.Configure<ProblemDetailsSerializationOptions>(options =>
+{
+    options.SerializeExceptions = false;
+    options.DisplayDebugInformation = (ExceptionHandlingContext ctx) =>
+    {
+#if DEBUG
+        return true;
+#else
+        return false;
+#endif
+    };
+});
+#endif
 
 var app = builder.Build();
 app.UseExceptionMapper();
@@ -45,7 +69,7 @@ app.MapGet("/", () => new string[]
     "---[Custom]---",
     "/ImATeapotException",
     "/MyForbiddenException",
-    "/MyNotFoundException",
+    "/DroidNotFoundException",
     "/MyUnauthorizedException",
     "---[Others]---",
     "/fallback",
@@ -68,7 +92,7 @@ app.MapGet("/ServiceUnavailableException", context => throw new ServiceUnavailab
 
 app.MapGet("/ImATeapotException", context => throw new ImATeapotException());
 app.MapGet("/MyForbiddenException", context => throw new MyForbiddenException());
-app.MapGet("/MyNotFoundException", context => throw new MyNotFoundException());
+app.MapGet("/DroidNotFoundException", context => throw new DroidNotFoundException());
 app.MapGet("/MyUnauthorizedException", context => throw new MyUnauthorizedException(Random.Shared.Next(100) % 2 == 0 ? "John" : "Jane"));
 
 app.MapGet("/fallback", context => throw new Exception("An error that gets handled by the fallback handler."));
