@@ -15,11 +15,6 @@ public static class ServiceCollectionExceptionFiltersExtensions
 {
     public static IServiceCollection AddExceptionMapper(this IServiceCollection services, IConfiguration configuration, Action<IExceptionMappingBuilder>? exceptionMappingBuilder = null)
     {
-#if NET7_0_OR_GREATER
-        services.ConfigureHttpJsonOptions(options => {
-            options.SerializerOptions.DictionaryKeyPolicy = options.SerializerOptions.PropertyNamingPolicy;
-        });
-#endif
         services.AddSingleton<ExceptionHandlerCollection>();
         services.AddSingleton<ExceptionMapperOptions>();
         services.TryAddSingleton<IExceptionHandlingManager, ExceptionHandlingManager>();
@@ -36,8 +31,9 @@ public static class ServiceCollectionExceptionFiltersExtensions
             .Map<ResourceNotFoundException>().ToStatusCode(StatusCodes.Status404NotFound)
             .Map<UnauthorizedException>().ToStatusCode(StatusCodes.Status401Unauthorized)
 
-            // ASP.NET Core exceptions
+            // .NET exceptions
             .Map<BadHttpRequestException>().ToStatusCode(StatusCodes.Status400BadRequest)
+            .Map<NotImplementedException>().ToStatusCode(StatusCodes.Status501NotImplemented)
 
             // Common server exceptions
             .Map<GatewayTimeoutException>().ToStatusCode(StatusCodes.Status504GatewayTimeout)
@@ -57,9 +53,14 @@ public static class ServiceCollectionExceptionFiltersExtensions
 
     private static void AddSerializationHandler(this IServiceCollection services, IConfiguration configuration)
     {
+#if NET7_0_OR_GREATER
+        services.ConfigureHttpJsonOptions(options => {
+            options.SerializerOptions.DictionaryKeyPolicy = options.SerializerOptions.PropertyNamingPolicy;
+        });
+#endif
         services
             .AddOptions<ProblemDetailsSerializationOptions>()
-            .Bind(configuration.GetSection("ExceptionFilters:ProblemDetailsSerialization"))
+            .Bind(configuration.GetSection("ExceptionMapper:ProblemDetailsSerialization"))
             .ValidateOnStart()
         ;
         services.AddSingleton(sp => sp.GetRequiredService<IOptions<ProblemDetailsSerializationOptions>>().Value);
@@ -77,7 +78,7 @@ public static class ServiceCollectionExceptionFiltersExtensions
     {
         services
             .AddOptions<FallbackExceptionHandlerOptions>()
-            .Bind(configuration.GetSection("ExceptionFilters:FallbackExceptionHandler"))
+            .Bind(configuration.GetSection("ExceptionMapper:FallbackExceptionHandler"))
             .ValidateOnStart()
         ;
         services.AddSingleton(sp => sp.GetRequiredService<IOptions<FallbackExceptionHandlerOptions>>().Value);
