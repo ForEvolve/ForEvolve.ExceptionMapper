@@ -1,79 +1,80 @@
 name: Build, Test, and Deploy
 
 on:
-    push:
-        branches:
-            - master
-        paths-ignore:
-            - 'samples/**'
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - 'samples/**'
 
-    pull_request:
-        branches:
-            - master
+  pull_request:
+    branches:
+      - master
 
-    workflow_dispatch:
-        inputs:
-            deployToFeedz:
-                description: 'Deploy the libraries to feedz.io'
-                required: false
-                default: 'false'
-            deployToNuGet:
-                description: 'Deploy the libraries to NuGet.org'
-                required: false
-                default: 'false'
+  workflow_dispatch:
+    inputs:
+      deployToFeedz:
+        description: 'Deploy the libraries to feedz.io'
+        required: false
+        default: 'false'
+      deployToNuGet:
+        description: 'Deploy the libraries to NuGet.org'
+        required: false
+        default: 'false'
 
 env:
-    BUILD_CONFIGURATION: Release
-    ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+  BUILD_CONFIGURATION: Release
+  # ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
 jobs:
-    build-and-test:
-        runs-on: ubuntu-latest
-        strategy:
-            fail-fast: false
-            matrix:
-                dotnet: ['6.0.x']
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-        steps:
-            - uses: actions/checkout@v1
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: |
+            6.x
+            7.x
+            8.x
 
-            - name: Setup .NET Core
-              uses: actions/setup-dotnet@v1
-              with:
-                  dotnet-version: ${{ matrix.dotnet }}
+      - name: Build
+        run: dotnet build -c ${{ env.BUILD_CONFIGURATION }}
 
-            - name: Build
-              run: dotnet build --configuration ${{ env.BUILD_CONFIGURATION }}
+      - name: Unit Test
+        run: dotnet test -c ${{ env.BUILD_CONFIGURATION }}
 
-            - name: Unit Test
-              if: github.event_name == 'impossible'
-              run: dotnet test --configuration ${{ env.BUILD_CONFIGURATION }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-    deploy:
-        runs-on: ubuntu-latest
-        needs: build-and-test
-        strategy:
-            matrix:
-                dotnet: ['6.0.x']
-        steps:
-            - uses: actions/checkout@v1
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: |
+            6.x
+            7.x
+            8.x
 
-            - name: Setup .NET Core
-              uses: actions/setup-dotnet@v1
-              with:
-                  dotnet-version: ${{ matrix.dotnet }}
+      - uses: dotnet/nbgv@master
+        with:
+          setAllVars: true
 
-            - uses: aarnott/nbgv@v0.3
-              with:
-                  setAllVars: true
+      - name: Pack
+        run: dotnet pack -c ${{ env.BUILD_CONFIGURATION }}
 
-            - name: Pack
-              run: dotnet pack --configuration ${{ env.BUILD_CONFIGURATION }}
+      - name: Push to feedz.io
+        run: dotnet nuget push **/*.nupkg -k ${{ secrets.FEEDZ_API_KEY }} -s https://f.feedz.io/forevolve/exception-mapper/nuget/index.json
+        if: ${{ github.event.inputs.deployToFeedz == 'true' || github.event_name == 'pull_request' }}
 
-            - name: Push to feedz.io
-              run: dotnet nuget push **/*.nupkg -k ${{ secrets.FEEDZ_API_KEY }} -s https://f.feedz.io/forevolve/exception-mapper/nuget/index.json
-              if: ${{ github.event.inputs.deployToFeedz == 'true' || github.event_name == 'pull_request' }}
-
-            - name: Push to NuGet.org
-              run: dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
-              if: ${{ github.event.inputs.deployToNuGet == 'true' || github.event_name == 'push' }}
+      - name: Push to NuGet.org
+        run: dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+        if: ${{ github.event.inputs.deployToNuGet == 'true' || github.event_name == 'push' }}

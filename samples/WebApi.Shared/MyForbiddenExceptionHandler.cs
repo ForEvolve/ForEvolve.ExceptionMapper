@@ -1,10 +1,9 @@
 ﻿using ForEvolve.ExceptionMapper;
 using Microsoft.AspNetCore.Http;
 
-namespace WebApi.Shared
+namespace WebApi.Shared;
+
+public class MyForbiddenExceptionHandler : ExceptionHandler<MyForbiddenException>
 {
-    public class MyForbiddenExceptionHandler : ExceptionHandler<MyForbiddenException>
-    {
-        public override int StatusCode => StatusCodes.Status403Forbidden;
-    }
+    public override int StatusCode => StatusCodes.Status403Forbidden;
 }

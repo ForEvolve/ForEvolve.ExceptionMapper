@@ -1,8 +1,12 @@
-﻿using System;
+﻿using ForEvolve.ExceptionMapper;
 
-namespace WebApi.Shared
+namespace WebApi.Shared;
+
+public class MyUnauthorizedException : UnauthorizedException
 {
-    public class MyUnauthorizedException : Exception
+    public MyUnauthorizedException(string name)
+        : base($"Sorry {name}, you can't access this page.")
     {
+            
     }
 }

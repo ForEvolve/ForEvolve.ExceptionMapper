@@ -1,20 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net5.0;net6.0</TargetFrameworks>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ForEvolve.ExceptionMapper.CommonExceptions\ForEvolve.ExceptionMapper.CommonExceptions.csproj" />
-    <ProjectReference Include="..\ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers\ForEvolve.ExceptionMapper.CommonHttpExceptionHandlers.csproj" />
-    <ProjectReference Include="..\ForEvolve.ExceptionMapper.Core\ForEvolve.ExceptionMapper.Core.csproj" />
-    <ProjectReference Include="..\ForEvolve.ExceptionMapper.FluentMapper\ForEvolve.ExceptionMapper.FluentMapper.csproj" />
-    <ProjectReference Include="..\ForEvolve.ExceptionMapper.HttpMiddleware\ForEvolve.ExceptionMapper.HttpMiddleware.csproj" />
-    <ProjectReference Include="..\ForEvolve.ExceptionMapper.Scrutor\ForEvolve.ExceptionMapper.Scrutor.csproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' != 'netstandard2.0'">
-    <ProjectReference Include="..\ForEvolve.ExceptionMapper.Serialization.Json\ForEvolve.ExceptionMapper.Serialization.Json.csproj" />
-  </ItemGroup>
-
+    <PropertyGroup>
+        <TargetFrameworks>$(FETargetFrameworks)</TargetFrameworks>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="ForEvolve.Core" Version="2.3.5" />
+    </ItemGroup>
 </Project>
