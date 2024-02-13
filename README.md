@@ -5,24 +5,15 @@
 [![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Fforevolve%2Fexception-mapper%2Fshield%2FForEvolve.ExceptionMapper%2Flatest)](https://f.feedz.io/forevolve/exception-mapper/packages/ForEvolve.ExceptionMapper/latest/download)
 
 A simple ASP.NET Core middleware that intercepts and reacts to `Exception`.
-You can map specific exception types to HTTP Status Code, use predefined handlers, or create your own.
+You can map specific exception types to HTTP Status Codes, use predefined handlers, or create your own.
 
 You can throw an exception from anywhere in your codebase and ExceptionMapper will handle it according to your specifications.
 This makes it a breeze to uniformize exception handling in a REST API.
 
-All of the handlers are iterated through, in order, so you can build a pipeline to handle exceptions where multiple handlers have a single responsibility.
+All the handlers are iterated through, in order, so you can build a pipeline to handle exceptions where multiple handlers have a single responsibility.
 For example, you could have handlers that respond to certain exception types, then one or more fallback handlers that react only if no previous handler handled the exception.
 
-Finally, there is a serializer that convert handled exceptions to JSON, in the format of your choice, making your API linear between endpoints and exception types without much effort. The default serializer converts the errors to [Problem Details for HTTP APIs](https://datatracker.ietf.org/doc/html/rfc7807).
-
-## Versioning
-
-The packages follows _semantic versioning_ and use `Nerdbank.GitVersioning` to automatically version packages based on git commits.
-
-### Pre-released
-
-Prerelease packages are packaged code not yet merged to `master`.
-The prerelease CI builds are packaged and hosted at [feedz.io](feedz.io), thanks to their "Open Source" subscription.
+Finally, there is a serializer that converts handled exceptions to JSON, in the format of your choice, making your API linear between endpoints and exception types without much effort. The default serializer converts the errors to [Problem Details for HTTP APIs](https://datatracker.ietf.org/doc/html/rfc7807).
 
 ## How to install
 
@@ -36,7 +27,7 @@ _You can take a look at the `samples/WebApiSample` project for a working example
 
 ## Getting started
 
-You must register the services, and optionally configure/register handlers, and use the middleware that catches exceptions (and that handles the logic).
+You must register the services, optionally configure/register handlers, and use the middleware that catches exceptions (and that handles the logic).
 
 **Program.cs**
 
@@ -76,7 +67,7 @@ public class Startup
 
 ## Extending the existing exception
 
-An easy way to manage your custom exceptions is to inherit from the one that are already mapped.
+An easy way to manage your custom exceptions is to inherit from the ones that are already mapped.
 For example, you could create and throw the following `DroidNotFoundException` and ExceptionMapper will associate it with a 404 Not Found status code because it inherits from `NotFoundException`:
 
 ```csharp
@@ -91,7 +82,7 @@ public class DroidNotFoundException : NotFoundException
 
 ## Mapping Exception types to status code
 
-If you do not want or can't inherit the provided exceptions, you can map any Exception types to specific status code, like this:
+If you do not want or can't inherit the provided exceptions, you can map any Exception types to a specific status code, like this:
 
 ```csharp
 builder.AddExceptionMapper(builder =>
@@ -188,7 +179,7 @@ ExceptionMapper implements different common exceptions and their handlers, like 
 
 # Fallback handler
 
-ExceptionMapper also comes with a fallback handler that convert unhandled exceptions to `500 InternalServerError`. This is an opt-out feature, configured by the `FallbackExceptionHandlerOptions`.
+ExceptionMapper also comes with a fallback handler that converts unhandled exceptions to `500 InternalServerError`. This is an opt-out feature, configured by the `FallbackExceptionHandlerOptions`.
 
 You can also configure the `FallbackExceptionHandlerOptions` like the following or under the `ExceptionMapper:FallbackExceptionHandler` key in your settings:
 
@@ -234,11 +225,11 @@ You can also customize the options from the `appsettings.json` file:
 ```
 
 Note that the serializer displays the debug information when in development.
-Use the `DisplayDebugInformation` function to display the debug info in other environment, like staging or production.
+Use the `DisplayDebugInformation` function to display the debug info in other environments, like staging or production.
 
 ## Property names
 
-To change the way the property name are serialized, you can configure the `JsonOptions` and change the `PropertyNamingPolicy` property.
+To change the way the property names are serialized, you can configure the `JsonOptions` and change the `PropertyNamingPolicy` property.
 
 **.NET 8+**
 
@@ -258,7 +249,7 @@ builder.Services.Configure<JsonOptions>(options => {
 
 ### Dictionary keys
 
-For .NET 7+ projects, ExceptionMapper sets the `DictionaryKeyPolicy` property to the `PropertyNamingPolicy` property value so dictionaries are serialized the same way as the normal properties.
+For .NET 7+ projects, ExceptionMapper sets the `DictionaryKeyPolicy` property to the `PropertyNamingPolicy` property value, so dictionaries are serialized the same way as the normal properties.
 
 ## Ensuring a property is not serialized
 
@@ -289,51 +280,52 @@ services.AddSingleton<IExceptionSerializer, MySerializationHandler>();
 builder.AddExceptionMapper();
 ```
 
+## Versioning
+
+The package follows _semantic versioning_ and uses `Nerdbank.GitVersioning` to automatically version packages based on git commits.
+
+### Pre-released
+
+Prerelease packages are packaged code not yet merged to the `main` branch.
+The prerelease CI builds are packaged and hosted at [feedz.io](feedz.io), thanks to their "Open Source" subscription.
+
 # Release notes
 
 ## 3.0
 
-The version 3 of ExceptionMapper is a major rewrite that simplifies the codebase and usage of the library. Here are a few important changes:
+Version 3 of ExceptionMapper is a major rewrite that simplifies the codebase and usage of the library. Here are a few important changes:
 
 -   Add support to .NET 7 and .NET 8.
 -   Remove transitive dependency on JSON.NET (`Newtonsoft.Json`).
 -   Drop support for .NET Standard 2.0 because `ExceptionMapper` depends on the `HttpContext` class which requires a `<FrameworkReference Include="Microsoft.AspNetCore.App" />` which is not compatible with `netstandard2.0`.
--   Merge all assemblies in `ForEvolve.ExceptionMapper` but `ForEvolve.ExceptionMapper.Scrutor` and removed `ForEvolve.ExceptionMapper.Scrutor` althogether.
+-   Merge all assemblies in `ForEvolve.ExceptionMapper` but `ForEvolve.ExceptionMapper.Scrutor` and removed `ForEvolve.ExceptionMapper.Scrutor` altogether.
 -   Replace the `AddMvcCore` call by registering a copy of the `DefaultProblemDetailsFactory` using a `TryAddSingleton` call, so you must register your custom `ProblemDetailsFactory` implementation before `AddExceptionMapper`. The good news is, if you are using a custom factory, the `ProblemDetailsSerializationHandler` will use it!
     > Removing the copy of the `DefaultProblemDetailsFactory` class could be resolved by https://github.com/dotnet/aspnetcore/issues/49982
 -   Calling `AddExceptionMapper()` now registers the common exceptions and the serializer automatically.
 -   The `Order` property was removed from the `IExceptionHandler` interface. The system uses the registration order instead.
--   The interface now leverage a serialzier implementing the `IExceptionSerializer` interface. The serializer no longer implements the `IExceptionHandler` interface.
+-   The interface now leverages a serializer implementing the `IExceptionSerializer` interface. The serializer no longer implements the `IExceptionHandler` interface.
 -   By default, `ProblemDetailsSerializationOptions` is bound to the section `ExceptionMapper:ProblemDetailsSerialization` and `FallbackExceptionHandlerOptions` is bound to the section `ExceptionMapper:FallbackExceptionHandler`.
 
 ### Breaking changes .NET 7+
 
 -   Remove the `ContentType` and `JsonSerializerOptions` properties from the `ProblemDetailsSerializationOptions` class (`ForEvolve.ExceptionMapper.Serialization.Json`).
--   The `ProblemDetailsSerializationHandler` class now leverages the `IProblemDetailsService` interface to write the `ProblemDetails` object to the response stream instead of serializing it with the `JsonSerializer`, relinguishing the control of the process to .NET.
+-   The `ProblemDetailsSerializationHandler` class now leverages the `IProblemDetailsService` interface to write the `ProblemDetails` object to the response stream instead of serializing it with the `JsonSerializer`, relinquishing the control of the process to .NET.
 -   The `ProblemDetailsSerializationHandler` leverages the `JsonOptions` class to ensure the names are formatted according to the `PropertyNamingPolicy` object. The default is `camelCase`.
 -   ExceptionMapper sets the `DictionaryKeyPolicy` property to the `PropertyNamingPolicy` property value so dictionaries are serialized the same way as the normal properties.
 
-## 2.0
+## 2.0 (deprecated)
 
 -   Drop .NET Core 3.1 support
 -   Add support for .NET 6.0
 
-## 1.1
+## 1.1 (deprecated)
 
 -   Add a handler that serializes exceptions to `ProblemDetails` (JSON)
 -   Add the `ForEvolve.ExceptionMapper.Serialization.Json` project
 
-## 1.0
+## 1.0 (deprecated)
 
--   Initial release (no yet released)
-
-# Future/To do
-
-Here is a list of what I want to do:
-
--   [ ] Improve overall test coverage.
--   [ ] Implement custom type converter. The serializer would either use the converter or fall back to the reflection-based code if no type converter is available.
--   [ ] Create a more "real-life" code sample.
+-   Initial release (not yet released).
 
 # Found a bug or have a feature request?
 
@@ -341,8 +333,8 @@ Please open an issue and be as clear as possible; see _How to contribute?_ for m
 
 # How to contribute?
 
-If you would like to contribute to the project, first, thank you for your interest, and please read [Contributing to ForEvolve open source projects](https://github.com/ForEvolve/ForEvolve.DependencyInjection/tree/master/CONTRIBUTING.md) for more information.
+If you would like to contribute to the project, first, thank you for your interest, and please read [Contributing to ForEvolve open source projects](https://github.com/ForEvolve/Toc/blob/master/CONTRIBUTING.md) for more information.
 
 ## Contributor Covenant Code of Conduct
 
-Also, please read the [Contributor Covenant Code of Conduct](https://github.com/ForEvolve/ForEvolve.DependencyInjection/tree/master/CODE_OF_CONDUCT.md) that applies to all ForEvolve repositories.
+Also, please read the [Contributor Covenant Code of Conduct](https://github.com/ForEvolve/Toc/blob/master/CODE_OF_CONDUCT.md) that applies to all ForEvolve repositories.
