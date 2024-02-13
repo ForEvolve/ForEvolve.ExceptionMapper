@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <TargetFrameworks>$(FETargetFrameworks)</TargetFrameworks>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
