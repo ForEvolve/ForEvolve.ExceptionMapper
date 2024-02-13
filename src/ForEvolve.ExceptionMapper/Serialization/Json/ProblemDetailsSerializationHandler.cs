@@ -80,7 +80,7 @@ public class ProblemDetailsSerializationHandler : IExceptionSerializer
         {
             var traceIdKey = "traceId";
             problemDetails.Extensions.Remove(traceIdKey);
-            problemDetails.Extensions.Add(FormatName(traceIdKey),  traceId);
+            problemDetails.Extensions.Add(FormatName(traceIdKey), traceId);
         }
 
         // Transfer non-excluded and non-JsonIgnored properties to the problem details.
