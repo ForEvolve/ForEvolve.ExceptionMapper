@@ -293,7 +293,7 @@ The prerelease CI builds are packaged and hosted at [feedz.io](feedz.io), thanks
 
 ## 3.0
 
-The version 3 of ExceptionMapper is a major rewrite that simplifies the codebase and usage of the library. Here are a few important changes:
+Version 3 of ExceptionMapper is a major rewrite that simplifies the codebase and usage of the library. Here are a few important changes:
 
 -   Add support to .NET 7 and .NET 8.
 -   Remove transitive dependency on JSON.NET (`Newtonsoft.Json`).
