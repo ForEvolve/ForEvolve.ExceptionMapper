@@ -3,9 +3,12 @@
     <PropertyGroup>
         <TargetFrameworks>$(FETargetFrameworks)</TargetFrameworks>
     </PropertyGroup>
-    
+
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="ForEvolve.Core" Version="2.3.5" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="../../README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 </Project>
