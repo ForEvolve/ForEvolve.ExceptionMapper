@@ -9,15 +9,9 @@ using WebApi.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 #if CHANGE_PROPERTY_NAME_POLICY
-#if NET8_0_OR_GREATER
 builder.Services.ConfigureHttpJsonOptions(options => {
     options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseUpper;
 });
-#else
-builder.Services.Configure<JsonOptions>(options => {
-    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-});
-#endif
 #endif
 builder.AddExceptionMapper(builder =>
 {
@@ -74,9 +68,7 @@ app.MapGet("/", () => new string[]
     "---[Others]---",
     "/fallback",
     "/a-url-that-does-not-exist",
-#if NET7_0_OR_GREATER
     "/fluent-validation?name=&description=&range=0",
-#endif
 });
 app.MapGet("/BadRequestException", context => throw new BadRequestException());
 app.MapGet("/ConflictException", context => throw new ConflictException());
@@ -96,7 +88,6 @@ app.MapGet("/DroidNotFoundException", context => throw new DroidNotFoundExceptio
 app.MapGet("/MyUnauthorizedException", context => throw new MyUnauthorizedException(Random.Shared.Next(100) % 2 == 0 ? "John" : "Jane"));
 
 app.MapGet("/fallback", context => throw new Exception("An error that gets handled by the fallback handler."));
-#if NET7_0_OR_GREATER
 app.MapGet("/fluent-validation", ([AsParameters] Entity entity) =>
 {
     var validator = new EntityValidator();
@@ -107,7 +98,6 @@ app.MapGet("/fluent-validation", ([AsParameters] Entity entity) =>
     }
     return TypedResults.Ok(entity);
 });
-#endif
 app.Run();
 
 

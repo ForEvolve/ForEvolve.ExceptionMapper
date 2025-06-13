@@ -17,15 +17,11 @@ public class ProblemDetailsSerializationHandler : IExceptionSerializer
     private readonly ProblemDetailsFactory _problemDetailsFactory;
     private readonly IHostEnvironment _hostEnvironment;
     private readonly ProblemDetailsSerializationOptions _options;
-#if NET7_0_OR_GREATER
     private readonly IProblemDetailsService _problemDetailsService;
-#endif
     private readonly JsonSerializerOptions _jsonSerializerOptions;
 
     public ProblemDetailsSerializationHandler(
-#if NET7_0_OR_GREATER
         IProblemDetailsService problemDetailsService,
-#endif
         ProblemDetailsFactory problemDetailsFactory,
         IHostEnvironment hostEnvironment,
         ProblemDetailsSerializationOptions options,
@@ -34,9 +30,7 @@ public class ProblemDetailsSerializationHandler : IExceptionSerializer
         _problemDetailsFactory = problemDetailsFactory ?? throw new ArgumentNullException(nameof(problemDetailsFactory));
         _hostEnvironment = hostEnvironment ?? throw new ArgumentNullException(nameof(hostEnvironment));
         _options = options ?? throw new ArgumentNullException(nameof(options));
-#if NET7_0_OR_GREATER
         _problemDetailsService = problemDetailsService ?? throw new ArgumentNullException(nameof(problemDetailsService));
-#endif
         _jsonSerializerOptions = jsonOptions.Value.SerializerOptions ?? throw new ArgumentNullException(nameof(jsonOptions));
     }
 
@@ -113,27 +107,13 @@ public class ProblemDetailsSerializationHandler : IExceptionSerializer
         }
 
         // Output the problem details
-#if NET7_0_OR_GREATER
         var problemDetailsContext = new ProblemDetailsContext
         {
             HttpContext = ctx.HttpContext,
-#if NET8_0_OR_GREATER
             Exception = ctx.Error,
-#endif
             ProblemDetails = problemDetails,
         };
         await _problemDetailsService.WriteAsync(problemDetailsContext);
-#else
-#pragma warning disable CS0618 // Type or member is obsolete
-        ctx.HttpContext.Response.ContentType = _options.ContentType;
-        await JsonSerializer.SerializeAsync(
-            ctx.HttpContext.Response.Body,
-            problemDetails,
-            _jsonSerializerOptions,
-            cancellationToken: ctx.HttpContext.RequestAborted
-        );
-#pragma warning restore CS0618 // Type or member is obsolete
-#endif
     }
 
     private string FormatName(string name)
