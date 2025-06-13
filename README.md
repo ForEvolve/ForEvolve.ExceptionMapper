@@ -291,6 +291,12 @@ The prerelease CI builds are packaged and hosted at [feedz.io](feedz.io), thanks
 
 # Release notes
 
+## 4.0
+
+- Remove support for .NET 6 and .NET 7
+- Add support for .NET 9
+- Remove dependency on ForEvolve.Core library which means the base exception is now `Exception` instead of `ForEvolve.Exception`.
+
 ## 3.0
 
 Version 3 of ExceptionMapper is a major rewrite that simplifies the codebase and usage of the library. Here are a few important changes:

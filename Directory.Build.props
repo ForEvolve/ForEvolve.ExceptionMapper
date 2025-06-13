@@ -6,7 +6,7 @@
         <RepositoryType>git</RepositoryType>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <LangVersion>Latest</LangVersion>
-        <FETargetFrameworks>net6.0;net7.0;net8.0</FETargetFrameworks>
+        <FETargetFrameworks>net8.0;net9.0</FETargetFrameworks>
         <FETestsTargetFrameworks>$(FETargetFrameworks)</FETestsTargetFrameworks>
     </PropertyGroup>
 
