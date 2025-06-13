@@ -1,4 +1,5 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+﻿#if !NET9_0_OR_GREATER
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Microsoft.AspNetCore.Http;
@@ -100,7 +101,7 @@ internal sealed class DefaultProblemDetailsFactory : ProblemDetailsFactory
         _configure?.Invoke(new() { HttpContext = httpContext!, ProblemDetails = problemDetails });
     }
 }
-
+#endif
 #if NET6_0
 public class ProblemDetailsOptions
 {
