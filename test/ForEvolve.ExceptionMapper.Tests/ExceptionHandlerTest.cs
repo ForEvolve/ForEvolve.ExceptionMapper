@@ -60,7 +60,7 @@ public class ExceptionHandlerTest
 
             Assert.Equal(
                 sut.StatusCode,
-                _httpContextHelper.HttpResponse.StatusCode
+                _httpContextHelper.HttpResponseFake.StatusCode
             );
         }
 

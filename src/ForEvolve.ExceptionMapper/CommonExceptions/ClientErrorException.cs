@@ -4,7 +4,7 @@
 /// Client error responses (400 – 499)
 /// <br /><br />See also <seealso cref="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses"/>
 /// </summary>
-public abstract class ClientErrorException : ForEvolveException
+public abstract class ClientErrorException : Exception
 {
     public ClientErrorException()
     {

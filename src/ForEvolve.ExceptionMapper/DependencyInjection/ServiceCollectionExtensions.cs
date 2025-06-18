@@ -53,23 +53,16 @@ public static class ServiceCollectionExceptionFiltersExtensions
 
     private static void AddSerializationHandler(this IServiceCollection services, IConfiguration configuration)
     {
-#if NET7_0_OR_GREATER
         services.ConfigureHttpJsonOptions(options => {
             options.SerializerOptions.DictionaryKeyPolicy = options.SerializerOptions.PropertyNamingPolicy;
         });
-#endif
         services
             .AddOptions<ProblemDetailsSerializationOptions>()
             .Bind(configuration.GetSection("ExceptionMapper:ProblemDetailsSerialization"))
             .ValidateOnStart()
         ;
         services.AddSingleton(sp => sp.GetRequiredService<IOptions<ProblemDetailsSerializationOptions>>().Value);
-#if NET7_0_OR_GREATER
         services.AddProblemDetails();
-#endif
-        // Workaround: binding a local copy of the DefaultProblemDetailsFactory because the .NET class is internal.
-        // Moreover, the only way to add the class is by calling the AddMvcCore method, which add way more services.
-        // So until we can add the DefaultProblemDetailsFactory
         services.TryAddSingleton<ProblemDetailsFactory, DefaultProblemDetailsFactory>();
         services.TryAddSingleton<IExceptionSerializer, ProblemDetailsSerializationHandler>();
     }
